@@ -1,4 +1,4 @@
-# Plateforme didactique MOODLE_AI — Moteur-UI
+# Gen-Moodle-IA — Plateforme didactique
 
 Ce projet constitue l'environnement de production d'évaluations et d'activités pédagogiques interactives pour les sciences au secondaire (PFEQ), standardisé sur **`moteur-ui`**.
 
@@ -30,7 +30,11 @@ Les deux façons produisent les mêmes ressources (SCORM 1.2, Moodle XML, H5P, e
 
 ## Localement, avec un abonnement à un agent IA
 
-1. Clonez ou téléchargez le dépôt, puis ouvrez le dossier `MOODLE_AI` dans votre agent (Claude Code, application de bureau Claude, Google Antigravity…). L'agent lit automatiquement [`AGENTS.md`](./AGENTS.md), qui contient toutes les directives du projet.
+1. Clonez le dépôt [a15505/Gen-Moodle-IA](https://github.com/a15505/Gen-Moodle-IA) (ou téléchargez-le avec *Code* → *Download ZIP*) :
+   ```
+   git clone https://github.com/a15505/Gen-Moodle-IA.git
+   ```
+   Ouvrez ensuite le dossier `Gen-Moodle-IA` dans votre agent (Claude Code, application de bureau Claude, Google Antigravity…). L'agent lit automatiquement [`AGENTS.md`](./AGENTS.md), qui contient toutes les directives du projet.
 2. Pour choisir une tâche, écrivez « Je veux démarrer une tâche » : l'agent vous donne le lien de la page [`assistant.html`](./assistant.html), qui présente les 7 possibilités.
 3. Déposez votre document original dans le dossier :
    👉 [`Originaux_a_analyser/`](./Originaux_a_analyser/)
@@ -75,10 +79,10 @@ Le détail du fonctionnement de l'application est dans [`application/README.md`]
 
 ---
 
-## 🏛️ Architecture du Projet
+## Architecture du projet
 
 ```
-MOODLE_AI/
+Gen-Moodle-IA/
 ├── Originaux_a_analyser/   ← Dépôt des documents sources (.pdf, images, textes)
 ├── AGENTS.md               ← Directives globales permanentes des agents IA
 ├── moteur-ui/              ← Moteur méthodologique et design system universel
@@ -100,7 +104,7 @@ MOODLE_AI/
 
 ---
 
-## 📋 Standards Non Négociables
+## Standards non négociables
 - **Zéro LaTeX (`.tex`)** : Format pivot unique en HTML5 sémantique léger.
 - **Conformité Loi 25** : Zéro CDN externe, polices système et fichiers 100 % locaux.
 - **Navigation élève haut/bas** : Stepper fixe en haut et boutons de navigation en bas.
