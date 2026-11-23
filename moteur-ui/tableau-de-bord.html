@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tableau de bord — Macroplanification FP (organisation scolaire)</title>
+  <link rel="stylesheet" href="./src/style.css">
+</head>
+<body>
+  <!-- Lien d'évitement accessible au clavier (WCAG 2.4.1) -->
+  <a href="#main-viewport" class="skip-link">Passer directement au contenu principal</a>
+
+  <div class="app-shell">
+    <!-- ====================================================================
+         1. EN-TÊTE ÉTROIT & CLAIR (48px · STRICTEMENT NON-SOMBRE)
+         ==================================================================== -->
+    <header class="app-header" role="banner">
+      <div class="header-left">
+        <span class="brand-title">Macroplanification FP</span>
+        <span class="brand-badge">Centre de formation professionnelle</span>
+      </div>
+
+      <div class="header-right">
+        <!-- Navigation d'accès rapide aux archétypes -->
+        <nav aria-label="Navigation des démonstrateurs">
+          <div class="archetype-switcher">
+            <a href="tableau-de-bord.html" class="switcher-btn" style="text-decoration: none; background: var(--brand-primary); color: #ffffff;">
+              Tableau de bord
+            </a>
+            <a href="activite-interactive.html" class="switcher-btn" style="text-decoration: none;">
+              Activité interactive
+            </a>
+          </div>
+        </nav>
+
+        <!-- Bouton Burger au bout à droite pour Configuration & Options -->
+        <button type="button" id="btnConfigDrawer" class="btn-burger" aria-expanded="false" aria-controls="configDrawer" aria-label="Ouvrir le menu de configuration, arbitrage et options">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <line x1="3" y1="12" x2="21" y2="12"></line>
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <line x1="3" y1="18" x2="21" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+    </header>
+
+    <!-- ====================================================================
+         2. CORPS : SIDEBAR GAUCHE PLEINE HAUTEUR + DONNÉES PLEIN ÉCRAN DENSES
+         ==================================================================== -->
+    <div class="app-body">
+      <!-- Sidebar gauche (Navigation de consultation quotidienne) -->
+      <aside class="app-sidebar" aria-label="Navigation principale de consultation">
+        <nav class="sidebar-nav">
+          <span class="sidebar-category">Consultation quotidienne</span>
+          <a href="#" class="sidebar-link active" aria-current="page">
+            <span>Ligne du temps</span>
+          </a>
+          <a href="#" class="sidebar-link">
+            <span>Cohortes et groupes</span>
+            <span style="font-size: 0.75rem; color: var(--text-subtle);">3 DEP</span>
+          </a>
+          <a href="#" class="sidebar-link">
+            <span>Ateliers et locaux</span>
+          </a>
+          <a href="#" class="sidebar-link">
+            <span>Tâche des enseignants</span>
+          </a>
+
+          <span class="sidebar-category" style="margin-top: 0.75rem;">Optimisation</span>
+          <a href="#" class="sidebar-link">
+            <span>Résolveur OR-Tools</span>
+          </a>
+          <a href="#" class="sidebar-link">
+            <span>Rapports ministériels</span>
+          </a>
+        </nav>
+
+        <div class="sidebar-footer">
+          <div>DEP Électricité (5295) et Soudage (5382)</div>
+          <div style="font-size: 0.7rem; color: var(--text-subtle); margin-top: 2px;">Loi 25 · WCAG 2.1 AAA</div>
+        </div>
+      </aside>
+
+      <!-- Viewport plein écran de consultation dense (Anti-éclatement) -->
+      <main id="main-viewport" class="app-content">
+        
+        <!-- En-tête secondaire escamotable (révélé au défilement vers le haut) -->
+        <header class="secondary-header" aria-label="Actions rapides et filtres de consultation">
+          <div>
+            <h1 class="view-title-dense">Macroplanification et occupation des plateaux techniques</h1>
+            <p style="color: var(--text-muted); font-size: 0.8125rem;">
+              Planification synchrone (30 h / semaine) et arbitrage des ateliers de câblage (110), automates (114) et soudage (120).
+            </p>
+          </div>
+          <div style="display: flex; gap: 0.5rem;">
+            <button type="button" class="btn">Exporter la grille (CSV)</button>
+            <button type="button" class="btn btn-primary">+ Admettre une cohorte</button>
+          </div>
+        </header>
+
+        <!-- Ligne de métriques compacte (sans gaspiller la hauteur d'écran) -->
+        <section class="kpi-row-compact" aria-label="Indicateurs de synthèse scolaire">
+          <article class="kpi-card-compact">
+            <div class="kpi-label-compact">Élèves inscrits</div>
+            <div class="kpi-value-compact">66 élèves</div>
+          </article>
+
+          <article class="kpi-card-compact">
+            <div class="kpi-label-compact">Volume par cohorte</div>
+            <div class="kpi-value-compact">1 800 h</div>
+          </article>
+
+          <article class="kpi-card-compact">
+            <div class="kpi-label-compact">Taux d'occupation des ateliers</div>
+            <div class="kpi-value-compact">88 %</div>
+          </article>
+
+          <article class="kpi-card-compact">
+            <div class="kpi-label-compact">Conflits d'horaires</div>
+            <div class="kpi-value-compact" style="color: var(--status-success-text);">0 conflit</div>
+          </article>
+        </section>
+
+        <!-- COMPOSANT : LIGNE DU TEMPS / GANTT ANNUEL PLEIN ÉCRAN -->
+        <section class="timeline-card" aria-labelledby="timelinePlanTitle">
+          <div class="timeline-header">
+            <h2 id="timelinePlanTitle" class="timeline-title">Ligne du temps annuelle des programmes (parcours synchrones)</h2>
+            <span style="font-size: 0.75rem; color: var(--text-muted);">Session 2025-2026 · Modules et stages</span>
+          </div>
+
+          <div class="timeline-grid" role="region" aria-label="Calendrier chronologique des cohortes">
+            <!-- Colonnes des mois -->
+            <div class="timeline-col-head">Programme / Cohorte</div>
+            <div class="timeline-col-head">Août</div>
+            <div class="timeline-col-head">Sept</div>
+            <div class="timeline-col-head">Oct</div>
+            <div class="timeline-col-head">Nov</div>
+            <div class="timeline-col-head">Déc</div>
+            <div class="timeline-col-head">Jan</div>
+            <div class="timeline-col-head">Fév</div>
+            <div class="timeline-col-head">Mar</div>
+            <div class="timeline-col-head">Avr</div>
+            <div class="timeline-col-head">Mai</div>
+            <div class="timeline-col-head">Juin</div>
+            <div class="timeline-col-head">Juil</div>
+
+            <!-- Cohorte ELEC-2025-A -->
+            <div class="timeline-row-label">ELEC-2025-A (22 él.)</div>
+            <div class="timeline-cell"><div class="timeline-bar">Module 01</div></div>
+            <div class="timeline-cell"><div class="timeline-bar">Module 02</div></div>
+            <div class="timeline-cell"><div class="timeline-bar">Module 03</div></div>
+            <div class="timeline-cell"><div class="timeline-bar">Module 04</div></div>
+            <div class="timeline-cell"><div class="timeline-bar">Stage I</div></div>
+            <div class="timeline-cell"><div class="timeline-bar">Module 05</div></div>
+            <div class="timeline-cell"><div class="timeline-bar">Module 06</div></div>
+            <div class="timeline-cell"><div class="timeline-bar">Module 07</div></div>
+            <div class="timeline-cell"><div class="timeline-bar">Module 08</div></div>
+            <div class="timeline-cell"><div class="timeline-bar">Stage II</div></div>
+            <div class="timeline-cell"><div class="timeline-bar">Bilan</div></div>
+            <div class="timeline-cell"></div>
+
+            <!-- Cohorte ELEC-2025-B -->
+            <div class="timeline-row-label">ELEC-2025-B (22 él.)</div>
+            <div class="timeline-cell"></div>
+            <div class="timeline-cell"></div>
+            <div class="timeline-cell"><div class="timeline-bar">Module 01</div></div>
+            <div class="timeline-cell"><div class="timeline-bar">Module 02</div></div>
+            <div class="timeline-cell"><div class="timeline-bar">Module 03</div></div>
+            <div class="timeline-cell"><div class="timeline-bar">Module 04</div></div>
+            <div class="timeline-cell"><div class="timeline-bar">Stage I</div></div>
+            <div class="timeline-cell"><div class="timeline-bar">Module 05</div></div>
+            <div class="timeline-cell"><div class="timeline-bar">Module 06</div></div>
+            <div class="timeline-cell"><div class="timeline-bar">Module 07</div></div>
+            <div class="timeline-cell"><div class="timeline-bar">Module 08</div></div>
+            <div class="timeline-cell"><div class="timeline-bar">Stage II</div></div>
+
+            <!-- Cohorte SOUD-2025-A -->
+            <div class="timeline-row-label">SOUD-2025-A (18 él.)</div>
+            <div class="timeline-cell"></div>
+            <div class="timeline-cell"><div class="timeline-bar accent-alt">Soudure I</div></div>
+            <div class="timeline-cell"><div class="timeline-bar accent-alt">Soudure II</div></div>
+            <div class="timeline-cell"><div class="timeline-bar accent-alt">Cabines</div></div>
+            <div class="timeline-cell"><div class="timeline-bar accent-alt">Montage</div></div>
+            <div class="timeline-cell"><div class="timeline-bar accent-alt">Contrôle</div></div>
+            <div class="timeline-cell"><div class="timeline-bar accent-alt">Stage A</div></div>
+            <div class="timeline-cell"><div class="timeline-bar accent-alt">Atelier</div></div>
+            <div class="timeline-cell"><div class="timeline-bar accent-alt">Normes</div></div>
+            <div class="timeline-cell"><div class="timeline-bar accent-alt">Stage B</div></div>
+            <div class="timeline-cell"><div class="timeline-bar accent-alt">Évaluation</div></div>
+            <div class="timeline-cell"></div>
+          </div>
+        </section>
+
+        <!-- COMPOSANT : TABLEAU DE DONNÉES PLEIN ÉCRAN NON-ÉCLATÉ -->
+        <section aria-labelledby="cohortTableHeading">
+          <div class="toolbar-dense">
+            <div class="toolbar-actions">
+              <label for="filterDep" style="font-size: 0.8125rem; font-weight: 700;">Programme :</label>
+              <select id="filterDep" class="filter-select-dense">
+                <option value="all">Tous les programmes (5295 et 5382)</option>
+                <option value="5295">5295 · DEP Électricité (1 800 h)</option>
+                <option value="5382">5382 · DEP Soudage-Montage (1 800 h)</option>
+              </select>
+            </div>
+            <span style="font-size: 0.75rem; color: var(--text-subtle);">Données issues du solveur OR-Tools</span>
+          </div>
+
+          <div class="table-viewport-container">
+            <table class="dense-data-table">
+              <caption style="position: absolute; width: 1px; height: 1px; overflow: hidden;">Matrice des cohortes, locaux et charge horaire du centre</caption>
+              <thead>
+                <tr>
+                  <th scope="col" style="width: 140px;">Code Cohorte</th>
+                  <th scope="col">Programme de formation</th>
+                  <th scope="col" style="width: 140px;">Local assigné</th>
+                  <th scope="col" style="width: 110px;">Date début</th>
+                  <th scope="col" style="width: 110px;">Fin prévue</th>
+                  <th scope="col" class="num-cell" style="width: 80px;">Élèves</th>
+                  <th scope="col" class="num-cell" style="width: 90px;">Heures</th>
+                  <th scope="col" style="width: 120px;">Statut</th>
+                  <th scope="col" style="width: 70px;"><span style="position: absolute; width:1px; height:1px; overflow:hidden;">Actions</span></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th scope="row"><strong>ELEC-2025-A</strong></th>
+                  <td>DEP Électricité (Synchrone 30 h)</td>
+                  <td>Local 110 (Câblage)</td>
+                  <td>2025-08-25</td>
+                  <td>2026-06-12</td>
+                  <td class="num-cell">22</td>
+                  <td class="num-cell">1 800 h</td>
+                  <td><span class="badge badge-success"><span aria-hidden="true">✔</span> En cours</span></td>
+                  <td><button type="button" class="btn" style="padding: 2px 6px; font-size: 0.75rem;">Voir</button></td>
+                </tr>
+                <tr>
+                  <th scope="row"><strong>ELEC-2025-B</strong></th>
+                  <td>DEP Électricité (Synchrone 30 h)</td>
+                  <td>Local 112 (Électrotech)</td>
+                  <td>2025-10-13</td>
+                  <td>2026-09-25</td>
+                  <td class="num-cell">22</td>
+                  <td class="num-cell">1 800 h</td>
+                  <td><span class="badge badge-success"><span aria-hidden="true">✔</span> En cours</span></td>
+                  <td><button type="button" class="btn" style="padding: 2px 6px; font-size: 0.75rem;">Voir</button></td>
+                </tr>
+                <tr>
+                  <th scope="row"><strong>SOUD-2025-A</strong></th>
+                  <td>DEP Soudage-Montage (Synchrone 30 h)</td>
+                  <td>Local 120 (Soudage)</td>
+                  <td>2025-09-01</td>
+                  <td>2026-06-19</td>
+                  <td class="num-cell">18</td>
+                  <td class="num-cell">1 800 h</td>
+                  <td><span class="badge badge-success"><span aria-hidden="true">✔</span> En cours</span></td>
+                  <td><button type="button" class="btn" style="padding: 2px 6px; font-size: 0.75rem;">Voir</button></td>
+                </tr>
+                <tr>
+                  <th scope="row"><strong>ELEC-2026-A</strong></th>
+                  <td>DEP Électricité (Scénario d'admission)</td>
+                  <td>Local 114 (Automates)</td>
+                  <td>2026-01-19</td>
+                  <td>2026-12-15</td>
+                  <td class="num-cell">22</td>
+                  <td class="num-cell">1 800 h</td>
+                  <td><span class="badge badge-warning"><span aria-hidden="true">▲</span> Arbitrage</span></td>
+                  <td><button type="button" class="btn" style="padding: 2px 6px; font-size: 0.75rem;">Arbitrer</button></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+      </main>
+    </div>
+
+    <!-- ====================================================================
+         3. TIROIR LATÉRAL (DRAWER) : OPTIONS & ARBITRAGE (AU BOUT À DROITE)
+         ==================================================================== -->
+    <div id="drawerBackdrop" class="drawer-backdrop" aria-hidden="true"></div>
+
+    <aside id="configDrawer" class="config-drawer" role="dialog" aria-modal="true" aria-labelledby="drawerTitle" aria-hidden="true">
+      <div class="drawer-header">
+        <h2 id="drawerTitle" class="drawer-title">Configuration et options</h2>
+        <button type="button" id="btnCloseDrawer" class="btn-close-drawer" aria-label="Fermer le panneau d'options">✕</button>
+      </div>
+
+      <div class="drawer-content">
+        <!-- Section mobile : La navigation de la sidebar bascule ici sur petits écrans -->
+        <div class="drawer-mobile-nav">
+          <h3 class="drawer-section-title">Navigation de consultation</h3>
+          <nav class="sidebar-nav" style="padding: 0; gap: 0.25rem;">
+            <a href="#" class="sidebar-link active" aria-current="page">
+              <span>Ligne du temps</span>
+            </a>
+            <a href="#" class="sidebar-link">
+              <span>Cohortes et groupes</span>
+              <span style="font-size: 0.75rem; color: var(--text-subtle);">3 DEP</span>
+            </a>
+            <a href="#" class="sidebar-link">
+              <span>Ateliers et locaux</span>
+            </a>
+            <a href="#" class="sidebar-link">
+              <span>Tâche des enseignants</span>
+            </a>
+            <a href="#" class="sidebar-link">
+              <span>Résolveur OR-Tools</span>
+            </a>
+            <a href="#" class="sidebar-link">
+              <span>Rapports ministériels</span>
+            </a>
+          </nav>
+          <div style="border-bottom: 1px solid var(--border-color); margin: 1rem 0;"></div>
+        </div>
+
+        <div>
+          <h3 class="drawer-section-title">Paramètres d'arbitrage OR-Tools</h3>
+          <div class="drawer-item">
+            <span>Plafond hebdomadaire</span>
+            <strong>30 h / sem.</strong>
+          </div>
+          <div class="drawer-item">
+            <span>Simultanéité maximale par atelier</span>
+            <strong>1 groupe</strong>
+          </div>
+          <div class="drawer-item">
+            <span>Calcul automatique des conflits</span>
+            <input type="checkbox" checked aria-label="Calcul automatique des conflits">
+          </div>
+        </div>
+
+        <div>
+          <h3 class="drawer-section-title">Administration et calendrier</h3>
+          <div class="drawer-item">
+            <button type="button" class="btn" style="width: 100%; justify-content: center;">Calendrier officiel CSSBE</button>
+          </div>
+          <div class="drawer-item">
+            <button type="button" class="btn" style="width: 100%; justify-content: center;">Gestion des locaux et des capacités</button>
+          </div>
+          <div class="drawer-item">
+            <button type="button" class="btn" style="width: 100%; justify-content: center;">Tâche et disponibilités des enseignants</button>
+          </div>
+        </div>
+
+        <div style="margin-top: auto; padding-top: 1rem; border-top: 1px solid var(--border-subtle); font-size: 0.75rem; color: var(--text-subtle);">
+          Ces réglages sont déportés dans ce tiroir afin de laisser l'intégralité de l'écran pour la consultation des plannings.
+        </div>
+      </div>
+    </aside>
+  </div>
+
+  <script src="./src/app.js" defer></script>
+</body>
+</html>

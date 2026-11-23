@@ -1,0 +1,31 @@
+{
+  "context": {
+    "titre": "L'anatomie du système digestif | Sciences | Alloprof",
+    "videoUrl": "https://www.youtube.com/watch?v=L5nD3HP8XBQ",
+    "dureeTotale": 278,
+    "niveau": "3e secondaire (ST - PFEQ Univers vivant)"
+  },
+  "aiJsonInput": "{\n  \"titre_video\": \"L'anatomie du système digestif | Sciences | Alloprof\",\n  \"duree_video_sec\": 278,\n  \"questions\": [\n    {\n      \"temps_apparition_sec\": 65,\n      \"question\": \"Pourquoi les aliments progressent-ils dans l'œsophage même si l'on est couché ou la tête en bas ?\",\n      \"reponses\": [\n        \"Parce que le péristaltisme, une onde de contractions musculaires involontaires, pousse le bol alimentaire vers l'estomac.\",\n        \"Parce que la gravité attire naturellement les aliments vers les cavités inférieures du tronc.\",\n        \"Parce que la salive crée un phénomène d'aspiration hydraulique le long de l'œsophage.\",\n        \"Parce que la luette propulse avec force les aliments jusqu'au cardia de l'estomac.\"\n      ],\n      \"index_bonne_reponse\": 0,\n      \"feedback\": \"Le péristaltisme est constitué de contractions coordonnées et involontaires des muscles lisses de la paroi de l'œsophage qui font descendre les aliments indépendamment de la pesanteur. [00:55]\",\n      \"retour_en_arriere_si_erreur_sec\": 35\n    },\n    {\n      \"temps_apparition_sec\": 110,\n      \"question\": \"Pourquoi l'estomac sécrète-t-il de l'acide chlorhydrique au sein des sucs gastriques ?\",\n      \"reponses\": [\n        \"Parce que cet acide crée le milieu très acide nécessaire à l'activation des enzymes comme la pepsine et neutralise les microbes.\",\n        \"Parce que cet acide dissout directement les lipides en acides gras sans intervention enzymatique.\",\n        \"Parce que l'acidité permet de neutraliser l'ammoniaque produit lors de la mastication buccale.\",\n        \"Parce que cet acide active la bile produite par les glandes gastriques de la paroi stomacale.\"\n      ],\n      \"index_bonne_reponse\": 0,\n      \"feedback\": \"L'acide chlorhydrique confère à l'estomac un pH très bas (environ 2), indispensable pour détruire les microorganismes et activer la pepsine qui découpe les protéines. [01:35]\",\n      \"retour_en_arriere_si_erreur_sec\": 80\n    },\n    {\n      \"temps_apparition_sec\": 165,\n      \"question\": \"Pourquoi la paroi interne de l'intestin grêle est-elle tapissée de millions de villosités microscopiques ?\",\n      \"reponses\": [\n        \"Parce que ces replis augmentent considérablement la surface de contact pour maximiser l'absorption des nutriments vers le sang.\",\n        \"Parce que ces replis sécrètent la totalité de la bile requise pour émulsionner les graisses alimentaires.\",\n        \"Parce que les villosités assurent le broyage mécanique des fibres végétales insolubles.\",\n        \"Parce qu'elles empêchent les sucs pancréatiques de remonter en direction de la vésicule biliaire.\"\n      ],\n      \"index_bonne_reponse\": 0,\n      \"feedback\": \"Les villosités et microvillosités déploient une immense surface d'échange permettant un passage rapide et massif des nutriments vers les capillaires sanguins et lymphatiques. [02:30]\",\n      \"retour_en_arriere_si_erreur_sec\": 130\n    },\n    {\n      \"temps_apparition_sec\": 230,\n      \"question\": \"Pourquoi le gros intestin réabsorbe-t-il une grande quantité d'eau lors du passage des résidus alimentaires ?\",\n      \"reponses\": [\n        \"Parce que cette réabsorption permet à l'organisme de récupérer l'eau vitale et de compacter les matières fécales avant leur expulsion.\",\n        \"Parce que l'eau réabsorbée sert à refroidir le foie et le pancréas en surchauffe digestive.\",\n        \"Parce que cette eau dissout les vitamines liposolubles pour les renvoyer dans l'estomac.\",\n        \"Parce que l'absorption d'eau déclenche la libération des sucs intestinaux par le côlon transverse.\"\n      ],\n      \"index_bonne_reponse\": 0,\n      \"feedback\": \"Le gros intestin récupère la majeure partie de l'eau résiduelle et des sels minéraux, ce qui solidifie les résidus sous forme de fèces avant leur élimination. [03:30]\",\n      \"retour_en_arriere_si_erreur_sec\": 195\n    }\n  ]\n}",
+  "editorContent": {
+    "interactiveVideo": {
+      "video": {
+        "startScreenOptions": {
+          "title": "L'anatomie du système digestif | Sciences | Alloprof",
+          "hideStartTitle": false
+        },
+        "files": [
+          {
+            "path": "https://www.youtube.com/watch?v=L5nD3HP8XBQ",
+            "mime": "video/YouTube",
+            "copyright": {
+              "license": "U"
+            }
+          }
+        ]
+      },
+      "assets": {
+        "interactions": []
+      }
+    }
+  }
+}

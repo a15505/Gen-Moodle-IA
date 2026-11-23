@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="fr" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <title>{{TITRE_VIDEO}} — Simulateur Vidéo Interactive H5P</title>
+
+  <!-- Feuilles de style moteur-ui (Loi 25 - Zéro CDN) -->
+  <link rel="stylesheet" href="{{MOTEUR_UI_PATH}}/src/tokens.css">
+  <link rel="stylesheet" href="{{MOTEUR_UI_PATH}}/src/style.css">
+  <link rel="stylesheet" href="{{MOTEUR_UI_PATH}}/simulateurs/video/video.css">
+</head>
+<body>
+
+  <!-- Conteneur racine injecté dynamiquement par VideoSimulator -->
+  <div id="videoAppRoot"></div>
+
+  <!-- Scripts d'assistance et API externe de lecture vidéo -->
+  <script src="{{MOTEUR_UI_PATH}}/src/mathjax.js" defer></script>
+  <script src="{{MOTEUR_UI_PATH}}/src/fflate.js" defer></script>
+  <script src="https://www.youtube.com/iframe_api"></script>
+
+  <!-- Scripts modulaires moteur-ui (100% locaux, zéro framework externe) -->
+  <script src="{{MOTEUR_UI_PATH}}/simulateurs/video/video-player.js" defer></script>
+  <script src="{{MOTEUR_UI_PATH}}/simulateurs/video/video-h5p-export.js" defer></script>
+  <script src="{{MOTEUR_UI_PATH}}/simulateurs/video/video-app.js" defer></script>
+
+  <!-- Données de secours pour compatibilité double-clic hors-ligne (file:///) -->
+  <script>
+    window.EMBEDDED_VIDEO_DATA = {{CONFIG_JSON}};
+
+    window.addEventListener('DOMContentLoaded', () => {
+      VideoSimulator.init({
+        jsonSource: './questions_video.json',
+        fallbackData: window.EMBEDDED_VIDEO_DATA,
+        container: '#videoAppRoot',
+        title: '{{TITRE_VIDEO}}'
+      });
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,268 @@
+/* Moteur-UI - Styles du Simulateur Enseignant SCORM 1.2 (Conforme Loi 25) */
+
+html, body {
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  height: 100vh;
+  max-height: 100vh;
+  background: var(--bg-canvas);
+  color: var(--text-main);
+  font-family: var(--font-body);
+}
+
+#scormAppRoot,
+.scorm-sim-wrapper {
+  height: 100vh;
+  max-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.sim-shell {
+  display: flex;
+  flex: 1;
+  height: calc(100vh - 48px);
+  max-height: calc(100vh - 48px);
+  overflow: hidden;
+}
+
+.sim-viewport {
+  flex: 1;
+  height: 100%;
+  max-height: 100%;
+  background: var(--bg-canvas);
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.sim-viewport iframe {
+  width: 100% !important;
+  height: 100% !important;
+  min-height: 0 !important;
+  max-height: 100% !important;
+  flex: 1 1 100%;
+  border: none;
+  display: block;
+}
+
+/* Mode de repli (document élève inaccessible, ex. file:/// dans Chrome) :
+   l'iframe prend la hauteur du contenu et le panneau central défile. */
+.sim-hauteur-auto .sim-viewport {
+  display: block;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+.sim-hauteur-auto .sim-viewport iframe {
+  flex: none;
+}
+
+.sim-drawer-side {
+  width: 360px;
+  height: 100%;
+  background: var(--bg-surface);
+  border-left: 1px solid var(--border-color);
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  padding: 1rem;
+  gap: 1rem;
+}
+
+.sim-section-header {
+  font-size: 0.8125rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-subtle);
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 0.4rem;
+}
+
+.sim-q-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.sim-q-btn {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.6rem 0.85rem;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  background: var(--bg-surface);
+  color: var(--text-main);
+  font-size: 0.85rem;
+  cursor: pointer;
+  text-align: left;
+  transition: all 0.15s ease;
+}
+
+.sim-q-btn:hover {
+  background: var(--bg-surface-subtle);
+  border-color: var(--brand-accent);
+}
+
+.sim-q-btn.active {
+  background: #f0f7ff;
+  border-color: var(--brand-accent);
+  font-weight: 700;
+}
+
+.sim-corrige-box {
+  background: #f0fdf4;
+  border: 1px solid #bbf7d0;
+  border-radius: var(--radius-sm);
+  padding: 0.85rem;
+  font-size: 0.85rem;
+  color: #14532d;
+  line-height: 1.45;
+}
+
+.sim-corrige-box code {
+  display: block;
+  background: #ffffff;
+  padding: 0.35rem 0.5rem;
+  border-radius: 4px;
+  margin-top: 0.4rem;
+  font-family: monospace;
+  color: #0f172a;
+}
+
+/* ── Mode narration : enregistrement de la voix de l'enseignant ── */
+.sim-mode-narration .sim-drawer-side {
+  width: 440px;
+}
+.sim-mode-narration .sim-drawer-side > :not(.narr-panel) {
+  display: none;
+}
+.narr-panel[hidden] {
+  display: none;
+}
+.narr-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+.narr-liste {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+.narr-station {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 0.45rem 0.7rem;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  background: var(--bg-surface);
+  color: var(--text-main);
+  font: inherit;
+  font-size: 0.8125rem;
+  text-align: left;
+  cursor: pointer;
+}
+.narr-station:hover:not(:disabled) {
+  background: var(--bg-surface-subtle);
+}
+.narr-station[aria-current="true"] {
+  background: #f1f5f9;
+  font-weight: 600;
+}
+.narr-station:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+.narr-station-etat {
+  flex-shrink: 0;
+  color: var(--text-muted);
+  font-variant-numeric: tabular-nums;
+}
+.narr-courante {
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  padding: 0.85rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+.narr-titre {
+  margin: 0;
+  font-size: 1rem;
+}
+.narr-cible,
+.narr-aide {
+  margin: 0;
+  font-size: 0.8125rem;
+  color: var(--text-muted);
+}
+.narr-texte {
+  max-height: 38vh;
+  overflow-y: auto;
+  font-size: 1.125rem;
+  line-height: 1.65;
+  padding: 0.75rem;
+  background: var(--bg-canvas);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+}
+.narr-texte p {
+  margin: 0 0 0.85rem 0;
+}
+.narr-texte p:last-child {
+  margin-bottom: 0;
+}
+.narr-niveau {
+  height: 8px;
+  background: #e2e8f0;
+  border-radius: 4px;
+  overflow: hidden;
+}
+.narr-niveau span {
+  display: block;
+  height: 100%;
+  width: 0;
+  background: #15803d;
+  transition: width 0.08s linear;
+}
+.narr-chrono {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+.narr-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+.narr-actions .btn,
+.narr-courante > .btn {
+  font-size: 0.9375rem;
+  padding: 0.5rem 1rem;
+}
+.narr-actions [hidden],
+.narr-courante > [hidden] {
+  display: none;
+}
+.narr-message {
+  margin: 0;
+  min-height: 1.2em;
+  font-size: 0.875rem;
+}
+.narr-panel .btn:focus-visible,
+.narr-station:focus-visible,
+.narr-texte:focus-visible {
+  outline: 3px solid var(--focus-ring);
+  outline-offset: 2px;
+}

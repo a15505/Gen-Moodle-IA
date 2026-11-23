@@ -1,0 +1,24 @@
+/* print.css — moteur-ui */
+@media print {
+  body {
+    background: #ffffff !important;
+    color: #000000 !important;
+  }
+  .app-header, .sim-sidebar, .sim-bottom-actions, .btn {
+    display: none !important;
+  }
+  .sim-shell {
+    height: auto !important;
+    overflow: visible !important;
+  }
+  .sim-content {
+    padding: 0 !important;
+    overflow: visible !important;
+  }
+  .sim-card {
+    box-shadow: none !important;
+    border: none !important;
+    max-width: 100% !important;
+    page-break-inside: avoid;
+  }
+}

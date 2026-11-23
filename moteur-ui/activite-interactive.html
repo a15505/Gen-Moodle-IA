@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Activité interactive (SCORM) — Préparation à l'examen</title>
+  <link rel="stylesheet" href="./src/style.css">
+</head>
+<body>
+  <!-- Lien d'évitement accessible au clavier (WCAG 2.4.1) -->
+  <a href="#main-scorm-content" class="skip-link">Aller directement à l'exercice</a>
+
+  <div class="app-shell">
+    <!-- ====================================================================
+         1. EN-TÊTE ÉTROIT & CLAIR (OBLIGATOIREMENT NON-SOMBRE : 48px)
+         ==================================================================== -->
+    <header class="app-header" role="banner">
+      <div class="header-left">
+        <span class="brand-title">Préparation à l'examen (Thématiques 1 à 4)</span>
+        <span class="brand-badge">Activité interactive SCORM</span>
+      </div>
+
+      <div class="header-right">
+        <!-- Navigation d'accès rapide aux archétypes -->
+        <nav aria-label="Navigation des démonstrateurs">
+          <div class="archetype-switcher">
+            <a href="tableau-de-bord.html" class="switcher-btn" style="text-decoration: none;">
+              Tableau de bord
+            </a>
+            <a href="activite-interactive.html" class="switcher-btn" style="text-decoration: none; background: var(--brand-primary); color: #ffffff;">
+              Activité interactive
+            </a>
+          </div>
+        </nav>
+
+        <!-- Bouton Options / Références -->
+        <button type="button" id="btnConfigDrawer" class="btn-burger" aria-expanded="false" aria-controls="configDrawer" aria-label="Ouvrir les outils et tables de référence">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+            <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+          </svg>
+        </button>
+      </div>
+    </header>
+
+    <!-- ====================================================================
+         2. ZONE D'ACTIVITÉ INTERACTIVE (SOURCE SCORM-THÉMATIQUES 1-4)
+         ==================================================================== -->
+    <main id="main-scorm-content" class="app-content" style="max-width: 1240px; margin: 0 auto; width: 100%;">
+      
+      <!-- Barre d'état HUD escamotable (révélée au défilement vers le haut) -->
+      <header class="secondary-header scorm-hud-bar" aria-label="Progression de l'évaluation">
+        <div class="scorm-hud-tags">
+          <span class="hud-pill">
+            Thématique 1 : L'échelle de l'univers
+          </span>
+          <span class="hud-pill">
+            Question <strong style="margin-left: 2px;">1</strong> / 29
+          </span>
+          <button type="button" id="btnCoachToggle" class="btn hud-coach-btn" aria-expanded="true" aria-controls="coachBubble" aria-label="Ouvrir ou masquer l'assistant pédagogique">
+            Assistant (1)
+          </button>
+          <button type="button" class="btn" style="padding: 0.25rem 0.6rem; font-size: 0.78rem;" onclick="document.getElementById('btnConfigDrawer').click()">
+            Tableaux de référence
+          </button>
+        </div>
+
+        <div class="hud-pill hud-score" aria-live="polite">
+          <span>Score :</span>
+          <strong id="hudScore">0 / 106 pts (0 %)</strong>
+        </div>
+      </header>
+
+      <!-- ESPACE DE TRAVAIL MODULAIRE : ASSISTANT À GAUCHE SANS CHEVAUCHEMENT (DESKTOP) OU BULLE ÉPHÉMÈRE (MOBILE) -->
+      <div class="scorm-workspace-layout">
+        
+        <!-- Assistant pédagogique (affiche uniquement le dernier message avec balayage ou dépliage de l'ensemble des messages) -->
+        <aside id="coachBubble" class="coach-assistant-widget" role="region" aria-label="Assistant pédagogique">
+          <div class="coach-widget-header">
+            <span class="coach-widget-title">Assistant pédagogique</span>
+            <div class="coach-pager" aria-label="Navigation des messages de l'assistant">
+              <button type="button" id="btnPrevCoachMsg" class="btn-coach-nav" aria-label="Message précédent" title="Précédent (molette haut ou balayage droite)" disabled>‹</button>
+              <span id="coachMsgCounter" class="coach-msg-counter" aria-live="polite">1 / 1</span>
+              <button type="button" id="btnNextCoachMsg" class="btn-coach-nav" aria-label="Message suivant" title="Suivant (molette bas ou balayage gauche)" disabled>›</button>
+              <button type="button" id="btnToggleAllCoachMsgs" class="btn-coach-nav btn-coach-chevron" aria-expanded="false" aria-controls="coachAllMessagesList" aria-label="Afficher l'ensemble des messages" title="Afficher l'ensemble des messages">
+                <svg class="coach-chevron-icon" width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M2 3.5L5 6.5L8 3.5" />
+                </svg>
+              </button>
+              <button type="button" id="btnCloseCoach" class="btn-close-coach" aria-label="Masquer l'assistant" title="Masquer">✕</button>
+            </div>
+          </div>
+          
+          <!-- Affichage du message actif unique (défilement molette, balayage ou touches fléchées) -->
+          <div id="coachMessageViewport" class="coach-msg-viewport" tabindex="0" role="region" aria-label="Message de l'assistant pédagogique. Utilisez la molette de la souris, le balayage ou les flèches du clavier pour naviguer" title="Faites défiler à la molette ou balayez l'écran pour naviguer">
+            <div id="coachActiveMsg" class="coach-active-msg">
+              Bonjour ! Je suis là pour t'accompagner dans la résolution de ce problème sur <strong>l'échelle de l'univers</strong>.
+            </div>
+          </div>
+
+          <!-- Vue dépliée de l'ensemble des messages (activable via le chevron) -->
+          <div id="coachAllMessagesList" class="coach-all-messages" hidden aria-label="Ensemble des messages de l'assistant">
+            <ol id="coachHistoryItems" class="coach-history-list">
+              <!-- Rempli dynamiquement -->
+            </ol>
+          </div>
+
+          <!-- Jauge discrète de temporisation de lecture éphémère (2px) -->
+          <div class="coach-timer-bar" aria-hidden="true">
+            <div id="coachTimerFill" class="coach-timer-fill"></div>
+          </div>
+        </aside>
+
+        <!-- PREMIÈRE COUCHE (FLUX DU CONTENU) : STRICTEMENT STABLE, POSITIONNEMENT INALTÉRABLE -->
+        <div class="scorm-container">
+          
+          <!-- Énoncé du problème courant -->
+          <article class="enonce-box" aria-labelledby="enonceHeading">
+            <div id="enonceHeading" class="enonce-title">Problème 1 · Calcul de distance astronomique</div>
+            <p class="enonce-text">
+              Une sonde d'exploration spatiale se déplace à une vitesse constante vers une planète naine située à une distance de 
+              <strong>4,5 × 10⁹ km</strong> du Soleil. 
+              Exprime cette distance en <strong>unités astronomiques (UA)</strong>, en arrondissant ta réponse au dixième près.
+            </p>
+          </article>
+
+          <!-- Choix du mode de résolution (Mode direct vs Pratique guidée) -->
+          <section aria-labelledby="modeChoiceHeading">
+            <div id="modeChoiceHeading" style="font-size: 0.75rem; font-weight: 800; text-transform: uppercase; color: var(--text-subtle); margin-bottom: 0.5rem; letter-spacing: 0.05em;">
+              Choisis ton mode de résolution :
+            </div>
+
+            <div class="mode-toggle-group">
+              <label class="mode-card-label">
+                <div style="display: flex; align-items: center; gap: 0.4rem; font-weight: 700; font-size: 0.9rem; margin-bottom: 0.2rem;">
+                  <input type="radio" name="resMode" value="direct" checked>
+                  <span>Fournir directement la réponse</span>
+                </div>
+                <div style="font-size: 0.78rem; color: var(--text-muted); margin-left: 1.25rem;">
+                  Saisie directe de ta valeur calculée et validation immédiate.
+                </div>
+              </label>
+
+              <label class="mode-card-label">
+                <div style="display: flex; align-items: center; gap: 0.4rem; font-weight: 700; font-size: 0.9rem; margin-bottom: 0.2rem;">
+                  <input type="radio" name="resMode" value="guide">
+                  <span>Pratique guidée</span>
+                </div>
+                <div style="font-size: 0.78rem; color: var(--text-muted); margin-left: 1.25rem;">
+                  Décomposition étape par étape avec rappels de formule.
+                </div>
+              </label>
+            </div>
+          </section>
+
+          <!-- Formulaire de saisie de la réponse scientifique -->
+          <section class="activity-card" style="margin-bottom: 0;">
+            <form id="scormExamForm">
+              <label for="answerValue" style="font-size: 0.875rem; font-weight: 700; display: block; margin-bottom: 0.25rem;">
+                Ta réponse numérique :
+              </label>
+
+              <div class="answer-unit-group">
+                <input type="text" id="answerValue" class="answer-input" placeholder="Exemple : 30.0" required aria-describedby="unitHelp">
+                <select id="unitSelector" class="unit-select" aria-label="Unité de mesure">
+                  <option value="UA" selected>Unités astronomiques (UA)</option>
+                  <option value="km">Kilomètres (km)</option>
+                  <option value="al">Années-lumière (al)</option>
+                </select>
+                <button type="submit" class="btn btn-primary" style="padding: 0.6rem 1.25rem;">
+                  Valider ma réponse
+                </button>
+              </div>
+
+              <div id="unitHelp" style="font-size: 0.75rem; color: var(--text-subtle);">
+                Rappel : 1 UA = 1,496 × 10⁸ km. La valeur attendue est un nombre décimal arrondi à une décimale.
+              </div>
+
+              <!-- Zone de rétroaction accessible (Live Region WCAG 4.1.3) -->
+              <div id="feedbackPanel" class="feedback-box" role="status" aria-live="polite" tabindex="-1">
+                <div id="feedbackText"></div>
+              </div>
+            </form>
+          </section>
+        </div>
+      </div>
+    </main>
+
+    <!-- ====================================================================
+         3. TIROIR LATÉRAL (DRAWER) : TABLES DE RÉFÉRENCE ET FORMULES
+         ==================================================================== -->
+    <div id="drawerBackdrop" class="drawer-backdrop" aria-hidden="true"></div>
+
+    <aside id="configDrawer" class="config-drawer" role="dialog" aria-modal="true" aria-labelledby="drawerTitle" aria-hidden="true">
+      <div class="drawer-header">
+        <h2 id="drawerTitle" class="drawer-title">Tableaux de référence</h2>
+        <button type="button" id="btnCloseDrawer" class="btn-close-drawer" aria-label="Fermer le panneau des références">✕</button>
+      </div>
+
+      <div class="drawer-content">
+        <div>
+          <h3 class="drawer-section-title">Constantes astronomiques</h3>
+          <div class="drawer-item">
+            <span>1 Unité astronomique (UA)</span>
+            <strong>1,496 × 10⁸ km</strong>
+          </div>
+          <div class="drawer-item">
+            <span>1 Année-lumière (al)</span>
+            <strong>9,46 × 10¹² km</strong>
+          </div>
+          <div class="drawer-item">
+            <span>Vitesse de la lumière (c)</span>
+            <strong>300 000 km/s</strong>
+          </div>
+        </div>
+
+        <div>
+          <h3 class="drawer-section-title">Formules utiles</h3>
+          <div class="drawer-item" style="flex-direction: column; align-items: flex-start; gap: 0.25rem;">
+            <span>Conversion distance en UA :</span>
+            <code>d(UA) = d(km) ÷ (1,496 × 10⁸)</code>
+          </div>
+          <div class="drawer-item" style="flex-direction: column; align-items: flex-start; gap: 0.25rem;">
+            <span>Temps de propagation lumière :</span>
+            <code>t = d ÷ c</code>
+          </div>
+        </div>
+      </div>
+    </aside>
+  </div>
+
+  <script src="./src/app.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="fr" dir="ltr" style="margin: 0; padding: 0; height: auto; min-height: auto;">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{TITRE_ACTIVITE}}</title>
+  <link rel="stylesheet" href="./src/style.css">
+  <style>
+    /* STYLES SPÉCIFIQUES À L'ACTIVITÉ ÉLÈVE SCORM (Anti-boucle infinie Moodle) */
+    html {
+      margin: 0;
+      padding: 0;
+      height: auto !important;
+      min-height: auto !important;
+    }
+    body {
+      margin: 0;
+      padding: 0;
+      height: auto !important;
+      min-height: auto !important;
+      overflow-x: hidden !important;
+      overflow-y: hidden !important;
+    }
+  </style>
+</head>
+<body style="margin: 0; padding: 0; height: auto; min-height: auto; overflow-x: hidden; overflow-y: hidden;">
+  <!-- Conteneur d'activité englobant (Anti-boucle infinie Moodle) -->
+  <div id="activity-content" style="width: 100%; margin: 0; padding: 0; box-sizing: border-box;">
+  <!-- Lien d'évitement accessible au clavier (WCAG 2.4.1) -->
+  <a href="#main-scorm-content" class="skip-link">Aller directement à l'exercice</a>
+
+  <!-- Cartouche d'identification imprimable (Masqué à l'écran, visible à l'impression Letter US) -->
+  <header class="exam-print-header">
+    <div class="exam-header-row">
+      <div class="exam-title-block">
+        <h1>{{TITRE_ACTIVITE}}</h1>
+        <p>{{DISCIPLINE_NIVEAU}} · Évaluation formative</p>
+      </div>
+      <div style="text-align: right; font-weight: 700;">
+        Barème : {{TOTAL_POINTS}} points
+      </div>
+    </div>
+    <div class="exam-student-fields">
+      <div class="student-field-item">
+        <span class="student-field-label">Nom et prénom</span>
+        <div class="student-field-line"></div>
+      </div>
+      <div class="student-field-item">
+        <span class="student-field-label">Groupe</span>
+        <div class="student-field-line"></div>
+      </div>
+      <div class="student-field-item">
+        <span class="student-field-label">Date</span>
+        <div class="student-field-line"></div>
+      </div>
+      <div class="student-field-item">
+        <span class="student-field-label">Note obtenue</span>
+        <div class="student-field-line"></div>
+      </div>
+    </div>
+  </header>
+
+  <div class="app-shell">
+    <!-- ====================================================================
+         1. EN-TÊTE ÉTROIT (48px) CONFORME MOTEUR-UI
+         ==================================================================== -->
+    <header class="app-header" role="banner">
+      <div class="header-left">
+        <span class="brand-title">{{TITRE_ACTIVITE}}</span>
+        <span class="brand-badge">Activité SCORM</span>
+      </div>
+
+      <div class="header-right">
+        <button type="button" id="btnToggleCoach" class="btn btn-secondary btn-sm btn-coach-toggle" aria-expanded="true" aria-controls="coachBubble" aria-label="Afficher ou masquer l'assistant">
+          Assistant
+        </button>
+      </div>
+    </header>
+
+    <!-- ====================================================================
+         2. NAVIGATION SUPÉRIEURE (STEPPER PASTILLES FIXE) & PROGRESSION
+         ==================================================================== -->
+    <header class="secondary-header scorm-hud-bar" aria-label="Progression de l'évaluation">
+      <nav class="eval-stepper-bar" id="stepperBar" aria-label="Questions de l'évaluation">
+        <!-- Pastilles 1 à N injectées par JS -->
+      </nav>
+
+      <div class="hud-pill hud-score" aria-live="polite">
+        <span>Score :</span>
+        <strong id="hudScore">0 / {{TOTAL_POINTS}} pts (0 %)</strong>
+      </div>
+    </header>
+
+    <!-- ====================================================================
+         3. ZONE DE CONTENU CENTRAL (QUESTION ACTIVE & ASSISTANT)
+         ==================================================================== -->
+    <main id="main-scorm-content" class="app-content" style="max-width: 1080px; margin: 0 auto; width: 100%;">
+      <div class="scorm-workspace-layout">
+        
+        <!-- Assistant sur deuxième couche (Overlay) -->
+        <aside id="coachBubble" class="coach-assistant-widget" role="region" aria-label="Assistant">
+          <div class="coach-widget-header">
+            <span class="coach-widget-title">Assistant</span>
+            <div class="coach-pager">
+              <button type="button" id="btnPrevCoachMsg" class="btn-coach-nav" aria-label="Message précédent" disabled>‹</button>
+              <span id="coachMsgCounter" class="coach-msg-counter" aria-live="polite">1 / 1</span>
+              <button type="button" id="btnNextCoachMsg" class="btn-coach-nav" aria-label="Message suivant" disabled>›</button>
+              <button type="button" id="btnCloseCoach" class="btn-close-coach" aria-label="Fermer l'assistant">✕</button>
+            </div>
+          </div>
+          <div id="coachMessageViewport" class="coach-msg-viewport" tabindex="0">
+            <div id="coachActiveMsg" class="coach-active-msg">
+              Bienvenue dans cette activité ! Réponds aux questions étape par étape.
+            </div>
+          </div>
+        </aside>
+
+        <!-- Conteneur de la question active -->
+        <div class="scorm-container">
+          <article class="enonce-box">
+            <div id="enonceTitle" class="enonce-title">Question 1</div>
+            <p id="enonceText" class="enonce-text">Chargement de la question...</p>
+          </article>
+
+          <section class="activity-card" style="margin-top: 1rem;">
+            <form id="evalQuestionForm">
+              <div id="interactionContainer">
+                <!-- Zone d'interaction (QCM ou saisie numérique) injectée par JS -->
+              </div>
+
+              <!-- Zone de rétroaction accessible -->
+              <div id="feedbackPanel" class="feedback-box" role="status" aria-live="polite" tabindex="-1">
+                <div id="feedbackText"></div>
+              </div>
+            </form>
+          </section>
+        </div>
+      </div>
+    </main>
+
+    <!-- ====================================================================
+         4. NAVIGATION INFÉRIEURE FIXE (PRÉCÉDENT / SUIVANT)
+         ==================================================================== -->
+    <footer class="eval-bottom-bar" role="navigation" aria-label="Navigation entre les questions">
+      <button type="button" id="btnPrevQuestion" class="btn-eval-nav" disabled>
+        Précédent
+      </button>
+
+      <span id="evalNavHint" class="eval-nav-hint">
+        Valide ta réponse pour débloquer la suite
+      </span>
+
+      <button type="button" id="btnNextQuestion" class="btn-eval-nav primary" disabled>
+        Suivant
+      </button>
+    </footer>
+
+    <!-- TIROIR LATÉRAL DES FORMULES & TABLES DE RÉFÉRENCE -->
+    <div id="drawerBackdrop" class="drawer-backdrop" aria-hidden="true"></div>
+    <aside id="configDrawer" class="config-drawer" role="dialog" aria-modal="true" aria-labelledby="drawerTitle" aria-hidden="true">
+      <div class="drawer-header">
+        <h2 id="drawerTitle" class="drawer-title">Tableaux de référence</h2>
+        <button type="button" id="btnCloseDrawer" class="btn-close-drawer" aria-label="Fermer">✕</button>
+      </div>
+      <div class="drawer-content">
+        <!-- Formules et constantes injectées -->
+      </div>
+    </aside>
+  </div>
+
+  <!-- Dispositif convivial d'agrandissement d'image (Lightbox) -->
+  <div id="imageLightboxModal" class="image-lightbox-modal" role="dialog" aria-modal="true" aria-label="Agrandissement de l'illustration" hidden>
+    <div class="lightbox-backdrop"></div>
+    <div class="lightbox-content">
+      <div class="lightbox-header">
+        <span id="lightboxCaption" class="lightbox-caption"></span>
+        <button type="button" id="btnCloseLightbox" class="btn-close-lightbox" aria-label="Fermer le zoom">✕ Fermer</button>
+      </div>
+      <div class="lightbox-body">
+        <img id="lightboxImg" src="" alt="" class="lightbox-img">
+      </div>
+    </div>
+  </div>
+
+  </div><!-- /#activity-content -->
+
+  <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [['\\(', '\\)'], ['$', '$']],
+        displayMath: [['\\[', '\\]'], ['$$', '$$']]
+      }
+    };
+  </script>
+  <script src="./src/mathjax.js" defer></script>
+  <script src="./src/scorm_api.js"></script>
+  <script src="./src/app.js" defer></script>
+</body>
+</html>

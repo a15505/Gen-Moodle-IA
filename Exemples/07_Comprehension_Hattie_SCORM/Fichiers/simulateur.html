@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="fr" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>La concentration des solutions — Exercice de compréhension — Simulateur Enseignant SCORM</title>
+  
+  <!-- Feuilles de style moteur-ui (Loi 25 - Zéro CDN) -->
+  <link rel="stylesheet" href="../../../moteur-ui/src/style.css">
+  <link rel="stylesheet" href="../../../moteur-ui/src/tokens.css">
+  <link rel="stylesheet" href="../../../moteur-ui/simulateurs/scorm/scorm.css">
+</head>
+<body>
+
+  <!-- Conteneur racine injecté par SCORMSimulator -->
+  <div id="scormAppRoot"></div>
+
+  <!-- Scripts d'assistance mathématique et moteur modulaire SCORM -->
+  <script src="../../../moteur-ui/src/mathjax.js" defer></script>
+  <script src="../../../moteur-ui/simulateurs/scorm/lame.min.js" defer></script>
+  <script src="../../../moteur-ui/simulateurs/scorm/narration-recorder.js" defer></script>
+  <script src="../../../moteur-ui/simulateurs/scorm/scorm-app.js" defer></script>
+
+  <script>
+    window.addEventListener('DOMContentLoaded', () => {
+      SCORMSimulator.init({
+        activityUrl: './index.html',
+        container: '#scormAppRoot',
+        title: 'La concentration des solutions — Exercice de compréhension',
+        zipFilename: 'La concentration des solutions — Exercice de compréhension.zip'
+      });
+    });
+  </script>
+</body>
+</html>

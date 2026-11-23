@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="fr" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aperçu de la banque de questions</title>
+  <link rel="stylesheet" href="../moteur-ui/src/style.css">
+  <link rel="stylesheet" href="../moteur-ui/src/tokens.css">
+  <link rel="stylesheet" href="../moteur-ui/src/quill.snow.css">
+  <link rel="stylesheet" href="../moteur-ui/simulateurs/moodle/moodle.css">
+  <style>
+    /* Dans l'assistant, l'exportation XML et l'enregistrement se font à l'étape 4 :
+       les boutons d'enregistrement sur disque du simulateur sont masqués, ainsi que
+       la demande d'image à l'agent (elle exige le serveur local de l'outil actuel).
+       « Copier le prompt » et « Parcourir… » restent offerts. */
+    #btnExportXml, #btnSaveQuiz, button[onclick="generateNewDdImageAction()"] { display: none !important; }
+    .header-right > div[style*="width: 1px"] { display: none !important; }
+  </style>
+</head>
+<body>
+  <div id="moodleAppRoot"></div>
+
+  <script>
+    // Pas de service d'images de l'agent ici : l'image se colle ou se choisit.
+    window.MOODLE_DD_SANS_AGENT = true;
+    window.MathJax = {
+      tex: {
+        inlineMath: [['\\(', '\\)'], ['$', '$']],
+        displayMath: [['\\[', '\\]'], ['$$', '$$']]
+      },
+      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+    };
+  </script>
+  <script src="../moteur-ui/src/quill.js" defer></script>
+  <script src="../moteur-ui/src/mathjax.js" defer></script>
+  <script src="../moteur-ui/simulateurs/common/image-retouch-canvas.js" defer></script>
+  <script src="../moteur-ui/simulateurs/moodle/moodle-parser.js" defer></script>
+  <script src="../moteur-ui/simulateurs/moodle/moodle-viewer.js" defer></script>
+  <script src="../moteur-ui/simulateurs/moodle/moodle-ddimage.js" defer></script>
+  <script src="../moteur-ui/simulateurs/moodle/moodle-editor.js" defer></script>
+  <script src="../moteur-ui/simulateurs/moodle/moodle-app.js" defer></script>
+  <script>
+    window.addEventListener('DOMContentLoaded', function () {
+      var banque = null;
+      try {
+        // Copie propre à ce cadre : les modifications sont reprises par l'assistant en quittant l'étape.
+        banque = window.parent && window.parent.MoodleAIApercuMoodle
+          ? JSON.parse(JSON.stringify(window.parent.MoodleAIApercuMoodle()))
+          : null;
+      } catch (e) { banque = null; }
+      if (!banque || !banque.questions || !banque.questions.length) {
+        document.getElementById('moodleAppRoot').innerHTML =
+          '<p style="padding:1rem">Aucune question à afficher. Revenez à l\'étape 3 de l\'assistant.</p>';
+        return;
+      }
+      MoodleSimulator.init({
+        xmlSource: null,
+        fallbackData: banque.questions,
+        container: '#moodleAppRoot',
+        title: banque.titre
+      });
+      var titre = document.querySelector('.brand-title');
+      if (titre) titre.textContent = banque.titre;
+    });
+  </script>
+</body>
+</html>

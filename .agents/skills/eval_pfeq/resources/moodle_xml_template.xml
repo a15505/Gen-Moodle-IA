@@ -1,0 +1,392 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<quiz>
+<!-- ======================================================================= -->
+<!-- MODÈLE CANONIQUE MOODLE XML — 9 TYPES DE QUESTIONS SCIENTIFIQUES (PFEQ)  -->
+<!-- Compatible avec le parseur Moodle XML officiel et moteur-ui             -->
+<!-- ======================================================================= -->
+
+  <!-- Catégorie parente -->
+  <question type="category">
+    <category>
+      <text>top/Sciences_PFEQ_Banque_Questions</text>
+    </category>
+    <info format="html">
+      <text></text>
+    </info>
+    <idnumber></idnumber>
+  </question>
+
+  <!-- ===================================================================== -->
+  <!-- TYPE 1 : CHOIX MULTIPLES (multichoice)                                 -->
+  <!-- ===================================================================== -->
+  <!-- question: 101  -->
+  <question type="multichoice">
+    <name>
+      <text>Q01 - Choix multiples - Concentration massique</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p>Quelle est la formule générale permettant de calculer la concentration massique d'une solution ?</p>]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text><![CDATA[<p>La formule originale est \( C = \frac{m}{V} \), où \( m \) est la masse du soluté (g) et \( V \) le volume de la solution (L).</p>]]></text>
+    </generalfeedback>
+    <defaultgrade>1.0000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <idnumber>Q01</idnumber>
+    <tags>
+      <tag><text>Sec4_ST</text></tag>
+      <tag><text>Chimie</text></tag>
+      <tag><text>Concentration</text></tag>
+    </tags>
+    <single>true</single>
+    <shuffleanswers>true</shuffleanswers>
+    <answernumbering>abc</answernumbering>
+    <answer fraction="100" format="html">
+      <text><![CDATA[\( C = \frac{m}{V} \)]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Exact. La concentration massique est le rapport entre la masse du soluté et le volume de la solution.</p>]]></text>
+      </feedback>
+    </answer>
+    <answer fraction="0" format="html">
+      <text><![CDATA[\( C = m \cdot V \)]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Incorrect. Multiplier la masse par le volume donne une grandeur sans signification physique usuelle.</p>]]></text>
+      </feedback>
+    </answer>
+    <answer fraction="0" format="html">
+      <text><![CDATA[\( C = \frac{V}{m} \)]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Attention. Il s'agit du volume massique (l'inverse de la concentration).</p>]]></text>
+      </feedback>
+    </answer>
+    <answer fraction="0" format="html">
+      <text><![CDATA[\( C = \frac{n}{V} \)]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Attention. Ceci correspond à la concentration molaire, non à la concentration massique.</p>]]></text>
+      </feedback>
+    </answer>
+  </question>
+
+  <!-- ===================================================================== -->
+  <!-- TYPE 2 : TEXTE À TROUS / MENUS DÉROULANTS (gapselect)                  -->
+  <!-- ===================================================================== -->
+  <!-- question: 102  -->
+  <question type="gapselect">
+    <name>
+      <text>Q02 - Texte à trous - Fonctions de nutrition</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p>La digestion mécanique débute dans la [[1]] grâce à la mastication, puis les nutriments sont absorbés principalement au niveau de [[2]].</p>]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text><![CDATA[<p>La bouche assure le broyage initial et l'intestin grêle réalise l'absorption des nutriments vers le sang et la lymphe.</p>]]></text>
+    </generalfeedback>
+    <defaultgrade>1.0000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <idnumber>Q02</idnumber>
+    <shuffleanswers>true</shuffleanswers>
+    <selectoption>
+      <text><![CDATA[bouche]]></text>
+      <group>1</group>
+    </selectoption>
+    <selectoption>
+      <text><![CDATA[intestin grêle]]></text>
+      <group>2</group>
+    </selectoption>
+    <selectoption>
+      <text><![CDATA[estomac]]></text>
+      <group>1</group>
+    </selectoption>
+    <selectoption>
+      <text><![CDATA[gros intestin]]></text>
+      <group>2</group>
+    </selectoption>
+  </question>
+
+  <!-- ===================================================================== -->
+  <!-- TYPE 3 : APPARIEMENT (matching)                                        -->
+  <!-- ===================================================================== -->
+  <!-- question: 103  -->
+  <question type="matching">
+    <name>
+      <text>Q03 - Appariement - Organes et rôles digestifs</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p>Associez chaque organe du tube digestif à sa fonction principale :</p>]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text><![CDATA[<p>L'estomac assure le brassage acide, l'intestin grêle l'absorption des nutriments et le côlon la réabsorption d'eau.</p>]]></text>
+    </generalfeedback>
+    <defaultgrade>1.0000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <idnumber>Q03</idnumber>
+    <shuffleanswers>true</shuffleanswers>
+    <subquestion format="html">
+      <text><![CDATA[Estomac]]></text>
+      <answer>
+        <text><![CDATA[Brassage mécanique et digestion des protéines par la pepsine]]></text>
+      </answer>
+    </subquestion>
+    <subquestion format="html">
+      <text><![CDATA[Intestin grêle]]></text>
+      <answer>
+        <text><![CDATA[Digestion chimique finale et absorption des nutriments]]></text>
+      </answer>
+    </subquestion>
+    <subquestion format="html">
+      <text><![CDATA[Gros intestin (côlon)]]></text>
+      <answer>
+        <text><![CDATA[Réabsorption de l'eau et formation des matières fécales]]></text>
+      </answer>
+    </subquestion>
+  </question>
+
+  <!-- ===================================================================== -->
+  <!-- TYPE 4 : GLISSER-DÉPOSER SUR IMAGE (ddimageortext)                     -->
+  <!-- ===================================================================== -->
+  <!-- question: 104  -->
+  <question type="ddimageortext">
+    <name>
+      <text>Anatomie de l'œil et récepteurs sensoriels</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p>Placez chaque étiquette au bon endroit sur le schéma anatomique de l'œil :</p>]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text><![CDATA[<p>La cornée est la membrane transparente antérieure, le cristallin est la lentille convergente et la rétine est la membrane photosensible.</p>]]></text>
+    </generalfeedback>
+    <defaultgrade>1.0000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <idnumber>Q04</idnumber>
+    <file name="bgimage.png" encoding="base64">iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==</file>
+    <drag>
+      <no>1</no>
+      <text><![CDATA[Cornée]]></text>
+      <draggroup>1</draggroup>
+      <infinite>0</infinite>
+    </drag>
+    <drag>
+      <no>2</no>
+      <text><![CDATA[Cristallin]]></text>
+      <draggroup>1</draggroup>
+      <infinite>0</infinite>
+    </drag>
+    <drag>
+      <no>3</no>
+      <text><![CDATA[Rétine]]></text>
+      <draggroup>1</draggroup>
+      <infinite>0</infinite>
+    </drag>
+    <drop>
+      <text></text>
+      <no>1</no>
+      <choice>1</choice>
+      <xleft>50</xleft>
+      <ytop>120</ytop>
+    </drop>
+    <drop>
+      <text></text>
+      <no>2</no>
+      <choice>2</choice>
+      <xleft>180</xleft>
+      <ytop>120</ytop>
+    </drop>
+    <drop>
+      <text></text>
+      <no>3</no>
+      <choice>3</choice>
+      <xleft>380</xleft>
+      <ytop>120</ytop>
+    </drop>
+  </question>
+
+  <!-- ===================================================================== -->
+  <!-- TYPE 5 : QUESTION NUMÉRIQUE AVEC UNITÉS (numerical)                    -->
+  <!-- ===================================================================== -->
+  <!-- question: 105  -->
+  <question type="numerical">
+    <name>
+      <text>Q05 - Calcul numérique - Concentration massique</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p>On dissout \( 12\text{ g} \) de chlorure de sodium (\(\text{NaCl}\)) dans de l'eau pour préparer \( 250\text{ mL} \) de solution. Calculez la concentration massique de cette solution en \( \text{g/L} \).</p>]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text><![CDATA[<p><strong>Démarche scientifique (PFEQ) :</strong></p>
+<p>Formule originale intacte : \( C = \frac{m}{V} \)</p>
+<p>Données : \( m = 12\text{ g} \), \( V = 250\text{ mL} = 0{,}25\text{ L} \)</p>
+<p>Substitution : \( C = \frac{12\text{ g}}{0{,}25\text{ L}} = 48\text{ g/L} \)</p>]]></text>
+    </generalfeedback>
+    <defaultgrade>1.0000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <idnumber>Q05</idnumber>
+    <answer fraction="100" format="moodle_auto_format">
+      <text>48</text>
+      <tolerance>0.5</tolerance>
+      <feedback format="html">
+        <text><![CDATA[<p>Parfait ! La concentration est exactement de 48 g/L.</p>]]></text>
+      </feedback>
+    </answer>
+    <units>
+      <unit>
+        <multiplier>1</multiplier>
+        <unit_name>g/L</unit_name>
+      </unit>
+      <unit>
+        <multiplier>0.001</multiplier>
+        <unit_name>g/mL</unit_name>
+      </unit>
+    </units>
+  </question>
+
+  <!-- ===================================================================== -->
+  <!-- TYPE 6 : ORDONNANCEMENT SÉQUENTIEL (ordering)                          -->
+  <!-- ===================================================================== -->
+  <!-- question: 106  -->
+  <question type="ordering">
+    <name>
+      <text>Q06 - Ordonnancement - Trajet du bol alimentaire</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p>Remettez dans l'ordre chronologique les structures traversées par les aliments lors de la digestion :</p>]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text><![CDATA[<p>Le bol alimentaire passe successivement par la bouche, l'œsophage, l'estomac, l'intestin grêle et enfin le côlon.</p>]]></text>
+    </generalfeedback>
+    <defaultgrade>1.0000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <idnumber>Q06</idnumber>
+    <layouttype>VERTICAL</layouttype>
+    <selecttype>RANDOM</selecttype>
+    <selectcount>5</selectcount>
+    <gradingtype>RELATIVE_NEXT_EXCLUDE_LAST</gradingtype>
+    <showgrading>SHOW</showgrading>
+    <numberingstyle>none</numberingstyle>
+    <shuffleanswers>true</shuffleanswers>
+    <correctfeedback format="html">
+      <text><![CDATA[<p>Votre séquence est entièrement correcte.</p>]]></text>
+    </correctfeedback>
+    <partiallycorrectfeedback format="html">
+      <text><![CDATA[<p>Votre séquence est partiellement ordonnée.</p>]]></text>
+    </partiallycorrectfeedback>
+    <incorrectfeedback format="html">
+      <text><![CDATA[<p>L'ordre des organes n'est pas respecté.</p>]]></text>
+    </incorrectfeedback>
+    <shownumcorrect/>
+    <answer fraction="1" format="moodle_auto_format">
+      <text><![CDATA[Bouche]]></text>
+    </answer>
+    <answer fraction="2" format="moodle_auto_format">
+      <text><![CDATA[Œsophage]]></text>
+    </answer>
+    <answer fraction="3" format="moodle_auto_format">
+      <text><![CDATA[Estomac]]></text>
+    </answer>
+    <answer fraction="4" format="moodle_auto_format">
+      <text><![CDATA[Intestin grêle]]></text>
+    </answer>
+    <answer fraction="5" format="moodle_auto_format">
+      <text><![CDATA[Gros intestin (côlon)]]></text>
+    </answer>
+    <hint format="html">
+      <text></text>
+    </hint>
+    <hint format="html">
+      <text></text>
+    </hint>
+  </question>
+
+  <!-- ===================================================================== -->
+  <!-- TYPE 7 : VRAI OU FAUX (truefalse)                                      -->
+  <!-- ===================================================================== -->
+  <!-- question: 107  -->
+  <question type="truefalse">
+    <name>
+      <text>Q07 - Vrai ou Faux - Loi de la conservation de la masse</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p>Lors d'une transformation chimique dans un système fermé, la masse totale des réactifs consommés est toujours égale à la masse totale des produits formés.</p>]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text><![CDATA[<p>Selon le principe de conservation de Lavoisier (« Rien ne se perd, rien ne se crée, tout se transforme »), le nombre d'atomes de chaque sorte est conservé.</p>]]></text>
+    </generalfeedback>
+    <defaultgrade>1.0000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <idnumber>Q07</idnumber>
+    <answer fraction="100" format="moodle_auto_format">
+      <text>true</text>
+      <feedback format="html">
+        <text><![CDATA[<p>Exact. La masse est rigoureusement conservée dans un système fermé.</p>]]></text>
+      </feedback>
+    </answer>
+    <answer fraction="0" format="moodle_auto_format">
+      <text>false</text>
+      <feedback format="html">
+        <text><![CDATA[<p>Incorrect. La masse ne peut ni disparaître ni être créée ex nihilo.</p>]]></text>
+      </feedback>
+    </answer>
+  </question>
+
+  <!-- ===================================================================== -->
+  <!-- TYPE 8 : RÉPONSE COURTE (shortanswer)                                  -->
+  <!-- ===================================================================== -->
+  <!-- question: 108  -->
+  <question type="shortanswer">
+    <name>
+      <text>Q08 - Réponse courte - Unité de la résistance électrique</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p>Quel est le nom de l'unité de mesure de la résistance électrique dans le Système international (écrivez le mot complet en minuscules) ?</p>]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text><![CDATA[<p>L'unité SI de la résistance électrique est l'<strong>ohm</strong> (symbole : \( \Omega \)), en hommage à Georg Ohm.</p>]]></text>
+    </generalfeedback>
+    <defaultgrade>1.0000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <idnumber>Q08</idnumber>
+    <usecase>0</usecase>
+    <answer fraction="100" format="moodle_auto_format">
+      <text><![CDATA[ohm]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Exact ! L'unité est bien l'ohm.</p>]]></text>
+      </feedback>
+    </answer>
+    <answer fraction="100" format="moodle_auto_format">
+      <text><![CDATA[ohms]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Exact (pluriel accepté).</p>]]></text>
+      </feedback>
+    </answer>
+  </question>
+
+  <!-- ===================================================================== -->
+  <!-- TYPE 9 : QUESTIONS INTÉGRÉES CLOZE (cloze)                             -->
+  <!-- ===================================================================== -->
+  <!-- question: 109  -->
+  <question type="cloze">
+    <name>
+      <text>Q09 - Question intégrée Cloze - Loi d'Ohm</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p>La relation entre la tension \( U \), l'intensité \( I \) et la résistance \( R \) s'exprime par la loi d'Ohm :</p>
+<p>Formule mathématique : \( U = \) {1:MULTICHOICE:=R \cdot I~R / I~I / R#La formule est U = R * I}.</p>
+<p>Si une résistance de \( 20\text{ }\Omega \) est traversée par un courant de \( 0{,}5\text{ A} \), la différence de potentiel à ses bornes vaut {1:NUMERICAL:=10:0.1#Calcul : 20 * 0.5 = 10 V} volts.</p>]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text><![CDATA[<p>La loi d'Ohm est \( U = R \cdot I \). Pour \( R = 20\text{ }\Omega \) et \( I = 0{,}5\text{ A} \), \( U = 20 \times 0{,}5 = 10\text{ V} \).</p>]]></text>
+    </generalfeedback>
+    <defaultgrade>2.0000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <idnumber>Q09</idnumber>
+  </question>
+
+</quiz>

@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Consigne de génération — La concentration des solutions</title>
+  <link rel="stylesheet" href="../../moteur-ui/src/style.css">
+  <style>
+    .consigne-main {
+      width: 100%;
+      max-width: 52rem;
+      margin: 0 auto;
+      padding: 2rem 1.25rem 3rem;
+      line-height: 1.6;
+    }
+    .consigne-main h1 {
+      font-size: 1.5rem;
+      line-height: 1.3;
+      margin-bottom: 0.5rem;
+    }
+    .consigne-main h2 {
+      font-size: 1.15rem;
+      margin: 2rem 0 0.6rem;
+    }
+    .consigne-intro {
+      color: var(--text-muted);
+      margin-bottom: 1.25rem;
+    }
+    .consigne-bloc {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 1.25rem 1.5rem;
+    }
+    .consigne-bloc p + p,
+    .consigne-bloc p + ul,
+    .consigne-bloc ul + p {
+      margin-top: 0.75rem;
+    }
+    .consigne-bloc ul,
+    .consigne-etapes {
+      padding-left: 1.25rem;
+    }
+    .consigne-bloc li + li,
+    .consigne-etapes li + li {
+      margin-top: 0.4rem;
+    }
+    .consigne-etapes li {
+      padding-left: 0.25rem;
+    }
+    .consigne-note {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      margin-top: 0.75rem;
+    }
+    .consigne-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: 1rem;
+    }
+    code {
+      font-family: ui-monospace, Consolas, "Courier New", monospace;
+      font-size: 0.875em;
+    }
+    @media print {
+      .consigne-actions,
+      .skip-link {
+        display: none;
+      }
+      .consigne-bloc {
+        break-inside: avoid;
+      }
+    }
+  </style>
+</head>
+<body>
+  <a href="#main-content" class="skip-link">Aller au contenu</a>
+
+  <main id="main-content" class="consigne-main">
+    <h1>Consigne de génération de l'exemple 07</h1>
+    <p class="consigne-intro">
+      L'activité « La concentration des solutions — Exercice de compréhension » n'a pas été générée à partir d'un document PDF.
+      Elle est née d'une suite de demandes faites à l'agent. Cette page les réunit en une seule consigne, réutilisable pour un autre concept.
+    </p>
+
+    <h2>Consigne résumée</h2>
+    <div class="consigne-bloc" id="consigne">
+      <p>Génère un exercice de compréhension SCORM sur la concentration des solutions (ST, secondaire 3), en tenant compte des principes de John Hattie situés dans le dossier <code>john_hattie</code>.</p>
+      <ul>
+        <li><strong>Deux pages par notion.</strong> Remplace chaque question par deux pages successives. La première présente la notion en utilisant tout l'écran : c'est une information à lire, et non une fiche à cliquer. La seconde pose la question.</li>
+        <li><strong>Représentations visuelles.</strong> L'élève doit pouvoir se représenter le concept : chaque présentation comprend une illustration SVG lorsque la situation le requiert (par exemple, un kilogramme séparé en 4 portions de 0,25 kg).</li>
+        <li><strong>Progression en trois temps.</strong> Répartis les questions selon le savoir que, le savoir comment, puis le savoir avec. Relie l'encadré « À retenir » à l'étape 1 de la démarche.</li>
+        <li><strong>Accueil.</strong> Présente seulement deux tuiles : « Ce que j'apprends » (intentions d'apprentissage) et « Je sais que j'ai réussi quand… » (critères de réussite).</li>
+        <li><strong>Analyse cognitive des erreurs.</strong> Formule les choix comme des pensées d'élève. Chaque distracteur correspond à une erreur fréquente (conception, procédure, stratégie, transfert ou exécution). Après une erreur, analyse le raisonnement de l'élève, puis donne une explication en trois temps (savoir que, savoir comment, savoir avec).</li>
+        <li><strong>Calculs en produit croisé, à la manière d'un humain.</strong> Écris la formule en fraction, suivie de « où » et de la légende des variables avec leurs unités. Garde l'égalité des deux fractions intacte, encercle la valeur qui change de côté et montre son déplacement par une flèche. Biffe les unités qui s'annulent et encadre le résultat. Jamais de tableau avec des flèches.</li>
+        <li><strong>Assistant.</strong> Il ne surgit pas de lui-même et n'affiche aucun message générique. Il sert uniquement à la rétroaction sur une action de l'élève.</li>
+        <li><strong>Fin de l'activité.</strong> Termine par un écran de fermeture bien visible, comme un test Moodle, avec le bouton « Terminer et envoyer ».</li>
+      </ul>
+      <p>Présente-moi d'abord le plan et attends mon « GO » avant de générer les fichiers.</p>
+    </div>
+    <div class="consigne-actions">
+      <button type="button" class="btn btn-primary" id="btnCopier">Copier la consigne</button>
+    </div>
+    <p id="statutCopie" class="consigne-note" role="status" aria-live="polite"></p>
+
+    <h2>Commande équivalente aujourd'hui</h2>
+    <div class="consigne-bloc">
+      <p>Toutes ces exigences sont maintenant inscrites dans le canevas Hattie. Pour un autre concept, il suffit d'écrire :</p>
+      <p><code>Génère un exercice de compréhension SCORM selon le canevas Hattie</code></p>
+      <p class="consigne-note">Canevas : <code>.agents/skills/assistant_scorm/CANEVAS_COMPREHENSION_HATTIE.md</code></p>
+    </div>
+
+    <h2>Demandes successives, dans l'ordre</h2>
+    <ol class="consigne-etapes">
+      <li>Retravailler l'exercice de compréhension sur la concentration selon les principes de John Hattie, avec des représentations SVG et deux pages successives par question (présenter, puis questionner).</li>
+      <li>Retirer les quatre étapes de l'accueil et conserver les deux tuiles de texte.</li>
+      <li>Présenter tous les calculs en produits croisés, à la manière des humains, avec la formule en fraction et sa légende « où ».</li>
+      <li>Ne pas faire surgir l'Assistant, dans tous les contextes.</li>
+      <li>Rendre le calcul en LaTeX ou en un équivalent fidèle ; montrer la transformation dans le produit croisé (valeur encerclée et flèche de déplacement), jamais en tableau avec des flèches.</li>
+      <li>Ajouter un espacement entre l'énoncé de la question et les choix de réponse.</li>
+      <li>Représenter le kilogramme en 4 portions de 0,25 kg et relier « À retenir » à l'étape 1.</li>
+      <li>Donner à l'explication une progression en trois temps (savoir que, savoir comment, savoir avec), avec analyse cognitive selon Hattie.</li>
+      <li>Rendre la forme réutilisable sous forme de canevas, en précisant que la représentation visuelle est recherchée lorsque la situation le requiert.</li>
+      <li>Ajouter un écran de fermeture « Terminer et envoyer », parce que des élèves quittent sans transmettre leur résultat.</li>
+    </ol>
+  </main>
+
+  <script>
+    document.getElementById('btnCopier').addEventListener('click', function () {
+      var texte = document.getElementById('consigne').innerText;
+      var statut = document.getElementById('statutCopie');
+      function repli() {
+        var zone = document.createElement('textarea');
+        zone.value = texte;
+        zone.style.position = 'absolute';
+        zone.style.left = '-9999px';
+        document.body.appendChild(zone);
+        zone.select();
+        var ok = false;
+        try { ok = document.execCommand('copy'); } catch (e) { ok = false; }
+        document.body.removeChild(zone);
+        statut.textContent = ok ? 'Consigne copiée.' : 'Copie impossible. Sélectionnez le texte ci-dessus.';
+      }
+      if (navigator.clipboard && window.isSecureContext) {
+        navigator.clipboard.writeText(texte).then(function () {
+          statut.textContent = 'Consigne copiée.';
+        }, repli);
+      } else {
+        repli();
+      }
+    });
+  </script>
+</body>
+</html>

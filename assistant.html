@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Démarrer une tâche</title>
+  <link rel="stylesheet" href="./moteur-ui/src/style.css">
+  <style>
+    .assistant-main {
+      width: 100%;
+      max-width: 72rem;
+      margin: 0 auto;
+      padding: 2rem 1.25rem 3rem;
+    }
+    .assistant-main h1 {
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      line-height: 1.25;
+      margin-bottom: 0.5rem;
+    }
+    .assistant-intro {
+      color: var(--text-muted);
+      max-width: 48rem;
+      margin-bottom: 1.75rem;
+    }
+    .assistant-instruction {
+      max-width: 48rem;
+      background: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 0.75rem 1rem;
+      margin-bottom: 0.75rem;
+      font-weight: 600;
+    }
+    .assistant-instruction code,
+    .option-command {
+      font-family: ui-monospace, Consolas, "Courier New", monospace;
+      font-size: 0.8125rem;
+    }
+    .options-list {
+      list-style: none;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(min(100%, 20rem), 1fr));
+      gap: 1rem;
+    }
+    .option-card {
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      background: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 1.25rem;
+    }
+    .option-card h2 {
+      font-size: 1.0625rem;
+      line-height: 1.35;
+      margin-bottom: 0.4rem;
+    }
+    .option-description {
+      color: var(--text-muted);
+      margin-bottom: 0.9rem;
+      flex: 1;
+    }
+    .option-command {
+      display: block;
+      background: var(--bg-surface-subtle);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-sm);
+      padding: 0.5rem 0.65rem;
+      margin-bottom: 0.9rem;
+      overflow-wrap: anywhere;
+    }
+    .option-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+    .option-status {
+      min-height: 1.25rem;
+      margin-top: 0.5rem;
+      font-size: 0.8125rem;
+      color: var(--status-success-text);
+    }
+    .option-status.is-error {
+      color: var(--status-alert-text);
+    }
+  </style>
+</head>
+<body>
+  <a href="#main-content" class="skip-link">Aller au contenu</a>
+
+  <div class="app-shell">
+    <header class="app-header">
+      <div class="header-left">
+        <span class="brand-title">Plateforme didactique MOODLE_AI</span>
+      </div>
+    </header>
+
+    <main id="main-content" class="assistant-main">
+      <h1>Que voulez-vous créer ?</h1>
+      <p class="assistant-instruction">
+        Vous devez déposer le document PDF à analyser dans le dossier <a id="lien-originaux" href="./Originaux_a_analyser/" title="Ouvrir le dossier dans l'explorateur"><code>Originaux_a_analyser</code></a>.
+      </p>
+      <p id="statut-originaux" class="option-status" role="status" aria-live="polite"></p>
+      <p class="assistant-intro">
+        Copiez ensuite la commande de votre choix, puis collez-la dans le chat avec le nom du document. L'agent vous présentera son plan et attendra votre « GO » avant de générer les fichiers.
+      </p>
+
+      <ul class="options-list">
+        <li>
+          <article class="option-card">
+            <h2>Corrigé interactif SCORM</h2>
+            <p class="option-description">Un module Moodle qui permet à l'élève de corriger lui-même, en ligne, un exercice fait sur papier. Pour chaque question, il reçoit une rétroaction et une explication, et il peut reprendre sa réponse.</p>
+            <code class="option-command">Génère un corrigé interactif SCORM</code>
+            <div class="option-actions">
+              <a class="btn" href="./Exemples/01_Corrige_Interactif_SCORM/Fichiers/simulateur.html" target="_blank" rel="noopener">Voir l'exemple</a>
+              <a class="btn" href="./Exemples/01_Corrige_Interactif_SCORM/Exercice_4.1_Systeme_Digestif.pdf" target="_blank" rel="noopener" title="Exercice_4.1_Systeme_Digestif.pdf">Voir le document source</a>
+              <button type="button" class="btn btn-primary js-copy">Copier la commande</button>
+            </div>
+            <p class="option-status" role="status" aria-live="polite"></p>
+          </article>
+        </li>
+        <li>
+          <article class="option-card">
+            <h2>Exercice de compréhension de lecture SCORM</h2>
+            <p class="option-description">Un exercice en ligne qui accompagne un document imprimé. Il permet de valider la compréhension de l'élève après sa première lecture, avec une question complémentaire en cas d'erreur.</p>
+            <code class="option-command">Génère un exercice de compréhension de lecture SCORM</code>
+            <div class="option-actions">
+              <a class="btn" href="./Exemples/02_Comprehension_Lecture_SCORM/Fichiers/simulateur.html" target="_blank" rel="noopener">Voir l'exemple</a>
+              <a class="btn" href="./Exemples/02_Comprehension_Lecture_SCORM/Lecture_4.1_Systeme_Digestif.pdf" target="_blank" rel="noopener" title="Lecture_4.1_Systeme_Digestif.pdf">Voir le document source</a>
+              <button type="button" class="btn btn-primary js-copy">Copier la commande</button>
+            </div>
+            <p class="option-status" role="status" aria-live="polite"></p>
+          </article>
+        </li>
+        <li>
+          <article class="option-card">
+            <h2>Nouvelle version d'un examen</h2>
+            <p class="option-description">Une variante à imprimer, avec de nouvelles valeurs numériques et des distracteurs recalculés.</p>
+            <code class="option-command">Génère une version de cet examen</code>
+            <div class="option-actions">
+              <a class="btn" href="./Exemples/03_Nouvelle_Version_Examen/Fichiers/index.html" target="_blank" rel="noopener">Voir l'exemple</a>
+              <a class="btn" href="./Exemples/03_Nouvelle_Version_Examen/Minitest_Concentration_Sec3.pdf" target="_blank" rel="noopener" title="Minitest_Concentration_Sec3.pdf">Voir le document source</a>
+              <button type="button" class="btn btn-primary js-copy">Copier la commande</button>
+            </div>
+            <p class="option-status" role="status" aria-live="polite"></p>
+          </article>
+        </li>
+        <li>
+          <article class="option-card">
+            <h2>Corrigé d'un examen</h2>
+            <p class="option-description">Le document de correction pour l'enseignant, avec les démarches complètes.</p>
+            <code class="option-command">Génère un corrigé de cet examen</code>
+            <div class="option-actions">
+              <a class="btn" href="./Exemples/04_Corrige_Examen/Fichiers/corrige.html" target="_blank" rel="noopener">Voir l'exemple</a>
+              <a class="btn" href="./Exemples/04_Corrige_Examen/Examen_ATS_SE_408_Chimie.pdf" target="_blank" rel="noopener" title="Examen_ATS_SE_408_Chimie.pdf">Voir le document source</a>
+              <button type="button" class="btn btn-primary js-copy">Copier la commande</button>
+            </div>
+            <p class="option-status" role="status" aria-live="polite"></p>
+          </article>
+        </li>
+        <li>
+          <article class="option-card">
+            <h2>Vidéo interactive H5P</h2>
+            <p class="option-description">Des questions qui surgissent dans une vidéo YouTube, avec un retour en arrière en cas d'erreur.</p>
+            <code class="option-command">Génère un fichier de questions en format JSON (vidéo interactive)</code>
+            <div class="option-actions">
+              <a class="btn" href="./Exemples/05_Video_Interactive_H5P/Fichiers/simulateur.html" target="_blank" rel="noopener">Voir l'exemple</a>
+              <a class="btn" href="https://www.youtube.com/watch?v=L5nD3HP8XBQ" target="_blank" rel="noopener" title="Vidéo YouTube utilisée">Voir la vidéo source</a>
+              <button type="button" class="btn btn-primary js-copy">Copier la commande</button>
+            </div>
+            <p class="option-status" role="status" aria-live="polite"></p>
+          </article>
+        </li>
+        <li>
+          <article class="option-card">
+            <h2>Banque de questions Moodle XML</h2>
+            <p class="option-description">Un fichier à importer dans Moodle, couvrant 9 types de questions.</p>
+            <code class="option-command">Génère une banque de questions Moodle XML</code>
+            <div class="option-actions">
+              <a class="btn" href="./Exemples/06_Banque_Questions_Moodle_XML/Fichiers/simulateur.html" target="_blank" rel="noopener">Voir l'exemple</a>
+              <a class="btn" href="./Exemples/06_Banque_Questions_Moodle_XML/Lecture_4.3_Systeme_Respiratoire.pdf" target="_blank" rel="noopener" title="Lecture_4.3_Systeme_Respiratoire.pdf">Voir le document source</a>
+              <button type="button" class="btn btn-primary js-copy">Copier la commande</button>
+            </div>
+            <p class="option-status" role="status" aria-live="polite"></p>
+          </article>
+        </li>
+        <li>
+          <article class="option-card">
+            <h2>Exercice de compréhension en deux pages (Hattie)</h2>
+            <p class="option-description">Chaque notion en deux pages : une présentation illustrée à lire, puis une question. Les questions sont réparties en trois temps : savoir que, savoir comment, puis savoir avec. Après une erreur, l'élève reçoit une analyse de son raisonnement.</p>
+            <code class="option-command">Génère un exercice de compréhension SCORM selon le canevas Hattie</code>
+            <div class="option-actions">
+              <a class="btn" href="./Exemples/07_Comprehension_Hattie_SCORM/Fichiers/simulateur.html" target="_blank" rel="noopener">Voir l'exemple</a>
+              <a class="btn" href="./Exemples/07_Comprehension_Hattie_SCORM/Consigne_de_generation.html" target="_blank" rel="noopener" title="Consigne de génération utilisée">Voir la consigne</a>
+              <a class="btn" href="./john_hattie/Hattie_et_exemple_07.html" target="_blank" rel="noopener" title="Principes de Hattie et de Mayer illustrés par l'exemple">Voir les principes</a>
+              <button type="button" class="btn btn-primary js-copy">Copier la commande</button>
+            </div>
+            <p class="option-status" role="status" aria-live="polite"></p>
+          </article>
+        </li>
+      </ul>
+    </main>
+  </div>
+
+  <script>
+    // Repli pour file:///, où navigator.clipboard n'est pas toujours disponible
+    function copierParSelection(texte) {
+      var zone = document.createElement('textarea');
+      zone.value = texte;
+      zone.setAttribute('readonly', '');
+      zone.style.position = 'absolute';
+      zone.style.left = '-9999px';
+      document.body.appendChild(zone);
+      zone.select();
+      var reussi = false;
+      try {
+        reussi = document.execCommand('copy');
+      } catch (e) {
+        reussi = false;
+      }
+      document.body.removeChild(zone);
+      return reussi;
+    }
+
+    function copierTexte(texte) {
+      if (navigator.clipboard && window.isSecureContext) {
+        return navigator.clipboard.writeText(texte).catch(function () {
+          if (!copierParSelection(texte)) throw new Error('Copie refusée');
+        });
+      }
+      return copierParSelection(texte) ? Promise.resolve() : Promise.reject(new Error('Copie refusée'));
+    }
+
+    // Hors serveur (file:///), le lien garde son comportement normal
+    if (location.protocol !== 'file:') {
+      document.getElementById('lien-originaux').addEventListener('click', function (evenement) {
+        evenement.preventDefault();
+        var statut = document.getElementById('statut-originaux');
+        statut.classList.remove('is-error');
+        fetch('./api/ouvrir_originaux', { method: 'POST' }).then(function (reponse) {
+          if (!reponse.ok) throw new Error('HTTP ' + reponse.status);
+          statut.textContent = 'Dossier ouvert dans l\'explorateur.';
+        }).catch(function () {
+          statut.textContent = 'Ouverture impossible. Ouvrez le dossier Originaux_a_analyser à la racine du projet.';
+          statut.classList.add('is-error');
+        });
+      });
+    }
+
+    document.querySelectorAll('.js-copy').forEach(function (bouton) {
+      bouton.addEventListener('click', function () {
+        var carte = bouton.closest('.option-card');
+        var statut = carte.querySelector('.option-status');
+        var commande = carte.querySelector('.option-command').textContent;
+        document.querySelectorAll('.option-status').forEach(function (s) {
+          s.textContent = '';
+          s.classList.remove('is-error');
+        });
+        copierTexte(commande).then(function () {
+          statut.textContent = 'Commande copiée. Collez-la dans le chat.';
+        }).catch(function () {
+          statut.textContent = 'Copie impossible. Sélectionnez la commande affichée ci-dessus.';
+          statut.classList.add('is-error');
+        });
+      });
+    });
+  </script>
+</body>
+</html>

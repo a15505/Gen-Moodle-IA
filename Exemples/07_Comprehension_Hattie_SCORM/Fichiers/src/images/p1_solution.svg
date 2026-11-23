@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 450" role="img" aria-labelledby="t1">
+  <title id="t1">Le soluté et le solvant forment une solution homogène</title>
+  <style>
+    .t{font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;fill:#0f172a}
+    .l{font-size:18px;font-weight:700}
+    .s{font-size:15px;fill:#334155}
+    .o{font-size:34px;font-weight:700;fill:#475569}
+    .eau{fill:#dbeafe}
+    .verre{fill:none;stroke:#334155;stroke-width:2.5;stroke-linejoin:round;stroke-linecap:round}
+    .p{fill:#b45309}
+    .loupe{fill:#dbeafe;stroke:#334155;stroke-width:2}
+  </style>
+  <rect width="720" height="450" fill="#ffffff"/>
+
+  <!-- Soluté : petit tas de sucre -->
+  <g class="p">
+    <circle cx="80" cy="196" r="5"/><circle cx="92" cy="196" r="5"/><circle cx="104" cy="196" r="5"/><circle cx="116" cy="196" r="5"/><circle cx="128" cy="196" r="5"/>
+    <circle cx="86" cy="186" r="5"/><circle cx="98" cy="186" r="5"/><circle cx="110" cy="186" r="5"/><circle cx="122" cy="186" r="5"/>
+    <circle cx="92" cy="176" r="5"/><circle cx="104" cy="176" r="5"/><circle cx="116" cy="176" r="5"/>
+    <circle cx="98" cy="166" r="5"/><circle cx="110" cy="166" r="5"/>
+  </g>
+  <line x1="62" y1="204" x2="146" y2="204" stroke="#334155" stroke-width="2.5" stroke-linecap="round"/>
+  <text x="104" y="240" text-anchor="middle" class="t l">Soluté</text>
+  <text x="104" y="262" text-anchor="middle" class="t s">le sucre</text>
+
+  <text x="190" y="160" text-anchor="middle" class="t o">+</text>
+
+  <!-- Solvant : bécher d'eau -->
+  <rect x="241" y="100" width="118" height="111" class="eau"/>
+  <path d="M240 70 L240 205 Q240 212 247 212 L353 212 Q360 212 360 205 L360 70" class="verre"/>
+  <text x="300" y="240" text-anchor="middle" class="t l">Solvant</text>
+  <text x="300" y="262" text-anchor="middle" class="t s">l'eau</text>
+
+  <text x="412" y="160" text-anchor="middle" class="t o">=</text>
+
+  <!-- Solution : bécher d'eau sucrée -->
+  <rect x="471" y="100" width="118" height="111" class="eau"/>
+  <g class="p">
+    <circle cx="490" cy="118" r="4"/><circle cx="528" cy="112" r="4"/><circle cx="566" cy="122" r="4"/>
+    <circle cx="505" cy="142" r="4"/><circle cx="548" cy="140" r="4"/><circle cx="578" cy="152" r="4"/>
+    <circle cx="486" cy="166" r="4"/><circle cx="526" cy="168" r="4"/><circle cx="560" cy="176" r="4"/>
+    <circle cx="500" cy="194" r="4"/><circle cx="540" cy="198" r="4"/><circle cx="576" cy="196" r="4"/>
+    <circle cx="512" cy="122" r="4"/><circle cx="582" cy="110" r="4"/>
+  </g>
+  <path d="M470 70 L470 205 Q470 212 477 212 L583 212 Q590 212 590 205 L590 70" class="verre"/>
+  <text x="530" y="240" text-anchor="middle" class="t l">Solution</text>
+  <text x="530" y="262" text-anchor="middle" class="t s">l'eau sucrée</text>
+
+  <line x1="40" y1="292" x2="680" y2="292" stroke="#cbd5e1" stroke-width="1"/>
+  <text x="360" y="322" text-anchor="middle" class="t l">Partout dans le verre, la même proportion de sucre</text>
+
+  <!-- Trois portions prélevées : même nombre de particules -->
+  <circle cx="200" cy="380" r="40" class="loupe"/>
+  <g class="p"><circle cx="184" cy="364" r="4"/><circle cx="214" cy="362" r="4"/><circle cx="198" cy="384" r="4"/><circle cx="180" cy="398" r="4"/><circle cx="220" cy="394" r="4"/></g>
+  <circle cx="360" cy="380" r="40" class="loupe"/>
+  <g class="p"><circle cx="346" cy="362" r="4"/><circle cx="378" cy="368" r="4"/><circle cx="356" cy="388" r="4"/><circle cx="378" cy="400" r="4"/><circle cx="340" cy="398" r="4"/></g>
+  <circle cx="520" cy="380" r="40" class="loupe"/>
+  <g class="p"><circle cx="508" cy="366" r="4"/><circle cx="536" cy="364" r="4"/><circle cx="520" cy="382" r="4"/><circle cx="504" cy="396" r="4"/><circle cx="538" cy="398" r="4"/></g>
+  <text x="200" y="440" text-anchor="middle" class="t s">en haut</text>
+  <text x="360" y="440" text-anchor="middle" class="t s">au milieu</text>
+  <text x="520" y="440" text-anchor="middle" class="t s">au fond</text>
+</svg>

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="fr" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <title>Aperçu de la vidéo interactive</title>
+  <link rel="stylesheet" href="../moteur-ui/src/tokens.css">
+  <link rel="stylesheet" href="../moteur-ui/src/style.css">
+  <link rel="stylesheet" href="../moteur-ui/simulateurs/video/video.css">
+  <style>
+    /* Dans l'assistant, l'enregistrement se fait à l'étape 4 : les boutons
+       d'enregistrement sur disque du simulateur sont masqués. Le panneau
+       « Questions » l'est aussi : le mode d'édition corrige tout à l'écran.
+       L'exportation H5P se fait à l'étape 4, avec la marche à suivre pour Moodle. */
+    #btnSaveChanges, #savePromptBanner, #btnBannerSave, #unsavedBadge,
+    #btnToggleQuestions, #corrigeInspectionPanel, #btnExportH5P { display: none !important; }
+    /* Séparateur vertical devenu inutile devant l'interrupteur « Mode d'édition » */
+    .header-right > div[style*="width: 1px"] { display: none !important; }
+    /* La vidéo profite de toute la largeur du cadre, sans dépasser sa hauteur
+       (en-tête 48 px + barre de contrôle + marges ≈ 130 px). */
+    .video-player-container { max-width: min(100%, calc((100vh - 130px) * 16 / 9)); }
+  </style>
+</head>
+<body>
+  <div id="videoAppRoot"></div>
+
+  <script src="../moteur-ui/src/mathjax.js" defer></script>
+  <script src="../moteur-ui/src/fflate.js" defer></script>
+  <!-- API officielle du lecteur YouTube : nécessaire pour lire la vidéo elle-même -->
+  <script src="https://www.youtube.com/iframe_api"></script>
+  <script src="../moteur-ui/simulateurs/video/video-player.js" defer></script>
+  <script src="../moteur-ui/simulateurs/video/video-h5p-export.js" defer></script>
+  <script src="../moteur-ui/simulateurs/video/video-app.js" defer></script>
+  <script>
+    window.addEventListener('DOMContentLoaded', function () {
+      var config = null;
+      try { config = window.parent && window.parent.MoodleAIApercu ? window.parent.MoodleAIApercu() : null; } catch (e) { config = null; }
+      if (!config) {
+        try { config = JSON.parse(localStorage.getItem('moodleai.video-h5p.apercu') || 'null'); } catch (e) { config = null; }
+      }
+      if (!config) {
+        document.getElementById('videoAppRoot').innerHTML =
+          '<p style="padding:1rem">Aucune vidéo à afficher. Revenez à l\'étape 3 de l\'assistant.</p>';
+        return;
+      }
+      VideoSimulator.init({
+        jsonSource: null,
+        fallbackData: config,
+        container: '#videoAppRoot',
+        title: config.context && config.context.titre
+      });
+    });
+  </script>
+</body>
+</html>

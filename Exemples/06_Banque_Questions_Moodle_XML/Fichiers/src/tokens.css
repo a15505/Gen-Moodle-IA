@@ -1,0 +1,46 @@
+/* ==========================================================================
+   TOKENS DE DESIGN UNIVERSELS — FORME GÉNÉRALE STANDARD (WCAG AA/AAA)
+   ========================================================================== */
+:root {
+  /* 1. Surfaces & Fonds */
+  --bg-canvas: #f8fafc;          /* Fond neutre reposant (Slate 50) */
+  --bg-surface: #ffffff;         /* Fond blanc pur pour cartes et tableaux */
+  --bg-surface-subtle: #f1f5f9;  /* En-têtes de tableaux et éléments inactifs */
+  --border-color: #cbd5e1;       /* Bordure nette 1px (Slate 300) */
+  --border-subtle: #e2e8f0;      /* Séparateurs fins (Slate 200) */
+
+  /* 2. Typographie & Encre */
+  --text-main: #0f172a;          /* Encre sombre principale (Contraste 15.5:1 AAA) */
+  --text-muted: #475569;         /* Texte secondaire (Contraste 5.8:1 AA+) */
+  --text-subtle: #64748b;        /* Métadonnées (Contraste 4.6:1 AA) */
+
+  /* 3. Identité Standard & Actions */
+  --brand-primary: #0f172a;      /* Bleu nuit / Encre sombre d'ancrage */
+  --brand-accent: #2563eb;       /* Bleu royal vif pour interactions */
+  --brand-accent-text: #ffffff;  /* Texte blanc sur bleu royal (Contraste 8.5:1 AAA) */
+  --brand-action: #2563eb;       /* Couleur d'action standard */
+  --focus-ring: #2563eb;         /* Anneau de focus clavier 3px */
+
+  /* 4. Statuts Sémantiques (Validation, Alertes, Progression) */
+  --status-success-bg: #ecfdf5;
+  --status-success-text: #065f46;  /* Contraste 8.2:1 (AAA) */
+  --status-success-border: #a7f3d0;
+
+  --status-warning-bg: #fffbeb;
+  --status-warning-text: #78350f;  /* Contraste 7.2:1 (AAA) */
+  --status-warning-border: #fde68a;
+
+  --status-alert-bg: #fef2f2;
+  --status-alert-text: #991b1b;    /* Contraste 7.5:1 (AAA) */
+  --status-alert-border: #fecaca;
+
+  --status-info-bg: #eff6ff;
+  --status-info-text: #1e40af;     /* Contraste 8.5:1 (AAA) */
+  --status-info-border: #bfdbfe;
+
+  /* 5. Typographie */
+  --font-display: Montserrat, "Segoe UI", -apple-system, sans-serif;
+  --font-body: Inter, "Atkinson Hyperlegible", system-ui, -apple-system, sans-serif;
+  --radius-sm: 4px;
+  --radius-md: 6px;
+}

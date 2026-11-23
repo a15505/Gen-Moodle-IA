@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="fr" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mini-test sur la concentration — Version B</title>
+
+  <!-- Feuilles de style moteur-ui (Loi 25 - Zéro CDN) -->
+  <link rel="stylesheet" href="./src/tokens.css">
+  <link rel="stylesheet" href="./src/style.css">
+  <link rel="stylesheet" href="./src/print.css" media="print">
+
+  <style>
+    /* VARIABLES ET MISE EN PAGE FIDÈLE AU DOCUMENT PAPIER */
+    :root {
+      --exam-paper-width: 8.5in;
+      --exam-paper-min-height: 11in;
+      --font-exam: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      background: var(--bg-canvas, #f1f5f9);
+      color: #000000;
+      font-family: var(--font-exam);
+      margin: 0;
+      padding: 0;
+      line-height: 1.45;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Barre d'action supérieure (Écran uniquement) */
+    .screen-actions-bar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: #ffffff;
+      border-bottom: 1px solid #cbd5e1;
+      padding: 0.65rem 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+    }
+    .screen-actions-bar .badge {
+      font-size: 0.8125rem;
+      font-weight: 700;
+      color: #0369a1;
+      background: #e0f2fe;
+      border: 1px solid #bae6fd;
+      padding: 0.25rem 0.65rem;
+      border-radius: 4px;
+    }
+    .screen-actions-bar .btn-group {
+      display: flex;
+      gap: 0.65rem;
+      align-items: center;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.45rem 0.9rem;
+      font-size: 0.875rem;
+      font-weight: 600;
+      border-radius: 4px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: background 0.15s ease, border-color 0.15s ease;
+      border: 1px solid #cbd5e1;
+      background: #ffffff;
+      color: #0f172a;
+    }
+    .btn:hover {
+      background: #f8fafc;
+      border-color: #94a3b8;
+    }
+    .btn-primary {
+      background: #0284c7;
+      border-color: #0284c7;
+      color: #ffffff;
+    }
+    .btn-primary:hover {
+      background: #0369a1;
+      border-color: #0369a1;
+    }
+
+    /* FEUILLE D'EXAMEN CALIBRÉE LETTER US (8,5 × 11 pouces) */
+    .exam-wrapper {
+      padding: 1.5rem 0 3rem 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2rem;
+    }
+
+    .exam-sheet {
+      width: var(--exam-paper-width);
+      min-height: var(--exam-paper-min-height);
+      background: #ffffff;
+      padding: 0.55in 0.75in 0.65in 0.75in;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+      border: 1px solid #cbd5e1;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      position: relative;
+    }
+
+    /* EN-TÊTE ÉLÈVE PUR ET SOBRE (CONFORME À L'ORIGINAL) */
+    .exam-header {
+      margin-bottom: 1.25rem;
+    }
+    .exam-id-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      font-size: 1rem;
+      font-weight: 600;
+      margin-bottom: 1.25rem;
+    }
+    .fill-line {
+      display: inline-block;
+      border-bottom: 1px solid #000000;
+      height: 1.25rem;
+      vertical-align: bottom;
+    }
+    .fill-name {
+      width: 320px;
+    }
+    .fill-groupe {
+      width: 110px;
+    }
+
+    .exam-title {
+      font-size: 1.35rem;
+      font-weight: 700;
+      text-align: center;
+      margin: 0.5rem 0 0.85rem 0;
+      letter-spacing: -0.01em;
+    }
+
+    .exam-instruction {
+      font-size: 0.95rem;
+      font-style: italic;
+      line-height: 1.45;
+      margin: 0 0 1.25rem 0;
+    }
+
+    /* STRUCTURE DES QUESTIONS ET ESPACES RÉPONSE AUTHENTIQUES */
+    .question-block {
+      display: flex;
+      flex-direction: column;
+      margin-bottom: 1.25rem;
+    }
+
+    .question-prompt {
+      font-size: 0.975rem;
+      line-height: 1.45;
+      margin: 0 0 0.45rem 0;
+    }
+    .question-prompt strong {
+      font-weight: 700;
+    }
+
+    /* Espace de démarche vierge pour l'élève (calcul manuscrit) */
+    .workspace-area {
+      width: 100%;
+      flex-grow: 1;
+      min-height: 100px;
+    }
+    .workspace-p1-q1 { min-height: 95px; }
+    .workspace-p1-q2 { min-height: 100px; }
+    .workspace-p1-q3 { min-height: 115px; }
+
+    .workspace-p2-q4 { min-height: 85px; }
+    .workspace-p2-q5 { min-height: 85px; }
+    .workspace-p2-q6 { min-height: 105px; }
+    .workspace-p2-q7 { min-height: 100px; }
+
+    /* Ligne de réponse de l'élève (100% fidèle au papier) */
+    .response-row {
+      display: flex;
+      align-items: baseline;
+      font-size: 0.975rem;
+      margin-top: 0.35rem;
+      font-weight: 600;
+    }
+    .response-row.right-aligned {
+      justify-content: flex-end;
+    }
+    .response-line-medium {
+      display: inline-block;
+      border-bottom: 1px solid #000000;
+      width: 185px;
+      height: 1.25rem;
+      margin: 0 0.75rem 0 0.35rem;
+      vertical-align: bottom;
+    }
+    .response-line-long {
+      display: inline-block;
+      border-bottom: 1px solid #000000;
+      width: 200px;
+      height: 1.25rem;
+      margin-left: 0.45rem;
+      vertical-align: bottom;
+    }
+
+    /* SAUT DE PAGE STRICT ET IMPRESSION */
+    .page-break {
+      break-after: page;
+      page-break-after: always;
+      height: 0;
+      margin: 0;
+      border: none;
+    }
+
+    @media print {
+      @page {
+        size: letter portrait;
+        margin: 0.55in 0.75in 0.65in 0.75in;
+      }
+      body {
+        background: #ffffff !important;
+        color: #000000 !important;
+      }
+      .no-print {
+        display: none !important;
+      }
+      .exam-wrapper {
+        padding: 0 !important;
+        gap: 0 !important;
+      }
+      .exam-sheet {
+        width: 100% !important;
+        min-height: auto !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        border: none !important;
+        box-shadow: none !important;
+        break-inside: avoid;
+        page-break-inside: avoid;
+      }
+      .page-break {
+        break-after: page !important;
+        page-break-after: always !important;
+        display: block !important;
+        height: 0 !important;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Barre de commande pour l'enseignant (Écran uniquement) -->
+  <header class="screen-actions-bar no-print" role="banner">
+    <div style="display: flex; align-items: center; gap: 0.75rem;">
+      <span class="badge">Version B équivalente</span>
+      <span style="font-weight: 700; font-size: 0.9rem;">Prêt pour impression papier Letter US</span>
+    </div>
+    <div class="btn-group">
+      <a href="./corrige.html" class="btn">Consulter le corrigé officiel</a>
+      <button type="button" class="btn btn-primary" onclick="window.print()">Imprimer l'examen (PDF)</button>
+    </div>
+  </header>
+
+  <main class="exam-wrapper" role="main">
+
+    <!-- ==================== PAGE 1 ==================== -->
+    <article class="exam-sheet">
+      <!-- En-tête élève -->
+      <header class="exam-header">
+        <div class="exam-id-row">
+          <div>Nom : <span class="fill-line fill-name"></span></div>
+          <div>Groupe : <span class="fill-line fill-groupe"></span></div>
+        </div>
+        <h1 class="exam-title">Mini-test sur la concentration</h1>
+        <p class="exam-instruction">
+          * Pour chaque problème, laisse les traces de ta démarche complète (formule, variables et unités de mesure) et encercle ta réponse.
+        </p>
+      </header>
+
+      <!-- Problème 1 -->
+      <section class="question-block" aria-labelledby="q1-label">
+        <p class="question-prompt" id="q1-label">
+          <strong>1.</strong> Quelle serait la concentration en g/L et en % d'une solution de 200 mL qui contient 8 g de soluté ?
+        </p>
+        <div class="workspace-area workspace-p1-q1" aria-label="Espace de travail démarche question 1"></div>
+        <div class="response-row">
+          <span>Réponse : en g/L <span class="response-line-medium"></span> en % <span class="response-line-medium"></span></span>
+        </div>
+      </section>
+
+      <!-- Problème 2 -->
+      <section class="question-block" aria-labelledby="q2-label">
+        <p class="question-prompt" id="q2-label">
+          <strong>2.</strong> On a dissout 18 g de NaOH dans de l'eau. Le volume de cette solution est 300 mL. Quelle est la concentration de cette solution aqueuse en g/L et en % ?
+        </p>
+        <div class="workspace-area workspace-p1-q2" aria-label="Espace de travail démarche question 2"></div>
+        <div class="response-row">
+          <span>Réponse : en g/L <span class="response-line-medium"></span> en % <span class="response-line-medium"></span></span>
+        </div>
+      </section>
+
+      <!-- Problème 3 -->
+      <section class="question-block" aria-labelledby="q3-label">
+        <p class="question-prompt" id="q3-label">
+          <strong>3.</strong> Quelle masse de soluté utiliserais-tu pour faire une solution de 150 mL de concentration 40 g/L ?
+        </p>
+        <div class="workspace-area workspace-p1-q3" aria-label="Espace de travail démarche question 3"></div>
+        <div class="response-row right-aligned">
+          <span>Réponse : <span class="response-line-long"></span></span>
+        </div>
+      </section>
+    </article>
+
+    <div class="page-break"></div>
+
+    <!-- ==================== PAGE 2 ==================== -->
+    <article class="exam-sheet">
+      <!-- Problème 4 -->
+      <section class="question-block" aria-labelledby="q4-label">
+        <p class="question-prompt" id="q4-label">
+          <strong>4.</strong> Tu veux faire 250 mL d'une solution d'eau salée de concentration 12 g/L. Quelle masse de sel devras-tu utiliser ?
+        </p>
+        <div class="workspace-area workspace-p2-q4" aria-label="Espace de travail démarche question 4"></div>
+        <div class="response-row right-aligned">
+          <span>Réponse : <span class="response-line-long"></span></span>
+        </div>
+      </section>
+
+      <!-- Problème 5 -->
+      <section class="question-block" aria-labelledby="q5-label">
+        <p class="question-prompt" id="q5-label">
+          <strong>5.</strong> Pour avoir une concentration de 25 g/L à partir d'un échantillon de 5 g de soluté, quel volume sera nécessaire à la solution ?
+        </p>
+        <div class="workspace-area workspace-p2-q5" aria-label="Espace de travail démarche question 5"></div>
+        <div class="response-row right-aligned">
+          <span>Réponse : <span class="response-line-long"></span></span>
+        </div>
+      </section>
+
+      <!-- Problème 6 -->
+      <section class="question-block" aria-labelledby="q6-label">
+        <p class="question-prompt" id="q6-label">
+          <strong>6.</strong> Sur l'étiquette nutritionnelle d'un thé glacé, on remarque que 200 mL de thé contiennent 18 g de sucre. Calcule la concentration de ce thé en g/L et en %.
+        </p>
+        <div class="workspace-area workspace-p2-q6" aria-label="Espace de travail démarche question 6"></div>
+        <div class="response-row">
+          <span>Réponse : en g/L <span class="response-line-medium"></span> en % <span class="response-line-medium"></span></span>
+        </div>
+      </section>
+
+      <!-- Problème 7 -->
+      <section class="question-block" aria-labelledby="q7-label">
+        <p class="question-prompt" id="q7-label">
+          <strong>7.</strong> Selon la prescription de son médecin, un enfant doit prendre un sirop pédiatrique dont la concentration est de 4 g/L. La posologie est la suivante : prendre 10 mL de sirop deux fois par jour pendant 7 jours. Quelle quantité de médicament en poudre devra utiliser le pharmacien pour préparer ce sirop ?
+        </p>
+        <div class="workspace-area workspace-p2-q7" aria-label="Espace de travail démarche question 7"></div>
+        <div class="response-row right-aligned">
+          <span>Réponse : <span class="response-line-long"></span></span>
+        </div>
+      </section>
+    </article>
+
+  </main>
+
+</body>
+</html>

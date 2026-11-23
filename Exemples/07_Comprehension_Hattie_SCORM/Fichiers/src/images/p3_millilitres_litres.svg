@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 420" role="img" aria-labelledby="t3">
+  <title id="t3">Une bouteille de 1 litre contient 1 000 mL, soit 4 tasses de 250 mL</title>
+  <style>
+    .t{font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;fill:#0f172a}
+    .l{font-size:18px;font-weight:700}
+    .s{font-size:15px;fill:#334155;font-variant-numeric:tabular-nums}
+    .o{font-size:34px;font-weight:700;fill:#475569}
+    .eau{fill:#dbeafe}
+    .verre{fill:none;stroke:#334155;stroke-width:2.5;stroke-linejoin:round}
+    .g{stroke:#334155;stroke-width:2}
+  </style>
+  <defs>
+    <g id="tasse">
+      <path d="M2.5 15 L87.5 15 L80 90 L10 90 Z" class="eau"/>
+      <path d="M0 0 L90 0 L80 90 L10 90 Z" class="verre"/>
+      <text x="45" y="62" text-anchor="middle" class="t l">250 mL</text>
+    </g>
+  </defs>
+  <rect width="720" height="420" fill="#ffffff"/>
+
+  <!-- Bouteille graduée de 1 L -->
+  <rect x="81" y="60" width="118" height="280" class="eau"/>
+  <path d="M80 30 L80 334 Q80 341 87 341 L193 341 Q200 341 200 334 L200 30" class="verre"/>
+  <line x1="200" y1="270" x2="214" y2="270" class="g"/>
+  <line x1="200" y1="200" x2="214" y2="200" class="g"/>
+  <line x1="200" y1="130" x2="214" y2="130" class="g"/>
+  <line x1="200" y1="60" x2="214" y2="60" class="g"/>
+  <line x1="81" y1="270" x2="199" y2="270" stroke="#93c5fd" stroke-width="1.5" stroke-dasharray="5 4"/>
+  <line x1="81" y1="200" x2="199" y2="200" stroke="#93c5fd" stroke-width="1.5" stroke-dasharray="5 4"/>
+  <line x1="81" y1="130" x2="199" y2="130" stroke="#93c5fd" stroke-width="1.5" stroke-dasharray="5 4"/>
+  <text x="220" y="65" class="t s">1 000 mL = 1 L</text>
+  <text x="220" y="135" class="t s">750 mL = 0,75 L</text>
+  <text x="220" y="205" class="t s">500 mL = 0,5 L</text>
+  <text x="220" y="275" class="t s">250 mL = 0,25 L</text>
+
+  <text x="372" y="210" text-anchor="middle" class="t o">=</text>
+
+  <!-- Quatre tasses -->
+  <use href="#tasse" x="420" y="80"/>
+  <use href="#tasse" x="550" y="80"/>
+  <use href="#tasse" x="420" y="210"/>
+  <use href="#tasse" x="550" y="210"/>
+
+  <text x="560" y="335" text-anchor="middle" class="t s">4 tasses de 250 mL remplissent 1 L</text>
+  <line x1="40" y1="362" x2="680" y2="362" stroke="#cbd5e1" stroke-width="1"/>
+  <text x="360" y="396" text-anchor="middle" class="t l">Des mL vers des L : le nombre diminue</text>
+</svg>

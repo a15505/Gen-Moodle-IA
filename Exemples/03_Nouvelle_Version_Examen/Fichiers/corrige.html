@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="fr" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Corrigé officiel — Mini-test sur la concentration (Version B)</title>
+  <link rel="stylesheet" href="./src/tokens.css">
+  <link rel="stylesheet" href="./src/style.css">
+  <link rel="stylesheet" href="./src/print.css" media="print">
+  <style>
+    :root {
+      --paper-width: 8.5in;
+      --paper-min-height: 11in;
+      --font-main: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    }
+    * { box-sizing: border-box; }
+    body {
+      background: var(--bg-canvas, #f1f5f9);
+      color: #0f172a;
+      font-family: var(--font-main);
+      margin: 0;
+      padding: 0;
+      line-height: 1.35;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Barre d'action écran */
+    .screen-actions-bar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: #ffffff;
+      border-bottom: 1px solid #cbd5e1;
+      padding: 0.55rem 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+    }
+    .badge {
+      font-size: 0.8125rem;
+      font-weight: 700;
+      color: #166534;
+      background: #f0fdf4;
+      border: 1px solid #bbf7d0;
+      padding: 0.2rem 0.65rem;
+      border-radius: 4px;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      padding: 0.4rem 0.85rem;
+      font-size: 0.85rem;
+      font-weight: 600;
+      border-radius: 4px;
+      cursor: pointer;
+      text-decoration: none;
+      border: 1px solid #cbd5e1;
+      background: #ffffff;
+      color: #0f172a;
+    }
+    .btn:hover { background: #f8fafc; }
+    .btn-primary { background: #0284c7; border-color: #0284c7; color: #ffffff; }
+    .btn-primary:hover { background: #0369a1; }
+
+    /* CONTENEUR CALIBRÉ 2 PAGES LETTER US (CORRESPONDANCE 1:1 AVEC L'EXAMEN) */
+    .doc-wrapper {
+      padding: 1.5rem 0 3rem 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1.75rem;
+    }
+
+    .corrige-sheet {
+      width: var(--paper-width);
+      min-height: var(--paper-min-height);
+      background: #ffffff;
+      padding: 0.38in 0.65in 0.4in 0.65in;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+      border: 1px solid #cbd5e1;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      position: relative;
+    }
+
+    /* EN-TÊTE */
+    .corrige-header {
+      border-bottom: 2px solid #0f172a;
+      padding-bottom: 0.35rem;
+      margin-bottom: 0.45rem;
+    }
+    .header-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 0.5rem;
+    }
+    .header-title {
+      font-size: 1.15rem;
+      font-weight: 800;
+      margin: 0;
+      color: #0f172a;
+      letter-spacing: -0.01em;
+    }
+    .header-meta {
+      font-size: 0.825rem;
+      font-weight: 700;
+      color: #0f172a;
+      white-space: nowrap;
+    }
+    .header-subtitle {
+      font-size: 0.775rem;
+      color: #475569;
+      margin: 0.15rem 0 0 0;
+    }
+
+    /* CARTES DES PROBLÈMES COMPACTES ET LISIBLES */
+    .problem-card {
+      border: 1px solid #cbd5e1;
+      border-radius: 4px;
+      padding: 0.45rem 0.65rem;
+      margin-bottom: 0.45rem;
+      background: #ffffff;
+      break-inside: avoid;
+      page-break-inside: avoid;
+    }
+    .problem-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 0.2rem;
+      gap: 0.5rem;
+    }
+    .problem-title {
+      font-size: 0.875rem;
+      font-weight: 800;
+      margin: 0;
+      color: #0f172a;
+    }
+    .problem-pts {
+      font-size: 0.7rem;
+      font-weight: 700;
+      color: #475569;
+      background: #f1f5f9;
+      border: 1px solid #e2e8f0;
+      padding: 1px 5px;
+      border-radius: 8px;
+      white-space: nowrap;
+    }
+    .problem-prompt {
+      font-size: 0.8rem;
+      line-height: 1.3;
+      color: #334155;
+      margin: 0 0 0.35rem 0;
+    }
+
+    /* GRILLE MÉTHODE A & B */
+    .methods-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.45rem;
+      margin-bottom: 0.3rem;
+    }
+    .method-col {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 3px;
+      padding: 0.35rem 0.5rem;
+      font-size: 0.75rem;
+      line-height: 1.3;
+    }
+    .method-tag {
+      display: block;
+      font-size: 0.675rem;
+      font-weight: 700;
+      color: #0284c7;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+      margin-bottom: 0.15rem;
+    }
+    .formula-tag {
+      font-weight: 700;
+      color: #0f172a;
+      border-bottom: 1px dashed #cbd5e1;
+      padding-bottom: 0.1rem;
+      margin-bottom: 0.15rem;
+    }
+
+    /* Fractions CSS haute fidélité */
+    .frac {
+      display: inline-flex;
+      flex-direction: column;
+      vertical-align: middle;
+      text-align: center;
+      padding: 0 2px;
+      font-size: 0.85em;
+      line-height: 1.05;
+    }
+    .frac .num {
+      border-bottom: 1px solid currentColor;
+      padding-bottom: 1px;
+    }
+    .frac .denom {
+      padding-top: 1px;
+    }
+
+    /* BANDEAU RÉPONSE ÉLÈVE ET ENCADRÉ */
+    .answer-strip {
+      background: #f0fdf4;
+      border: 1px solid #86efac;
+      border-radius: 3px;
+      padding: 0.25rem 0.55rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.775rem;
+      font-weight: 700;
+      color: #14532d;
+      margin-bottom: 0.3rem;
+    }
+    .answer-strip code {
+      font-family: inherit;
+      background: #dcfce7;
+      padding: 1px 4px;
+      border-radius: 2px;
+    }
+    .answer-boxed-val {
+      font-size: 0.85rem;
+      color: #15803d;
+      font-variant-numeric: tabular-nums;
+      background: #ffffff;
+      border: 1px solid #86efac;
+      padding: 1px 5px;
+      border-radius: 3px;
+    }
+
+    /* DISTRACTEURS DIDACTIQUES */
+    .distractor-strip {
+      background: #fdf2f8;
+      border: 1px solid #fbcfe8;
+      border-radius: 3px;
+      padding: 0.25rem 0.5rem;
+      font-size: 0.7rem;
+      color: #831843;
+      line-height: 1.25;
+    }
+    .distractor-strip strong { color: #9d174d; }
+
+    /* TABLEAU RÉCAPITULATIF SYNTHÉTIQUE */
+    .summary-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.7rem;
+      margin-top: 0.25rem;
+      line-height: 1.25;
+    }
+    .summary-table th, .summary-table td {
+      border: 1px solid #cbd5e1;
+      padding: 0.25rem 0.45rem;
+      text-align: left;
+    }
+    .summary-table th {
+      background: #f8fafc;
+      font-weight: 700;
+      color: #0f172a;
+    }
+    .summary-table tr:nth-child(even) { background: #fdfdfd; }
+
+    /* SAUT DE PAGE PHYSIQUE STRICT */
+    .page-break {
+      break-after: page;
+      page-break-after: always;
+      height: 0;
+      margin: 0;
+      border: none;
+    }
+
+    @media print {
+      @page {
+        size: letter portrait;
+        margin: 0.38in 0.65in 0.4in 0.65in;
+      }
+      body { background: #ffffff !important; color: #000000 !important; }
+      .screen-actions-bar { display: none !important; }
+      .doc-wrapper { padding: 0 !important; gap: 0 !important; }
+      .corrige-sheet {
+        width: 100% !important;
+        min-height: auto !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        border: none !important;
+        box-shadow: none !important;
+        break-inside: avoid;
+        page-break-inside: avoid;
+      }
+      .page-break {
+        break-after: page !important;
+        page-break-after: always !important;
+        display: block !important;
+        height: 0 !important;
+      }
+      .problem-card {
+        border: 1px solid #000000 !important;
+        margin-bottom: 0.22rem !important;
+        padding: 0.32rem 0.55rem !important;
+      }
+      .methods-grid {
+        margin-bottom: 0.2rem !important;
+      }
+      .answer-strip {
+        margin-bottom: 0.2rem !important;
+      }
+      .answer-strip {
+        border: 1.5px solid #000000 !important;
+        background: #ffffff !important;
+        color: #000000 !important;
+      }
+      .answer-strip code, .answer-strip .answer-boxed-val {
+        color: #000000 !important;
+        border-color: #000000 !important;
+        background: transparent !important;
+      }
+      .method-col { border: 1px solid #94a3b8 !important; background: #ffffff !important; }
+      .distractor-strip { border: 1px solid #94a3b8 !important; background: #ffffff !important; color: #000000 !important; }
+      .distractor-strip strong { color: #000000 !important; }
+      .summary-table th, .summary-table td { border: 1px solid #000000 !important; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Barre d'action supérieure -->
+  <header class="screen-actions-bar" role="banner">
+    <div style="display: flex; align-items: center; gap: 0.75rem;">
+      <span class="badge">Corrigé officiel enseignant</span>
+      <span style="font-weight: 700; font-size: 0.875rem;">Version B · Correspondance 1:1 avec l'examen élève (2 pages exactes)</span>
+    </div>
+    <div style="display: flex; gap: 0.5rem; align-items: center;">
+      <a href="./index.html" class="btn">Voir l'examen élève (2 pages)</a>
+      <button type="button" class="btn btn-primary" onclick="window.print()">Imprimer le corrigé (PDF)</button>
+    </div>
+  </header>
+
+  <main class="doc-wrapper" role="main">
+
+    <!-- ==================== PAGE 1 SUR 2 (Problèmes 1, 2 et 3) ==================== -->
+    <article class="corrige-sheet">
+      <header class="corrige-header">
+        <div class="header-top">
+          <h1 class="header-title">Mini-test sur la concentration — Version B</h1>
+          <div class="header-meta">Corrigé officiel · 14 points (Page 1 sur 2)</div>
+        </div>
+        <p class="header-subtitle">Science et technologie · 3e secondaire · Solutions intégrales par Méthode A et Méthode B</p>
+        <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:4px; padding:0.3rem 0.55rem; margin-top:0.35rem; font-size:0.725rem; line-height:1.3; color:#334155;">
+          <strong>Directives de correction :</strong> Formule originale intacte en 1re ligne (<i>C = m / V</i>) ; résolution par Méthode A (produits croisés) ou Méthode B (isolation algébrique) ; unités de mesure obligatoires ; réponse finale encerclée sur la copie.
+        </div>
+      </header>
+
+      <!-- Problème 1 -->
+      <section class="problem-card" aria-labelledby="p1-title">
+        <div class="problem-header">
+          <h2 class="problem-title" id="p1-title">1. Solution de soluté en fiole</h2>
+          <span class="problem-pts">2 points (1 pt en g/L + 1 pt en %)</span>
+        </div>
+        <p class="problem-prompt">
+          <strong>Énoncé :</strong> Quelle serait la concentration en g/L et en % d'une solution de 200 mL qui contient 8 g de soluté ?
+        </p>
+        <div class="methods-grid">
+          <div class="method-col">
+            <span class="method-tag">Méthode A — Produits croisés</span>
+            <div class="formula-tag">Formule : <i>C = m / V</i></div>
+            <div>En g/L : <span class="frac"><span class="num">8 g</span><span class="denom">200 mL</span></span> = <span class="frac"><span class="num">x g</span><span class="denom">1000 mL</span></span> &rArr; <i>x</i> = <strong>40 g</strong> &rArr; <strong>40 g/L</strong></div>
+            <div>En % : <span class="frac"><span class="num">8 g</span><span class="denom">200 mL</span></span> = <span class="frac"><span class="num">y g</span><span class="denom">100 mL</span></span> &rArr; <i>y</i> = <strong>4 g</strong> &rArr; <strong>4 % (m/V)</strong></div>
+          </div>
+          <div class="method-col">
+            <span class="method-tag">Méthode B — Algébrique</span>
+            <div class="formula-tag">Formule : <i>C = m / V</i></div>
+            <div>Données : <i>m</i> = 8 g, <i>V</i> = 200 mL = 0,200 L</div>
+            <div>En g/L : <i>C</i> = 8 g / 0,200 L = <strong>40 g/L</strong></div>
+            <div>En % : <i>C</i><sub>%</sub> = (8 g / 200 mL) × 100 = <strong>4 % (m/V)</strong></div>
+          </div>
+        </div>
+        <div class="answer-strip">
+          <span>Sur la copie élève : <code>Réponse : en g/L <strong>40 g/L</strong> en % <strong>4 %</strong></code></span>
+          <span class="answer-boxed-val">C = 40 g/L &nbsp;|&nbsp; 4 % (m/V)</span>
+        </div>
+        <div class="distractor-strip">
+          <strong>Distracteurs :</strong> 0,04 g/L (oubli conversion mL en L : 8 / 200) ; 25 g/L (inversion formule 200 / 8) ; 16 g/L (erreur rapport).
+        </div>
+      </section>
+
+      <!-- Problème 2 -->
+      <section class="problem-card" aria-labelledby="p2-title">
+        <div class="problem-header">
+          <h2 class="problem-title" id="p2-title">2. Dissolution d'hydroxyde de sodium (NaOH)</h2>
+          <span class="problem-pts">2 points (1 pt en g/L + 1 pt en %)</span>
+        </div>
+        <p class="problem-prompt">
+          <strong>Énoncé :</strong> On a dissout 18 g de NaOH dans de l'eau. Le volume de cette solution est 300 mL. Quelle est la concentration de cette solution aqueuse en g/L et en % ?
+        </p>
+        <div class="methods-grid">
+          <div class="method-col">
+            <span class="method-tag">Méthode A — Produits croisés</span>
+            <div class="formula-tag">Formule : <i>C = m / V</i></div>
+            <div>En g/L : <span class="frac"><span class="num">18 g</span><span class="denom">300 mL</span></span> = <span class="frac"><span class="num">x g</span><span class="denom">1000 mL</span></span> &rArr; <i>x</i> = <strong>60 g</strong> &rArr; <strong>60 g/L</strong></div>
+            <div>En % : <span class="frac"><span class="num">18 g</span><span class="denom">300 mL</span></span> = <span class="frac"><span class="num">y g</span><span class="denom">100 mL</span></span> &rArr; <i>y</i> = <strong>6 g</strong> &rArr; <strong>6 % (m/V)</strong></div>
+          </div>
+          <div class="method-col">
+            <span class="method-tag">Méthode B — Algébrique</span>
+            <div class="formula-tag">Formule : <i>C = m / V</i></div>
+            <div>Données : <i>m</i> = 18 g, <i>V</i> = 300 mL = 0,300 L</div>
+            <div>En g/L : <i>C</i> = 18 g / 0,300 L = <strong>60 g/L</strong></div>
+            <div>En % : <i>C</i><sub>%</sub> = (18 g / 300 mL) × 100 = <strong>6 % (m/V)</strong></div>
+          </div>
+        </div>
+        <div class="answer-strip">
+          <span>Sur la copie élève : <code>Réponse : en g/L <strong>60 g/L</strong> en % <strong>6 %</strong></code></span>
+          <span class="answer-boxed-val">C = 60 g/L &nbsp;|&nbsp; 6 % (m/V)</span>
+        </div>
+        <div class="distractor-strip">
+          <strong>Distracteurs :</strong> 0,06 g/L (oubli conversion mL en L : 18 / 300) ; 16,67 g/L (inversion variable 300 / 18) ; 5,4 g/L (erreur multiplication).
+        </div>
+      </section>
+
+      <!-- Problème 3 -->
+      <section class="problem-card" aria-labelledby="p3-title">
+        <div class="problem-header">
+          <h2 class="problem-title" id="p3-title">3. Masse requise pour une préparation</h2>
+          <span class="problem-pts">2 points (1 pt démarche + 1 pt réponse)</span>
+        </div>
+        <p class="problem-prompt">
+          <strong>Énoncé :</strong> Quelle masse de soluté utiliserais-tu pour faire une solution de 150 mL de concentration 40 g/L ?
+        </p>
+        <div class="methods-grid">
+          <div class="method-col">
+            <span class="method-tag">Méthode A — Produits croisés</span>
+            <div class="formula-tag">Formule : <i>C = m / V</i></div>
+            <div>Proportion : <span class="frac"><span class="num">40 g</span><span class="denom">1000 mL</span></span> = <span class="frac"><span class="num">m</span><span class="denom">150 mL</span></span></div>
+            <div><i>m</i> = (40 × 150) / 1000 = 6000 / 1000 = <strong>6 g</strong></div>
+          </div>
+          <div class="method-col">
+            <span class="method-tag">Méthode B — Algébrique</span>
+            <div class="formula-tag">Formule : <i>C = m / V</i></div>
+            <div>Isolation : <i>m = C × V</i></div>
+            <div>Données : <i>C</i> = 40 g/L, <i>V</i> = 150 mL = 0,150 L</div>
+            <div><i>m</i> = 40 g/L × 0,150 L = <strong>6 g</strong></div>
+          </div>
+        </div>
+        <div class="answer-strip">
+          <span>Sur la copie élève : <code>Réponse : <strong>6 g</strong></code></span>
+          <span class="answer-boxed-val">m = 6 g</span>
+        </div>
+        <div class="distractor-strip">
+          <strong>Distracteurs :</strong> 6000 g (oubli conversion : 40 × 150) ; 0,267 g (isolation par division : 40 / 150) ; 3,75 g (division inverse).
+        </div>
+      </section>
+    </article>
+
+    <div class="page-break"></div>
+
+    <!-- ==================== PAGE 2 SUR 2 (Problèmes 4, 5, 6, 7 et Grille) ==================== -->
+    <article class="corrige-sheet">
+      <header class="corrige-header">
+        <div class="header-top">
+          <h2 class="header-title" style="font-size: 1.15rem;">Mini-test sur la concentration — Version B (suite et fin)</h2>
+          <div class="header-meta">Page 2 sur 2</div>
+        </div>
+      </header>
+
+      <!-- Problème 4 -->
+      <section class="problem-card" aria-labelledby="p4-title">
+        <div class="problem-header">
+          <h3 class="problem-title" id="p4-title">4. Préparation d'une solution saline (NaCl)</h3>
+          <span class="problem-pts">2 points</span>
+        </div>
+        <p class="problem-prompt">
+          <strong>Énoncé :</strong> Tu veux faire 250 mL d'une solution d'eau salée de concentration 12 g/L. Quelle masse de sel devras-tu utiliser ?
+        </p>
+        <div class="methods-grid">
+          <div class="method-col">
+            <span class="method-tag">Méthode A — Produits croisés</span>
+            <div class="formula-tag">Formule : <i>C = m / V</i></div>
+            <div><span class="frac"><span class="num">12 g</span><span class="denom">1000 mL</span></span> = <span class="frac"><span class="num">m</span><span class="denom">250 mL</span></span> &rArr; <i>m</i> = (12 × 250) / 1000 = <strong>3 g</strong></div>
+          </div>
+          <div class="method-col">
+            <span class="method-tag">Méthode B — Algébrique</span>
+            <div class="formula-tag">Formule : <i>C = m / V</i></div>
+            <div><i>m = C × V</i> = 12 g/L × 0,250 L = <strong>3 g</strong></div>
+          </div>
+        </div>
+        <div class="answer-strip">
+          <span>Sur la copie élève : <code>Réponse : <strong>3 g</strong></code></span>
+          <span class="answer-boxed-val">m = 3 g</span>
+        </div>
+        <div class="distractor-strip">
+          <strong>Distracteurs :</strong> 3000 g (oubli conversion mL : 12 × 250) ; 0,048 g (12 / 250) ; 48 g (12 / 0,25).
+        </div>
+      </section>
+
+      <!-- Problème 5 -->
+      <section class="problem-card" aria-labelledby="p5-title">
+        <div class="problem-header">
+          <h3 class="problem-title" id="p5-title">5. Recherche du volume de solution</h3>
+          <span class="problem-pts">2 points</span>
+        </div>
+        <p class="problem-prompt">
+          <strong>Énoncé :</strong> Pour avoir une concentration de 25 g/L à partir d'un échantillon de 5 g de soluté, quel volume sera nécessaire à la solution ?
+        </p>
+        <div class="methods-grid">
+          <div class="method-col">
+            <span class="method-tag">Méthode A — Produits croisés</span>
+            <div class="formula-tag">Formule : <i>C = m / V</i></div>
+            <div><span class="frac"><span class="num">25 g</span><span class="denom">1000 mL</span></span> = <span class="frac"><span class="num">5 g</span><span class="denom">V</span></span> &rArr; <i>V</i> = (5 × 1000) / 25 = <strong>200 mL</strong> (0,200 L)</div>
+          </div>
+          <div class="method-col">
+            <span class="method-tag">Méthode B — Algébrique</span>
+            <div class="formula-tag">Formule : <i>C = m / V</i></div>
+            <div><i>V = m / C</i> = 5 g / 25 g/L = <strong>0,200 L</strong> = <strong>200 mL</strong></div>
+          </div>
+        </div>
+        <div class="answer-strip">
+          <span>Sur la copie élève : <code>Réponse : <strong>200 mL</strong> (ou 0,200 L)</code></span>
+          <span class="answer-boxed-val">V = 0,200 L = 200 mL</span>
+        </div>
+        <div class="distractor-strip">
+          <strong>Distracteurs :</strong> 5 L ou 5000 mL (inversion formule 25 / 5) ; 125 L (multiplication 5 × 25) ; 50 mL (erreur d'échelle).
+        </div>
+      </section>
+
+      <!-- Problème 6 -->
+      <section class="problem-card" aria-labelledby="p6-title">
+        <div class="problem-header">
+          <h3 class="problem-title" id="p6-title">6. Analyse nutritionnelle (Thé glacé)</h3>
+          <span class="problem-pts">2 points (1 pt en g/L + 1 pt en %)</span>
+        </div>
+        <p class="problem-prompt">
+          <strong>Énoncé :</strong> Sur l'étiquette d'un thé glacé, 200 mL contiennent 18 g de sucre. Calcule la concentration en g/L et en %.
+        </p>
+        <div class="methods-grid">
+          <div class="method-col">
+            <span class="method-tag">Méthode A — Produits croisés</span>
+            <div class="formula-tag">Formule : <i>C = m / V</i></div>
+            <div>En g/L : 18 g / 200 mL = <i>x</i> / 1000 mL &rArr; <i>x</i> = <strong>90 g</strong> &rArr; <strong>90 g/L</strong></div>
+            <div>En % : 18 g / 200 mL = <i>y</i> / 100 mL &rArr; <i>y</i> = <strong>9 g</strong> &rArr; <strong>9 % (m/V)</strong></div>
+          </div>
+          <div class="method-col">
+            <span class="method-tag">Méthode B — Algébrique</span>
+            <div class="formula-tag">Formule : <i>C = m / V</i></div>
+            <div><i>C</i> = 18 g / 0,200 L = <strong>90 g/L</strong></div>
+            <div><i>C</i><sub>%</sub> = (18 g / 200 mL) × 100 = <strong>9 % (m/V)</strong></div>
+          </div>
+        </div>
+        <div class="answer-strip">
+          <span>Sur la copie élève : <code>Réponse : en g/L <strong>90 g/L</strong> en % <strong>9 %</strong></code></span>
+          <span class="answer-boxed-val">C = 90 g/L &nbsp;|&nbsp; 9 % (m/V)</span>
+        </div>
+        <div class="distractor-strip">
+          <strong>Distracteurs :</strong> 0,09 g/L (18 / 200) ; 11,1 g/L (200 / 18) ; 36 g/L (erreur rapport).
+        </div>
+      </section>
+
+      <!-- Problème 7 -->
+      <section class="problem-card" aria-labelledby="p7-title">
+        <div class="problem-header">
+          <h3 class="problem-title" id="p7-title">7. Posologie médicale et sirop pédiatrique</h3>
+          <span class="problem-pts">2 points (1 pt volume + 1 pt masse)</span>
+        </div>
+        <p class="problem-prompt">
+          <strong>Énoncé :</strong> Posologie : 10 mL deux fois par jour pendant 7 jours d'un sirop à 4 g/L. Quelle quantité de poudre peser ?
+        </p>
+        <div class="methods-grid">
+          <div class="method-col">
+            <span class="method-tag">Étape 1 — Volume total</span>
+            <div><i>V</i><sub>tot</sub> = 10 mL/dose × 2 doses/j × 7 j = <strong>140 mL = 0,140 L</strong></div>
+          </div>
+          <div class="method-col">
+            <span class="method-tag">Étape 2 — Masse requise</span>
+            <div>Formule : <i>C = m / V</i> &rArr; <i>m = C × V</i></div>
+            <div><i>m</i> = 4 g/L × 0,140 L = <strong>0,56 g</strong> (ou <strong>560 mg</strong>)</div>
+          </div>
+        </div>
+        <div class="answer-strip">
+          <span>Sur la copie élève : <code>Réponse : <strong>0,56 g</strong> (ou 560 mg)</code></span>
+          <span class="answer-boxed-val">m = 0,56 g = 560 mg</span>
+        </div>
+        <div class="distractor-strip">
+          <strong>Distracteurs :</strong> 560 g (oubli conversion 4 × 140) ; 0,08 g (oubli 7 j : 20 mL × 4 g/L) ; 0,28 g (oubli 2 prises/j).
+        </div>
+      </section>
+
+      <!-- Grille récapitulative compacte en 2 colonnes (Page 2) -->
+      <div style="margin-top: 0.35rem; border: 1px solid #cbd5e1; border-radius: 4px; padding: 0.35rem 0.6rem; background: #f8fafc;">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.25rem;">
+          <span style="font-size:0.75rem; font-weight:800; text-transform:uppercase; color:#0f172a; letter-spacing:0.02em;">Grille synthétique de notation</span>
+          <span style="font-size:0.75rem; font-weight:800; color:#0284c7;">Barème total : 14 points (2 pts / problème)</span>
+        </div>
+        <div style="display:grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; font-size: 0.725rem; line-height: 1.3;">
+          <div>
+            <div><strong>1.</strong> Fiole (200 mL, 8 g) &rarr; <strong>40 g/L</strong> et <strong>4 %</strong> (2 pts)</div>
+            <div><strong>2.</strong> NaOH (300 mL, 18 g) &rarr; <strong>60 g/L</strong> et <strong>6 %</strong> (2 pts)</div>
+            <div><strong>3.</strong> Masse requise (150 mL, 40 g/L) &rarr; <strong>6 g</strong> (2 pts)</div>
+            <div><strong>4.</strong> Eau salée (250 mL, 12 g/L) &rarr; <strong>3 g</strong> (2 pts)</div>
+          </div>
+          <div>
+            <div><strong>5.</strong> Volume nécessaire (25 g/L, 5 g) &rarr; <strong>200 mL</strong> (2 pts)</div>
+            <div><strong>6.</strong> Thé glacé (200 mL, 18 g sucre) &rarr; <strong>90 g/L</strong> et <strong>9 %</strong> (2 pts)</div>
+            <div><strong>7.</strong> Sirop pédiatrique (140 mL, 4 g/L) &rarr; <strong>0,56 g</strong> (560 mg) (2 pts)</div>
+            <div style="font-weight:700; color:#166534; margin-top:2px;">Notation : 1 pt démarche conforme + 1 pt réponse & unités</div>
+          </div>
+        </div>
+      </div>
+
+    </article>
+  </main>
+</body>
+</html>

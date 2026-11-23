@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="fr" dir="ltr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{TITRE_PAGE}} - Simulateur Moodle XML</title>
+  
+  <!-- Feuilles de style moteur-ui (Loi 25 - Zéro CDN) -->
+  <link rel="stylesheet" href="{{MOTEUR_UI_PATH}}/src/style.css">
+  <link rel="stylesheet" href="{{MOTEUR_UI_PATH}}/src/tokens.css">
+  <link rel="stylesheet" href="{{MOTEUR_UI_PATH}}/src/quill.snow.css">
+  <link rel="stylesheet" href="{{MOTEUR_UI_PATH}}/simulateurs/moodle/moodle.css">
+</head>
+<body>
+  <!-- Conteneur racine injecté par le moteur MoodleSimulator -->
+  <div id="moodleAppRoot"></div>
+
+  <!-- Scripts modulaires moteur-ui (100% locaux, zéro framework externe) -->
+  <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [['\\(', '\\)'], ['$', '$']],
+        displayMath: [['\\[', '\\]'], ['$$', '$$']]
+      },
+      options: {
+        skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    };
+  </script>
+  <script src="{{MOTEUR_UI_PATH}}/src/quill.js" defer></script>
+  <script src="{{MOTEUR_UI_PATH}}/src/mathjax.js" defer></script>
+  <script src="{{MOTEUR_UI_PATH}}/simulateurs/common/image-retouch-canvas.js" defer></script>
+  <script src="{{MOTEUR_UI_PATH}}/simulateurs/moodle/moodle-parser.js" defer></script>
+  <script src="{{MOTEUR_UI_PATH}}/simulateurs/moodle/moodle-viewer.js" defer></script>
+  <script src="{{MOTEUR_UI_PATH}}/simulateurs/moodle/moodle-ddimage.js" defer></script>
+  <script src="{{MOTEUR_UI_PATH}}/simulateurs/moodle/moodle-editor.js" defer></script>
+  <script src="{{MOTEUR_UI_PATH}}/simulateurs/moodle/moodle-app.js" defer></script>
+
+  <!-- Données de secours pour compatibilité double-clic hors-ligne (file:///) -->
+  <script>
+    window.EMBEDDED_QUIZ_DATA = {{QUESTIONS_JSON}};
+
+    window.addEventListener('DOMContentLoaded', () => {
+      MoodleSimulator.init({
+        xmlSource: './questions_moodle.xml',
+        fallbackData: window.EMBEDDED_QUIZ_DATA,
+        container: '#moodleAppRoot',
+        title: '{{TITRE_PAGE}}'
+      });
+    });
+  </script>
+</body>
+</html>

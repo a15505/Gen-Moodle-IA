@@ -1,0 +1,864 @@
+<!DOCTYPE html>
+<html lang="fr" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Assistant de création de ressources Moodle</title>
+  <link rel="icon" href="./src/images/favicon.ico" sizes="16x16">
+  <link rel="icon" href="./src/images/logo-recit.png" type="image/png" sizes="151x150">
+  <link rel="stylesheet" href="../moteur-ui/src/tokens.css">
+  <link rel="stylesheet" href="./src/app.css">
+</head>
+<body>
+  <a href="#main-content" class="skip-link">Aller au contenu</a>
+
+  <header class="app-header" role="banner">
+    <div class="header-left">
+      <img class="brand-logo" src="./src/images/logo-recit.png" alt="RÉCIT" width="32" height="32">
+      <span class="brand-title">Assistant de création de ressources Moodle</span>
+    </div>
+    <div class="header-right">
+      <span class="statut statut-entete" id="statutEntete" role="status" aria-live="polite"></span>
+      <button type="button" class="btn btn-quiet" id="btnAccueil" hidden>Accueil</button>
+      <button type="button" class="btn btn-quiet" id="btnEnregistrer" aria-label="Enregistrer le projet" hidden><span>Enregistrer<span class="libelle-long"> le projet</span></span></button>
+      <button type="button" class="btn btn-quiet" id="btnReprendre" aria-label="Ouvrir un fichier projet"><span>Ouvrir<span class="libelle-long"> un fichier projet</span></span></button>
+      <input type="file" id="fichierProjet" accept=".json,.xml,.js,application/json,text/xml" hidden>
+    </div>
+  </header>
+
+  <main id="main-content" tabindex="-1">
+
+    <!-- ================= ACCUEIL ================= -->
+    <section id="ecranAccueil" class="ecran" aria-labelledby="titreAccueil">
+      <h1 id="titreAccueil">Que voulez-vous créer ?</h1>
+      <p class="intro">
+        L'assistant vous guide pas à pas. Il prépare une consigne que vous donnez à Gemini ou à Copilot,
+        puis il transforme la réponse de l'IA en ressource prête à déposer dans Moodle.
+        Aucune donnée ne quitte votre navigateur.
+      </p>
+      <p class="aide aide-reprise">
+        Pour reprendre un travail enregistré dans un fichier, cliquez sur « Ouvrir un fichier projet » en haut à droite ou glissez le fichier sur cette page.
+        La sauvegarde automatique ne vaut que pour ce navigateur, sur cet ordinateur : pour continuer ailleurs, utilisez « Enregistrer le projet ».
+      </p>
+
+      <ul class="cartes-actions" role="list">
+        <li class="carte-action">
+          <h2>Vidéo interactive H5P</h2>
+          <p>Des questions « Pourquoi… ? » surgissent pendant une vidéo YouTube. En cas d'erreur, la vidéo recule au passage à revoir.</p>
+          <p class="carte-meta">Durée : environ 10 minutes. Aucune image à fournir.</p>
+          <div class="carte-continuer" id="blocContinuerVideo" hidden>
+            <button type="button" class="btn btn-continuer" data-demarrer="continuer" aria-describedby="infoContinuerVideo"></button>
+            <p class="carte-meta" id="infoContinuerVideo"></p>
+          </div>
+          <div class="carte-boutons">
+            <button type="button" class="btn" data-demarrer="exemple">Exemple</button>
+            <button type="button" class="btn btn-primary" data-demarrer="nouveau">Nouveau</button>
+          </div>
+        </li>
+        <li class="carte-action">
+          <h2>Banque de questions Moodle XML</h2>
+          <p>Neuf types de questions, tirés de vos notes de cours, à importer dans la banque de questions d'un cours Moodle.</p>
+          <p class="carte-meta">Durée : environ 15 minutes. Une image à fournir pour chaque question de glisser-déposer sur image.</p>
+          <div class="carte-continuer" id="blocContinuerMoodle" hidden>
+            <button type="button" class="btn btn-continuer" data-demarrer-moodle="continuer" aria-describedby="infoContinuerMoodle"></button>
+            <p class="carte-meta" id="infoContinuerMoodle"></p>
+          </div>
+          <div class="carte-boutons">
+            <button type="button" class="btn" data-demarrer-moodle="exemple">Exemple</button>
+            <button type="button" class="btn btn-primary" data-demarrer-moodle="nouveau">Nouveau</button>
+          </div>
+        </li>
+        <li class="carte-action">
+          <h2>Corrigé interactif SCORM</h2>
+          <p>Un exercice papier que l'élève corrige lui-même : rétroaction à chaque réponse, démarche détaillée en cas d'erreur et score transmis à Moodle.</p>
+          <p class="carte-meta">Durée : environ 15 minutes. Les schémas de l'exercice s'ajoutent à l'aperçu.</p>
+          <div class="carte-continuer" id="blocContinuerScorm" hidden>
+            <button type="button" class="btn btn-continuer" data-demarrer-scorm="continuer" aria-describedby="infoContinuerScorm"></button>
+            <p class="carte-meta" id="infoContinuerScorm"></p>
+          </div>
+          <div class="carte-boutons">
+            <button type="button" class="btn" data-demarrer-scorm="exemple">Exemple</button>
+            <button type="button" class="btn btn-primary" data-demarrer-scorm="nouveau">Nouveau</button>
+          </div>
+        </li>
+        <li class="carte-action">
+          <h2>Exercice de compréhension SCORM</h2>
+          <p>Un extrait du texte, puis une question « Pourquoi… ? » pour chaque notion clé : rétroaction à chaque réponse, explication et question guidée en cas d'erreur, score transmis à Moodle.</p>
+          <p class="carte-meta">Durée : environ 10 minutes. Les schémas du texte s'ajoutent à l'aperçu.</p>
+          <div class="carte-continuer" id="blocContinuerComp" hidden>
+            <button type="button" class="btn btn-continuer" data-demarrer-comp="continuer" aria-describedby="infoContinuerComp"></button>
+            <p class="carte-meta" id="infoContinuerComp"></p>
+          </div>
+          <div class="carte-boutons">
+            <button type="button" class="btn" data-demarrer-comp="exemple">Exemple</button>
+            <button type="button" class="btn btn-primary" data-demarrer-comp="nouveau">Nouveau</button>
+          </div>
+        </li>
+        <li class="carte-action">
+          <h2>Compréhension en deux pages (Hattie)</h2>
+          <p>Pour chaque habileté, une page illustrée à écouter ou à lire, puis une question : analyse du raisonnement de l'élève, explication en trois temps et question guidée en cas d'erreur, score transmis à Moodle.</p>
+          <p class="carte-meta">Durée : environ 20 minutes. Un schéma à fournir pour chaque présentation.</p>
+          <div class="carte-continuer" id="blocContinuerHattie" hidden>
+            <button type="button" class="btn btn-continuer" data-demarrer-hattie="continuer" aria-describedby="infoContinuerHattie"></button>
+            <p class="carte-meta" id="infoContinuerHattie"></p>
+          </div>
+          <div class="carte-boutons">
+            <button type="button" class="btn" data-demarrer-hattie="exemple">Exemple</button>
+            <button type="button" class="btn btn-primary" data-demarrer-hattie="nouveau">Nouveau</button>
+          </div>
+        </li>
+        <li class="carte-action">
+          <h2>Nouvelle version ou corrigé d'un examen</h2>
+          <p>Une variante d'examen aux données renouvelées, ou le corrigé d'un examen : démarches complètes, réponses sur la copie et grille de correction, à imprimer en format lettre.</p>
+          <p class="carte-meta">Durée : environ 10 minutes. Les schémas de l'examen s'ajoutent à l'aperçu.</p>
+          <div class="carte-continuer" id="blocContinuerExamen" hidden>
+            <button type="button" class="btn btn-continuer" data-demarrer-examen="continuer" aria-describedby="infoContinuerExamen"></button>
+            <p class="carte-meta" id="infoContinuerExamen"></p>
+          </div>
+          <div class="carte-boutons">
+            <button type="button" class="btn" data-demarrer-examen="exemple">Exemple</button>
+            <button type="button" class="btn btn-primary" data-demarrer-examen="nouveau">Nouveau</button>
+          </div>
+        </li>
+      </ul>
+    </section>
+
+    <!-- ================= VIDÉO INTERACTIVE H5P ================= -->
+    <section id="ecranVideo" class="ecran" aria-labelledby="titreVideo" hidden>
+      <h1 id="titreVideo">Vidéo interactive H5P</h1>
+      <div class="bandeau bandeau-info" id="bandeauExemple" role="status" hidden>
+        <strong>Vous parcourez un exemple.</strong> Les renseignements et la réponse de l'IA sont déjà remplis : passez d'une étape à l'autre pour voir le déroulement.
+        <button type="button" class="btn btn-quiet" id="btnQuitterExemple">Commencer un nouveau projet</button>
+      </div>
+
+      <nav class="etapes" aria-label="Étapes de création">
+        <ol>
+          <li><button type="button" data-etape="1"><span class="etape-num">1</span> La vidéo et la consigne</button></li>
+          <li><button type="button" data-etape="2"><span class="etape-num">2</span> La réponse de l'IA</button></li>
+          <li><button type="button" data-etape="3"><span class="etape-num">3</span> L'aperçu</button></li>
+          <li><button type="button" data-etape="4"><span class="etape-num">4</span> L'exportation</button></li>
+        </ol>
+      </nav>
+
+      <!-- Étape 1 -->
+      <div class="panneau" data-panneau="1">
+        <h2 tabindex="-1">Étape 1 — Décrivez la vidéo et donnez la consigne à l'IA</h2>
+        <form id="formVideo" novalidate>
+          <div class="champ">
+            <label for="vUrl">Lien de la vidéo (YouTube ou Vimeo)</label>
+            <input type="url" id="vUrl" required placeholder="https://www.youtube.com/watch?v=... ou https://vimeo.com/..." autocomplete="off">
+            <p class="aide">Copiez l'adresse de la vidéo dans la barre de votre navigateur. Avec YouTube, le lien suffit souvent : l'IA y trouve le titre, la durée et le contenu de la vidéo. Avec Vimeo, la transcription est obligatoire.</p>
+          </div>
+          <div class="grille-2">
+            <div class="champ">
+              <label for="vTitre">Titre de la vidéo <span class="facultatif">(facultatif)</span></label>
+              <input type="text" id="vTitre" placeholder="Ex. : L'anatomie du système digestif">
+            </div>
+            <div class="champ">
+              <label for="vDuree">Durée de la vidéo, min:s <span class="facultatif">(facultatif)</span></label>
+              <input type="text" id="vDuree" inputmode="numeric" placeholder="Ex. : 4:38" class="nombres" aria-describedby="aideDuree">
+              <p class="aide" id="aideDuree">Inscrite en bas du lecteur vidéo. Elle permet de vérifier qu'aucune question ne tombe après la fin.</p>
+            </div>
+            <div class="champ">
+              <label for="vNiveau">Niveau des élèves <span class="facultatif">(facultatif)</span></label>
+              <input type="text" id="vNiveau" placeholder="Ex. : 3e secondaire, science et technologie">
+            </div>
+            <div class="champ">
+              <label for="vNb">Nombre de questions</label>
+              <input type="number" id="vNb" min="2" max="10" value="4" class="nombres">
+            </div>
+          </div>
+
+          <fieldset class="champ">
+            <legend>Outil d'IA que vous utiliserez</legend>
+            <div class="choix-outil">
+              <label><input type="radio" name="vOutil" value="gemini" checked> Gemini</label>
+              <label><input type="radio" name="vOutil" value="copilot"> Copilot</label>
+            </div>
+            <p class="bandeau bandeau-avertissement aide-outil" id="aideOutil" role="note"></p>
+          </fieldset>
+
+          <details class="champ" id="blocTranscription">
+            <summary id="libelleTranscription">Ajouter la transcription de la vidéo (recommandé avec Copilot)</summary>
+            <ol class="aide-liste" id="etapesTranscriptionYouTube">
+              <li>Sur YouTube, sous la vidéo, cliquez sur « …plus » dans la description.</li>
+              <li>Cliquez sur « Afficher la transcription ».</li>
+              <li>Sélectionnez tout le texte de la transcription, copiez-le et collez-le ci-dessous.</li>
+            </ol>
+            <ol class="aide-liste" id="etapesTranscriptionVimeo" hidden>
+              <li>Sur Vimeo, sous la vidéo, cliquez sur le bouton « Transcription » (offert seulement si la vidéo a des sous-titres).</li>
+              <li>Sélectionnez tout le texte de la transcription, copiez-le et collez-le ci-dessous, avec ses repères de temps.</li>
+              <li>Sans transcription sur Vimeo, rédigez les questions vous-même avec le bouton « Rédiger les questions moi-même », plus bas.</li>
+            </ol>
+            <label for="vTranscription" class="visuellement-masque">Transcription de la vidéo</label>
+            <textarea id="vTranscription" rows="8" placeholder="0:00 Bonjour..."></textarea>
+          </details>
+
+          <h3>Consigne pour l'IA</h3>
+          <div class="champ">
+            <label for="texteConsigne">Consigne</label>
+            <p class="aide" id="aideConsigne">Elle suit les renseignements ci-dessus. Vous pouvez la modifier avant de la copier, par exemple pour préciser une notion à cibler. Gardez la section « Format de la réponse » intacte : l'assistant en a besoin pour lire la réponse.</p>
+            <textarea id="texteConsigne" rows="18" spellcheck="true" class="code" aria-describedby="aideConsigne"></textarea>
+          </div>
+          <div class="actions">
+            <button type="button" class="btn btn-primary" id="btnCopierConsigne">Copier la consigne</button>
+            <button type="button" class="btn" id="btnRetablirConsigne" hidden>Rétablir la consigne d'origine</button>
+            <span class="statut" id="statutConsigne" role="status" aria-live="polite"></span>
+          </div>
+          <p class="aide-ensuite">Une fois la consigne copiée :</p>
+          <ol class="marche-a-suivre" id="marcheConsigne"></ol>
+
+          <div class="bloc-sans-ia">
+            <h3>Sans l'IA</h3>
+            <p>Pas de transcription, ou l'IA n'a pas accès à la vidéo ? Rédigez vous-même les questions, directement sur la vidéo, à l'étape de l'aperçu.</p>
+            <button type="button" class="btn" id="btnSansIA">Rédiger les questions moi-même</button>
+          </div>
+
+          <p class="message-erreur" id="erreurEtape1" role="alert"></p>
+          <div class="actions actions-bas">
+            <button type="submit" class="btn btn-primary">J'ai la réponse de l'IA</button>
+          </div>
+        </form>
+      </div>
+
+      <!-- Étape 2 -->
+      <div class="panneau" data-panneau="2" hidden>
+        <h2 tabindex="-1">Étape 2 — Collez la réponse de l'IA</h2>
+        <p id="consigneEtape2"></p>
+        <div class="champ">
+          <label for="reponseIA">Réponse de l'IA</label>
+          <textarea id="reponseIA" rows="12" spellcheck="false" class="code" placeholder='{ "titre_video": ... }'></textarea>
+        </div>
+        <div class="actions">
+          <button type="button" class="btn btn-primary" id="btnVerifier">Vérifier la réponse</button>
+        </div>
+
+        <div id="resultatVerification" aria-live="polite"></div>
+
+        <div class="actions actions-bas">
+          <button type="button" class="btn" data-aller="1">Précédent</button>
+          <button type="button" class="btn btn-primary" id="btnVersApercu" disabled>Voir l'aperçu</button>
+        </div>
+      </div>
+
+      <!-- Étape 3 -->
+      <div class="panneau panneau-large" data-panneau="3" hidden>
+        <h2 tabindex="-1">Étape 3 — Essayez la vidéo comme un élève</h2>
+        <p>Lancez la vidéo : les questions surgissent aux moments prévus. Pour corriger un texte ou un moment, activez le « Mode d'édition » en haut à droite de l'aperçu ; vos modifications seront reprises à l'exportation.</p>
+        <div class="bandeau bandeau-info" id="aideApercuSansIA" hidden>
+          <strong>Rédigez vos questions.</strong> Le mode d'édition est activé. Faites jouer la vidéo jusqu'au moment voulu, mettez-la en pause, puis cliquez sur « Ajouter une question » dans la liste à gauche. Remplacez ensuite les « … » de la question et des quatre choix, cochez la bonne réponse et écrivez la rétroaction.
+        </div>
+        <iframe id="cadreApercu" title="Aperçu de la vidéo interactive" allow="autoplay; fullscreen; encrypted-media" referrerpolicy="strict-origin-when-cross-origin"></iframe>
+        <div class="actions actions-bas">
+          <button type="button" class="btn" data-aller="2">Précédent</button>
+          <button type="button" class="btn btn-primary" data-aller="4">Continuer vers l'exportation</button>
+        </div>
+      </div>
+
+      <!-- Étape 4 -->
+      <div class="panneau" data-panneau="4" hidden>
+        <h2 tabindex="-1">Étape 4 — Exportez et déposez dans Moodle</h2>
+        <div id="resumeExport" class="resume"></div>
+        <div class="actions">
+          <button type="button" class="btn btn-primary" id="btnExporterH5P">Enregistrer le fichier H5P…</button>
+          <button type="button" class="btn" id="btnExporterProjet">Enregistrer le projet…</button>
+          <span class="statut" id="statutExport" role="status" aria-live="polite"></span>
+        </div>
+        <p class="aide" id="aideDossierVideo"></p>
+        <p class="aide">Le fichier projet (.json) vous permet de modifier la vidéo plus tard, sur n'importe quel ordinateur, avec le bouton « Ouvrir un fichier projet ».</p>
+
+        <h3>Déposer le fichier dans votre cours Moodle</h3>
+        <ol class="marche-a-suivre">
+          <li>Dans votre cours, activez le « Mode d'édition ».</li>
+          <li>Dans la section voulue, choisissez « Ajouter une activité ou une ressource », puis « H5P ».</li>
+          <li>Déposez le fichier .h5p enregistré dans la zone « Fichier », puis enregistrez.</li>
+        </ol>
+
+        <h3>Autre format : une page web</h3>
+        <p>La même vidéo interactive, sans H5P et sans note transmise. Elle ne fonctionne ni en double-clic sur l'ordinateur, ni dans SharePoint.</p>
+        <ul class="choix-export">
+          <li>
+            <button type="button" class="btn" id="btnExporterHTML">Enregistrer la page HTML…</button>
+            <span>pour la déposer sur un site web, par exemple dans Moodle comme ressource « Fichier ».</span>
+          </li>
+          <li>
+            <button type="button" class="btn" id="btnCopierHTML">Copier le code de la page</button>
+            <span>pour le coller dans Google Sites : « Insérer », « Intégrer », puis « Code d'intégration ».</span>
+          </li>
+        </ul>
+        <p class="statut" id="statutExportHTML" role="status" aria-live="polite"></p>
+
+        <div class="actions actions-bas">
+          <button type="button" class="btn" data-aller="3">Précédent</button>
+          <button type="button" class="btn" id="btnNouveau">Créer une autre vidéo</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= BANQUE DE QUESTIONS MOODLE XML ================= -->
+    <section id="ecranMoodle" class="ecran" aria-labelledby="titreMoodle" hidden>
+      <h1 id="titreMoodle">Banque de questions Moodle XML</h1>
+      <div class="bandeau bandeau-info" id="bandeauExempleMoodle" role="status" hidden>
+        <strong>Vous parcourez un exemple.</strong> Les renseignements et la réponse de l'IA sont déjà remplis : passez d'une étape à l'autre pour voir le déroulement.
+        <button type="button" class="btn btn-quiet" id="btnQuitterExempleMoodle">Commencer un nouveau projet</button>
+      </div>
+
+      <nav class="etapes" aria-label="Étapes de création">
+        <ol>
+          <li><button type="button" data-etape-moodle="1"><span class="etape-num">1</span> Le cours et la consigne</button></li>
+          <li><button type="button" data-etape-moodle="2"><span class="etape-num">2</span> La réponse de l'IA</button></li>
+          <li><button type="button" data-etape-moodle="3"><span class="etape-num">3</span> L'aperçu</button></li>
+          <li><button type="button" data-etape-moodle="4"><span class="etape-num">4</span> L'exportation</button></li>
+        </ol>
+      </nav>
+
+      <!-- Étape 1 -->
+      <div class="panneau" data-panneau-moodle="1">
+        <h2 tabindex="-1">Étape 1 — Décrivez la banque et donnez la consigne à l'IA</h2>
+        <form id="formMoodle" novalidate>
+          <div class="grille-2">
+            <div class="champ">
+              <label for="mSujet">Sujet de la banque</label>
+              <input type="text" id="mSujet" placeholder="Ex. : Le système respiratoire" autocomplete="off" aria-describedby="aideSujet">
+              <p class="aide" id="aideSujet">Il devient le nom de la catégorie dans la banque de questions de Moodle.</p>
+            </div>
+            <div class="champ">
+              <label for="mNiveau">Niveau des élèves <span class="facultatif">(facultatif)</span></label>
+              <input type="text" id="mNiveau" placeholder="Ex. : 3e secondaire, science et technologie">
+            </div>
+            <div class="champ">
+              <label for="mNb">Nombre de questions</label>
+              <input type="number" id="mNb" min="3" max="30" value="9" class="nombres" aria-describedby="aideNb">
+              <p class="aide" id="aideNb">Au moins une question par type coché ; le reste est réparti entre les types.</p>
+            </div>
+          </div>
+
+          <fieldset class="champ">
+            <legend>Types de questions</legend>
+            <ul class="liste-types" id="listeTypes" role="list"></ul>
+            <p class="aide" id="aideRepartition" aria-live="polite"></p>
+          </fieldset>
+
+          <fieldset class="champ">
+            <legend>Outil d'IA que vous utiliserez</legend>
+            <div class="choix-outil">
+              <label><input type="radio" name="mOutil" value="gemini" checked> Gemini</label>
+              <label><input type="radio" name="mOutil" value="copilot"> Copilot</label>
+            </div>
+          </fieldset>
+
+          <fieldset class="champ">
+            <legend>Contenu du cours</legend>
+            <div class="choix-outil">
+              <label><input type="radio" name="mSource" value="joint" checked> Je joindrai mon document (PDF, Word) dans la conversation avec l'IA</label>
+              <label><input type="radio" name="mSource" value="colle"> Je colle le texte du cours ici</label>
+            </div>
+            <div id="blocTexteCours" hidden>
+              <label for="mTexteCours" class="visuellement-masque">Texte du cours</label>
+              <textarea id="mTexteCours" rows="8" placeholder="Collez ici le texte de vos notes de cours..."></textarea>
+            </div>
+          </fieldset>
+
+          <details class="champ" id="blocPrecisions">
+            <summary>Ajouter des précisions pour l'IA <span class="facultatif">(facultatif)</span></summary>
+            <label for="mPrecisions" class="visuellement-masque">Précisions pour l'IA</label>
+            <textarea id="mPrecisions" rows="3" placeholder="Ex. : insister sur la diffusion ; éviter les questions sur la cellule."></textarea>
+          </details>
+
+          <h3>Consigne pour l'IA</h3>
+          <div class="champ">
+            <label for="texteConsigneMoodle">Consigne</label>
+            <p class="aide" id="aideConsigneMoodle"></p>
+            <textarea id="texteConsigneMoodle" rows="18" spellcheck="true" class="code" aria-describedby="aideConsigneMoodle"></textarea>
+          </div>
+          <div class="actions">
+            <button type="button" class="btn btn-primary" id="btnCopierConsigneMoodle">Copier la consigne</button>
+            <button type="button" class="btn" id="btnRetablirConsigneMoodle" hidden>Rétablir la consigne d'origine</button>
+            <span class="statut" id="statutConsigneMoodle" role="status" aria-live="polite"></span>
+          </div>
+          <p class="aide-ensuite">Une fois la consigne copiée :</p>
+          <ol class="marche-a-suivre" id="marcheConsigneMoodle"></ol>
+
+          <p class="message-erreur" id="erreurEtape1Moodle" role="alert"></p>
+          <div class="actions actions-bas">
+            <button type="submit" class="btn btn-primary">J'ai la réponse de l'IA</button>
+          </div>
+        </form>
+      </div>
+
+      <!-- Étape 2 -->
+      <div class="panneau" data-panneau-moodle="2" hidden>
+        <h2 tabindex="-1">Étape 2 — Collez la réponse de l'IA</h2>
+        <p id="consigneEtape2Moodle"></p>
+        <div class="champ">
+          <label for="reponseIAMoodle">Réponse de l'IA</label>
+          <textarea id="reponseIAMoodle" rows="12" spellcheck="false" class="code" placeholder='{ "titre": ..., "questions": [ ... ] }'></textarea>
+        </div>
+        <div class="actions">
+          <button type="button" class="btn btn-primary" id="btnVerifierMoodle">Vérifier la réponse</button>
+        </div>
+
+        <div id="resultatVerificationMoodle" aria-live="polite"></div>
+
+        <div class="actions actions-bas">
+          <button type="button" class="btn" data-aller-moodle="1">Précédent</button>
+          <button type="button" class="btn btn-primary" id="btnVersApercuMoodle" disabled>Voir l'aperçu</button>
+        </div>
+      </div>
+
+      <!-- Étape 3 -->
+      <div class="panneau panneau-large" data-panneau-moodle="3" hidden>
+        <h2 tabindex="-1">Étape 3 — Essayez les questions comme un élève</h2>
+        <p>Répondez aux questions et vérifiez vos réponses. Pour corriger un texte, une réponse ou un tag, activez le « Mode d'édition » en haut à droite de l'aperçu ; vos modifications seront reprises à l'exportation.</p>
+        <div id="blocImagesMoodle"></div>
+        <iframe id="cadreApercuMoodle" class="cadre-moodle" title="Aperçu de la banque de questions" allow="clipboard-read; clipboard-write"></iframe>
+        <div class="actions actions-bas">
+          <button type="button" class="btn" data-aller-moodle="2">Précédent</button>
+          <button type="button" class="btn btn-primary" data-aller-moodle="4">Continuer vers l'exportation</button>
+        </div>
+      </div>
+
+      <!-- Étape 4 -->
+      <div class="panneau" data-panneau-moodle="4" hidden>
+        <h2 tabindex="-1">Étape 4 — Exportez et importez dans Moodle</h2>
+        <div id="resumeExportMoodle" class="resume"></div>
+        <div class="actions">
+          <button type="button" class="btn btn-primary" id="btnExporterXml">Enregistrer le fichier XML…</button>
+          <button type="button" class="btn" id="btnExporterProjetMoodle">Enregistrer le projet…</button>
+        </div>
+        <p class="statut" id="statutExportMoodle" role="status" aria-live="polite"></p>
+        <p class="aide" id="aideDossierMoodle"></p>
+        <p class="aide">Le fichier XML s'ouvre aussi avec « Ouvrir un fichier projet » pour modifier la banque plus tard. Le fichier projet (.json) conserve en plus vos renseignements et la consigne.</p>
+
+        <h3>Importer le fichier dans votre cours Moodle</h3>
+        <ol class="marche-a-suivre">
+          <li>Dans votre cours, ouvrez la « Banque de questions » (menu « Plus », ou « Administration du cours »).</li>
+          <li>Choisissez « Importer », puis le format « Format XML Moodle ».</li>
+          <li>Déposez le fichier .xml enregistré, cliquez sur « Importer », puis sur « Continuer ».</li>
+          <li>Les questions sont rangées dans une catégorie au nom du sujet. Les tags permettent ensuite de tirer des questions au hasard dans un test.</li>
+        </ol>
+
+        <div class="actions actions-bas">
+          <button type="button" class="btn" data-aller-moodle="3">Précédent</button>
+          <button type="button" class="btn" id="btnNouveauMoodle">Créer une autre banque</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ CORRIGÉ INTERACTIF ET EXERCICE DE COMPRÉHENSION SCORM ============ -->
+    <!-- Écran partagé par les deux types : assistant-scorm.js y pose les libellés du type ouvert. -->
+    <section id="ecranScorm" class="ecran" aria-labelledby="titreScorm" hidden>
+      <h1 id="titreScorm">Activité interactive SCORM</h1>
+      <div class="bandeau bandeau-info" id="bandeauExempleScorm" role="status" hidden>
+        <strong>Vous parcourez un exemple.</strong> Les renseignements et la réponse de l'IA sont déjà remplis : passez d'une étape à l'autre pour voir le déroulement.
+        <button type="button" class="btn btn-quiet" id="btnQuitterExempleScorm">Commencer un nouveau projet</button>
+      </div>
+
+      <nav class="etapes" aria-label="Étapes de création">
+        <ol>
+          <li><button type="button" data-etape-scorm="1"><span class="etape-num">1</span> <span id="libEtape1Scorm">L'exercice et la consigne</span></button></li>
+          <li><button type="button" data-etape-scorm="2"><span class="etape-num">2</span> La réponse de l'IA</button></li>
+          <li><button type="button" data-etape-scorm="3"><span class="etape-num">3</span> L'aperçu</button></li>
+          <li><button type="button" data-etape-scorm="4"><span class="etape-num">4</span> L'exportation</button></li>
+        </ol>
+      </nav>
+
+      <!-- Étape 1 -->
+      <div class="panneau" data-panneau-scorm="1">
+        <h2 tabindex="-1" id="titreEtape1Scorm">Étape 1 — Décrivez l'exercice et donnez la consigne à l'IA</h2>
+        <form id="formScorm" novalidate>
+          <div class="grille-2">
+            <div class="champ">
+              <label for="sSujet" id="libSujetScorm">Sujet de l'exercice</label>
+              <input type="text" id="sSujet" placeholder="Ex. : La concentration des solutions" autocomplete="off" aria-describedby="aideSujetScorm">
+              <p class="aide" id="aideSujetScorm">Il devient le titre de l'activité dans Moodle, suivi de « Activité interactive ».</p>
+            </div>
+            <div class="champ">
+              <label for="sNiveau">Niveau des élèves <span class="facultatif">(facultatif)</span></label>
+              <input type="text" id="sNiveau" placeholder="Ex. : 3e secondaire, science et technologie">
+            </div>
+            <div class="champ" id="champNbScorm" hidden>
+              <label for="sNb" id="libNbScorm">Nombre de questions</label>
+              <input type="number" id="sNb" min="2" max="15" value="6" class="nombres" aria-describedby="aideNbScorm">
+              <p class="aide" id="aideNbScorm">Une question par notion clé du texte, de 2 points chacune ; la deuxième chance rapporte la moitié des points.</p>
+            </div>
+          </div>
+
+          <fieldset class="champ" id="champFormatScorm" hidden>
+            <legend>Présentations</legend>
+            <div class="choix-outil">
+              <label><input type="radio" name="sFormat" value="narration" checked> Avec narration audio (recommandé)</label>
+              <label><input type="radio" name="sFormat" value="ecrite"> Écrites</label>
+            </div>
+            <p class="aide">Avec narration, l'explication est racontée en commentant l'image ; à l'écran restent les mots clés et « À retenir ». Une voix française de l'appareil la lit, et l'élève peut ouvrir la transcription. Écrites : trois paragraphes et un réflexe, lus à l'écran.</p>
+          </fieldset>
+
+          <fieldset class="champ">
+            <legend>Outil d'IA que vous utiliserez</legend>
+            <div class="choix-outil">
+              <label><input type="radio" name="sOutil" value="gemini" checked> Gemini</label>
+              <label><input type="radio" name="sOutil" value="copilot"> Copilot</label>
+            </div>
+          </fieldset>
+
+          <fieldset class="champ">
+            <legend id="legendeSourceScorm">Exercice à corriger</legend>
+            <div class="choix-outil">
+              <label><input type="radio" name="sSource" value="joint" checked> <span id="libJointScorm">Je joindrai l'exercice (PDF, Word ou photo) dans la conversation avec l'IA</span></label>
+              <label><input type="radio" name="sSource" value="colle"> <span id="libColleScorm">Je colle le texte de l'exercice ici</span></label>
+            </div>
+            <div id="blocTexteSource" hidden>
+              <label for="sTexteSource" class="visuellement-masque" id="libTexteSourceScorm">Texte de l'exercice</label>
+              <textarea id="sTexteSource" rows="8" placeholder="Collez ici toutes les questions de l'exercice, avec leurs données et le barème..."></textarea>
+            </div>
+          </fieldset>
+
+          <details class="champ" id="blocPrecisionsScorm">
+            <summary>Ajouter des précisions pour l'IA <span class="facultatif">(facultatif)</span></summary>
+            <label for="sPrecisions" class="visuellement-masque">Précisions pour l'IA</label>
+            <textarea id="sPrecisions" rows="3" placeholder="Ex. : barème de 20 points ; laisser de côté la question 5."></textarea>
+          </details>
+
+          <h3>Consigne pour l'IA</h3>
+          <div class="champ">
+            <label for="texteConsigneScorm">Consigne</label>
+            <p class="aide" id="aideConsigneScorm"></p>
+            <textarea id="texteConsigneScorm" rows="18" spellcheck="true" class="code" aria-describedby="aideConsigneScorm"></textarea>
+          </div>
+          <div class="actions">
+            <button type="button" class="btn btn-primary" id="btnCopierConsigneScorm">Copier la consigne</button>
+            <button type="button" class="btn" id="btnRetablirConsigneScorm" hidden>Rétablir la consigne d'origine</button>
+            <span class="statut" id="statutConsigneScorm" role="status" aria-live="polite"></span>
+          </div>
+          <p class="aide-ensuite">Une fois la consigne copiée :</p>
+          <ol class="marche-a-suivre" id="marcheConsigneScorm"></ol>
+
+          <p class="message-erreur" id="erreurEtape1Scorm" role="alert"></p>
+          <div class="actions actions-bas">
+            <button type="submit" class="btn btn-primary">J'ai la réponse de l'IA</button>
+          </div>
+        </form>
+      </div>
+
+      <!-- Étape 2 -->
+      <div class="panneau" data-panneau-scorm="2" hidden>
+        <h2 tabindex="-1">Étape 2 — Collez la réponse de l'IA</h2>
+        <p id="consigneEtape2Scorm"></p>
+        <div class="champ">
+          <label for="reponseIAScorm">Réponse de l'IA</label>
+          <textarea id="reponseIAScorm" rows="12" spellcheck="false" class="code" placeholder='{ "titre": ..., "questions": [ ... ] }'></textarea>
+        </div>
+        <div class="actions">
+          <button type="button" class="btn btn-primary" id="btnVerifierScorm">Vérifier la réponse</button>
+        </div>
+
+        <div id="resultatVerificationScorm" aria-live="polite"></div>
+
+        <div class="actions actions-bas">
+          <button type="button" class="btn" data-aller-scorm="1">Précédent</button>
+          <button type="button" class="btn btn-primary" id="btnVersApercuScorm" disabled>Voir l'aperçu</button>
+        </div>
+      </div>
+
+      <!-- Étape 3 -->
+      <div class="panneau panneau-large" data-panneau-scorm="3" hidden>
+        <h2 tabindex="-1">Étape 3 — Faites l'activité comme un élève</h2>
+        <p id="texteEtape3Scorm">Répondez aux questions : l'Assistant donne la rétroaction et, en cas d'erreur, la démarche s'affiche sous la question. « Consulter le corrigé » montre la solution de chaque question sans y répondre. Pour corriger un texte, revenez à l'étape 2 : demandez une correction à l'IA ou modifiez la réponse collée.</p>
+        <div class="disposition-apercu-scorm">
+          <div class="apercu-scorm-principal">
+            <div class="barre-apercu">
+              <button type="button" class="btn" id="btnCorrigeScorm" aria-pressed="false">Consulter le corrigé</button>
+              <label for="allerQuestionScorm">Aller à</label>
+              <select id="allerQuestionScorm"></select>
+              <button type="button" class="btn" id="btnRecommencerScorm">Recommencer</button>
+            </div>
+            <p class="statut" id="statutApercuScorm" role="status" aria-live="polite"></p>
+            <iframe id="cadreApercuScorm" class="cadre-scorm" title="Aperçu de l'activité interactive"></iframe>
+          </div>
+          <aside class="colonne-images-scorm" aria-labelledby="titreImagesScorm">
+            <h3 id="titreImagesScorm">Images et retouches</h3>
+            <div id="blocImagesScorm"></div>
+            <p class="statut" id="statutImageScorm" role="status" aria-live="polite"></p>
+          </aside>
+        </div>
+        <div class="actions actions-bas">
+          <button type="button" class="btn" data-aller-scorm="2">Précédent</button>
+          <button type="button" class="btn btn-primary" data-aller-scorm="4">Continuer vers l'exportation</button>
+        </div>
+      </div>
+
+      <!-- Étape 4 -->
+      <div class="panneau" data-panneau-scorm="4" hidden>
+        <h2 tabindex="-1">Étape 4 — Exportez et déposez dans Moodle</h2>
+        <div id="resumeExportScorm" class="resume"></div>
+        <div class="actions">
+          <button type="button" class="btn btn-primary" id="btnExporterScorm">Enregistrer le package SCORM…</button>
+          <button type="button" class="btn" id="btnExporterProjetScorm">Enregistrer le projet…</button>
+        </div>
+        <p class="statut" id="statutExportScorm" role="status" aria-live="polite"></p>
+        <p class="aide" id="aideDossierScorm"></p>
+        <p class="aide" id="aideProjetScorm">Le fichier projet (.json) vous permet de modifier le corrigé plus tard, sur n'importe quel ordinateur, avec le bouton « Ouvrir un fichier projet ».</p>
+
+        <h3>Déposer le package dans votre cours Moodle</h3>
+        <ol class="marche-a-suivre">
+          <li>Dans votre cours, activez le « Mode d'édition ».</li>
+          <li>Dans la section voulue, choisissez « Ajouter une activité ou une ressource », puis « Paquetage SCORM ».</li>
+          <li>Donnez un nom à l'activité, déposez le fichier .zip enregistré dans la zone « Paquetage », puis enregistrez.</li>
+          <li>Le score de l'élève débute à 0 et lui est transmis quand il clique sur « Terminer et envoyer » à la fin de l'activité.</li>
+        </ol>
+
+        <h3>Autre format : les données seules</h3>
+        <p>Pour l'outil de génération du projet (<code>create_scorm_activity.py</code>) : le fichier <code>questions_data.js</code> de l'activité, images comprises.</p>
+        <div class="actions">
+          <button type="button" class="btn" id="btnExporterDonneesScorm">Enregistrer questions_data.js…</button>
+        </div>
+
+        <div class="actions actions-bas">
+          <button type="button" class="btn" data-aller-scorm="3">Précédent</button>
+          <button type="button" class="btn" id="btnNouveauScorm">Créer un autre corrigé</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= NOUVELLE VERSION OU CORRIGÉ D'UN EXAMEN ================= -->
+    <section id="ecranExamen" class="ecran" aria-labelledby="titreExamen" hidden>
+      <h1 id="titreExamen">Nouvelle version ou corrigé d'un examen</h1>
+      <div class="bandeau bandeau-info" id="bandeauExempleExamen" role="status" hidden>
+        <strong>Vous parcourez un exemple.</strong> Les renseignements et la réponse de l'IA sont déjà remplis : passez d'une étape à l'autre pour voir le déroulement.
+        <button type="button" class="btn btn-quiet" id="btnQuitterExempleExamen">Commencer un nouveau projet</button>
+      </div>
+
+      <nav class="etapes" aria-label="Étapes de création">
+        <ol>
+          <li><button type="button" data-etape-examen="1"><span class="etape-num">1</span> L'examen et la consigne</button></li>
+          <li><button type="button" data-etape-examen="2"><span class="etape-num">2</span> La réponse de l'IA</button></li>
+          <li><button type="button" data-etape-examen="3"><span class="etape-num">3</span> L'aperçu</button></li>
+          <li><button type="button" data-etape-examen="4"><span class="etape-num">4</span> L'impression</button></li>
+        </ol>
+      </nav>
+
+      <!-- Étape 1 -->
+      <div class="panneau" data-panneau-examen="1">
+        <h2 tabindex="-1">Étape 1 — Décrivez l'examen et donnez la consigne à l'IA</h2>
+        <form id="formExamen" novalidate>
+          <fieldset class="champ">
+            <legend>Ce que vous voulez obtenir</legend>
+            <div class="choix-outil">
+              <label><input type="radio" name="eMode" value="version" checked> Une nouvelle version de l'examen, avec son corrigé</label>
+              <label><input type="radio" name="eMode" value="corrige"> Le corrigé de cet examen</label>
+            </div>
+            <p class="aide" id="aideModeExamen"></p>
+          </fieldset>
+
+          <div class="grille-2">
+            <div class="champ" id="champVersionExamen">
+              <label for="eVersion">Nom de la version</label>
+              <input type="text" id="eVersion" value="B" maxlength="3" autocomplete="off" aria-describedby="aideVersionExamen">
+              <p class="aide" id="aideVersionExamen">Une lettre, ajoutée au titre : « … — Version B ».</p>
+            </div>
+            <div class="champ">
+              <label for="eSujet">Titre de l'examen <span class="facultatif">(facultatif)</span></label>
+              <input type="text" id="eSujet" placeholder="Ex. : Mini-test sur la concentration" autocomplete="off">
+            </div>
+            <div class="champ">
+              <label for="eNiveau">Niveau des élèves <span class="facultatif">(facultatif)</span></label>
+              <input type="text" id="eNiveau" placeholder="Ex. : 3e secondaire, science et technologie">
+            </div>
+            <div class="champ">
+              <label for="ePages">Nombre de pages de l'original <span class="facultatif">(facultatif)</span></label>
+              <input type="number" id="ePages" min="1" max="20" class="nombres" aria-describedby="aideePages">
+              <p class="aide" id="aideePages">Il permet de vérifier que la réponse garde la même pagination.</p>
+            </div>
+          </div>
+
+          <fieldset class="champ">
+            <legend>Outil d'IA que vous utiliserez</legend>
+            <div class="choix-outil">
+              <label><input type="radio" name="eOutil" value="gemini" checked> Gemini</label>
+              <label><input type="radio" name="eOutil" value="copilot"> Copilot</label>
+            </div>
+          </fieldset>
+
+          <fieldset class="champ">
+            <legend>Examen original</legend>
+            <div class="choix-outil">
+              <label><input type="radio" name="eSource" value="joint" checked> Je joindrai l'examen (PDF, Word ou photo) dans la conversation avec l'IA</label>
+              <label><input type="radio" name="eSource" value="colle"> Je colle le texte de l'examen ici</label>
+            </div>
+            <div id="blocTexteSourceExamen" hidden>
+              <label for="eTexteSource" class="visuellement-masque">Texte de l'examen</label>
+              <textarea id="eTexteSource" rows="8" placeholder="Collez ici toutes les questions de l'examen, avec leurs données, le barème et les lignes de réponse..."></textarea>
+            </div>
+          </fieldset>
+
+          <details class="champ" id="blocPrecisionsExamen">
+            <summary>Ajouter des précisions pour l'IA <span class="facultatif">(facultatif)</span></summary>
+            <label for="ePrecisions" class="visuellement-masque">Précisions pour l'IA</label>
+            <textarea id="ePrecisions" rows="3" placeholder="Ex. : garder les mêmes substances ; changer seulement les valeurs."></textarea>
+          </details>
+
+          <h3>Consigne pour l'IA</h3>
+          <details class="champ" id="blocConsigneExamen">
+            <summary>Voir ou modifier la consigne</summary>
+            <label for="texteConsigneExamen" class="visuellement-masque">Consigne</label>
+            <p class="aide" id="aideConsigneExamen"></p>
+            <textarea id="texteConsigneExamen" rows="18" spellcheck="true" class="code" aria-describedby="aideConsigneExamen"></textarea>
+          </details>
+          <div class="actions">
+            <button type="button" class="btn btn-primary" id="btnCopierConsigneExamen">Copier la consigne</button>
+            <button type="button" class="btn" id="btnRetablirConsigneExamen" hidden>Rétablir la consigne d'origine</button>
+            <span class="statut" id="statutConsigneExamen" role="status" aria-live="polite"></span>
+          </div>
+          <p class="aide-ensuite">Une fois la consigne copiée :</p>
+          <ol class="marche-a-suivre" id="marcheConsigneExamen"></ol>
+
+          <p class="message-erreur" id="erreurEtape1Examen" role="alert"></p>
+          <div class="actions actions-bas">
+            <button type="submit" class="btn btn-primary">J'ai la réponse de l'IA</button>
+          </div>
+        </form>
+      </div>
+
+      <!-- Étape 2 -->
+      <div class="panneau" data-panneau-examen="2" hidden>
+        <h2 tabindex="-1">Étape 2 — Collez la réponse de l'IA</h2>
+        <p id="consigneEtape2Examen"></p>
+        <div class="champ">
+          <label for="reponseIAExamen">Réponse de l'IA</label>
+          <textarea id="reponseIAExamen" rows="12" spellcheck="false" class="code" placeholder='{ "titre": ..., "questions": [ ... ] }'></textarea>
+        </div>
+        <div class="actions">
+          <button type="button" class="btn btn-primary" id="btnVerifierExamen">Vérifier la réponse</button>
+        </div>
+
+        <div id="resultatVerificationExamen" aria-live="polite"></div>
+
+        <div class="champ" id="blocRelectureExamen">
+          <details>
+            <summary>Relire les questions dans l'IA avant de les coller <span class="facultatif">(facultatif)</span></summary>
+            <div class="bloc-correction">
+              <p>Collez ce texte à la suite de la conversation avec l'IA : elle présente ses questions en clair et signale les erreurs qu'elle repère. Demandez-lui ensuite les corrections nécessaires.</p>
+              <pre id="texteRelectureExamen"></pre>
+              <p>Cet aperçu sert à relire le contenu ; il ne montre pas les feuilles. Collez ci-dessus le dernier bloc JSON de l'IA, pas l'aperçu, puis vérifiez à nouveau. <span id="noteMelangeRelectureExamen">Les choix de réponse de la nouvelle version sont mélangés à l'importation : leur ordre sur la copie diffère de celui de l'IA.</span> L'aperçu de l'étape 3 montre les feuilles telles qu'elles seront imprimées.</p>
+            </div>
+          </details>
+          <div class="actions">
+            <button type="button" class="btn" id="btnCopierRelectureExamen">Copier la consigne de relecture</button>
+            <span class="statut" id="statutRelectureExamen" role="status" aria-live="polite"></span>
+          </div>
+        </div>
+
+        <div class="actions actions-bas">
+          <button type="button" class="btn" data-aller-examen="1">Précédent</button>
+          <button type="button" class="btn btn-primary" id="btnVersApercuExamen" disabled>Voir l'aperçu</button>
+        </div>
+      </div>
+
+      <!-- Étape 3 -->
+      <div class="panneau panneau-large" data-panneau-examen="3" hidden>
+        <h2 tabindex="-1">Étape 3 — Vérifiez les feuilles en format lettre</h2>
+        <p>Chaque feuille de l'aperçu correspond à une page imprimée (8,5 × 11 po). Ajustez la page et l'espace de démarche des questions à droite ; une feuille qui déborde est entourée d'un pointillé. Pour corriger un texte, revenez à l'étape 2.</p>
+        <div class="disposition-apercu-scorm">
+          <div class="apercu-scorm-principal">
+            <div class="barre-apercu">
+              <button type="button" class="btn" id="ongletExamenEleve" aria-pressed="true">Examen de l'élève</button>
+              <button type="button" class="btn" id="ongletExamenCorrige" aria-pressed="false">Corrigé</button>
+              <label class="choix-case" id="champDetailleExamen" hidden><input type="checkbox" id="cbDetailleExamen"> Phrases d'explication des étapes</label>
+              <button type="button" class="btn" id="btnImprimerApercuExamen">Imprimer l'examen…</button>
+            </div>
+            <p class="statut" id="statutApercuExamen" role="status" aria-live="polite"></p>
+            <iframe id="cadreApercuExamen" class="cadre-examen" title="Aperçu des feuilles imprimables"></iframe>
+          </div>
+          <aside class="colonne-images-scorm" aria-labelledby="titreMiseEnPageExamen">
+            <h3 id="titreMiseEnPageExamen">Mise en page et schémas</h3>
+            <div id="blocMiseEnPageExamen"></div>
+            <p class="statut" id="statutImageExamen" role="status" aria-live="polite"></p>
+          </aside>
+        </div>
+        <div class="actions actions-bas">
+          <button type="button" class="btn" data-aller-examen="2">Précédent</button>
+          <button type="button" class="btn btn-primary" data-aller-examen="4">Continuer vers l'impression</button>
+        </div>
+      </div>
+
+      <!-- Étape 4 -->
+      <div class="panneau" data-panneau-examen="4" hidden>
+        <h2 tabindex="-1">Étape 4 — Imprimez ou enregistrez les documents</h2>
+        <div id="resumeExportExamen" class="resume"></div>
+        <ul class="choix-export choix-export-examen">
+          <li id="ligneExportEleve">
+            <span class="choix-export-nom" id="libelleExportEleve">Examen de l'élève</span>
+            <span class="choix-export-boutons">
+              <button type="button" class="btn btn-primary" id="btnImprimerExamen">Imprimer…</button>
+              <button type="button" class="btn" id="btnHtmlExamen">Enregistrer la page HTML…</button>
+            </span>
+          </li>
+          <li id="ligneExportCorrige">
+            <span class="choix-export-nom">Corrigé de l'enseignant</span>
+            <span class="choix-export-boutons">
+              <button type="button" class="btn btn-primary" id="btnImprimerCorrige">Imprimer…</button>
+              <button type="button" class="btn" id="btnHtmlCorrige">Enregistrer la page HTML…</button>
+            </span>
+          </li>
+        </ul>
+        <p class="statut" id="statutExportExamen" role="status" aria-live="polite"></p>
+        <p class="aide" id="aideDossierExamen"></p>
+
+        <h3>Obtenir un PDF</h3>
+        <ol class="marche-a-suivre">
+          <li>Cliquez sur « Imprimer… » à côté du document voulu.</li>
+          <li>Dans la fenêtre d'impression, choisissez « Enregistrer au format PDF » (ou « Microsoft Print to PDF ») comme destination.</li>
+          <li>Vérifiez le format « Lettre » et les marges « Par défaut » ; cochez « Graphiques d'arrière-plan » pour garder les encadrés du corrigé.</li>
+        </ol>
+        <p class="aide">La page HTML enregistrée s'ouvre en double-clic, sans connexion : formules comprises, elle s'imprime de la même façon. Le fichier projet (.json) vous permet de modifier l'examen plus tard avec « Ouvrir un fichier projet ».</p>
+        <div class="actions">
+          <button type="button" class="btn" id="btnExporterProjetExamen">Enregistrer le projet…</button>
+        </div>
+
+        <div class="actions actions-bas">
+          <button type="button" class="btn" data-aller-examen="3">Précédent</button>
+          <button type="button" class="btn" id="btnNouveauExamen">Préparer un autre examen</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <dialog id="dialogueReprise" aria-labelledby="titreReprise">
+    <h2 id="titreReprise">Ouvrir un fichier projet</h2>
+    <div id="repriseCorps"></div>
+    <div class="actions actions-dialogue">
+      <button type="button" class="btn" id="btnRepriseAnnuler">Annuler</button>
+      <button type="button" class="btn btn-primary" id="btnRepriseOuvrir">Ouvrir</button>
+    </div>
+  </dialog>
+
+  <script src="../moteur-ui/src/fflate.js" defer></script>
+  <script src="../moteur-ui/simulateurs/common/image-retouch-canvas.js" defer></script>
+  <script src="../moteur-ui/simulateurs/video/video-h5p-export.js" defer></script>
+  <script src="./src/collage.js" defer></script>
+  <script src="./src/projets.js" defer></script>
+  <script src="./src/actions/video.js" defer></script>
+  <script src="./src/export-html.js" defer></script>
+  <script src="./src/exemples/video.js" defer></script>
+  <script src="../moteur-ui/simulateurs/moodle/moodle-parser.js" defer></script>
+  <script src="./src/actions/moodle.js" defer></script>
+  <script src="./src/exemples/moodle.js" defer></script>
+  <script src="./src/actions/scorm-corrige.js" defer></script>
+  <script src="./src/exemples/scorm-corrige.js" defer></script>
+  <script src="./src/exemples/images-exemples.js" defer></script>
+  <script src="./src/actions/scorm-comprehension.js" defer></script>
+  <script src="./src/exemples/scorm-comprehension.js" defer></script>
+  <script src="./src/actions/scorm-hattie.js" defer></script>
+  <script src="../moteur-ui/simulateurs/scorm/lame.min.js" defer></script>
+  <script src="../moteur-ui/simulateurs/scorm/narration-recorder.js" defer></script>
+  <script src="./src/enregistreur-voix.js" defer></script>
+  <script src="./src/exemples/scorm-hattie.js" defer></script>
+  <script src="./src/assistant.js" defer></script>
+  <script src="./src/assistant-moodle.js" defer></script>
+  <script src="./src/assistant-scorm.js" defer></script>
+  <script src="./src/actions/examen-blocs.js" defer></script>
+  <script src="./src/actions/examen.js" defer></script>
+  <script src="./src/exemples/examen.js" defer></script>
+  <script src="./src/assistant-examen.js" defer></script>
+</body>
+</html>

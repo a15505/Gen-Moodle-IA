@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 350" role="img" aria-labelledby="t7">
+  <title id="t7">Un calcul erroné de concentration comparé à l'estimation de l'expert</title>
+  <style>
+    .t{font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;fill:#0f172a;font-variant-numeric:tabular-nums}
+    .s{font-size:16px;fill:#334155}
+    .m{font-size:20px;font-weight:600}
+    .g{font-size:30px;font-weight:700}
+    .r{fill:#b91c1c}
+    .v{fill:#15803d}
+    .feuille{fill:#ffffff;stroke:#94a3b8;stroke-width:1.5}
+    .qt{fill:#dbeafe;stroke:#334155;stroke-width:1.5}
+  </style>
+  <rect width="720" height="350" fill="#ffffff"/>
+
+  <!-- Feuille de gauche : le calcul à vérifier -->
+  <rect x="30" y="30" width="315" height="290" rx="4" class="feuille"/>
+  <text x="60" y="88" class="t m">8 g</text>
+  <text x="200" y="88" class="t m">250 mL</text>
+  <line x1="50" y1="112" x2="325" y2="112" stroke="#e2e8f0" stroke-width="1"/>
+  <text x="60" y="172" class="t m">C = 8 ÷</text>
+  <text x="148" y="172" class="t m">250</text>
+  <ellipse cx="165" cy="165" rx="29" ry="19" fill="none" stroke="#b91c1c" stroke-width="2.5"/>
+  <text x="60" y="232" class="t m">C = 0,032 g/L</text>
+  <text x="270" y="236" class="t g r">✗</text>
+
+  <!-- Feuille de droite : l'estimation de l'expert -->
+  <rect x="375" y="30" width="315" height="290" rx="4" class="feuille"/>
+  <text x="532" y="88" text-anchor="middle" class="t m">250 mL = ¼ L</text>
+  <rect x="400" y="110" width="60" height="70" class="qt"/>
+  <rect x="466" y="110" width="60" height="70" class="qt"/>
+  <rect x="532" y="110" width="60" height="70" class="qt"/>
+  <rect x="598" y="110" width="60" height="70" class="qt"/>
+  <text x="430" y="151" text-anchor="middle" class="t s">8 g</text>
+  <text x="496" y="151" text-anchor="middle" class="t s">8 g</text>
+  <text x="562" y="151" text-anchor="middle" class="t s">8 g</text>
+  <text x="628" y="151" text-anchor="middle" class="t s">8 g</text>
+  <text x="430" y="200" text-anchor="middle" class="t s">¼ L</text>
+  <text x="496" y="200" text-anchor="middle" class="t s">¼ L</text>
+  <text x="562" y="200" text-anchor="middle" class="t s">¼ L</text>
+  <text x="628" y="200" text-anchor="middle" class="t s">¼ L</text>
+  <path d="M400 214 L400 222 L658 222 L658 214" fill="none" stroke="#334155" stroke-width="1.5"/>
+  <text x="529" y="250" text-anchor="middle" class="t m">1 L ≈ 32 g</text>
+  <text x="510" y="296" text-anchor="middle" class="t m">C ≈ 32 g/L</text>
+  <text x="600" y="300" class="t g v">✓</text>
+</svg>

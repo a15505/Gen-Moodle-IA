@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<manifest identifier="{{IDENTIFIER}}" version="1.2"
+          xmlns="http://www.imsproject.org/xsd/imscp_rootv1p1p2"
+          xmlns:adlcp="http://www.adlnet.org/xsd/adlcp_rootv1p2"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://www.imsproject.org/xsd/imscp_rootv1p1p2 imscp_rootv1p1p2.xsd
+                              http://www.imsglobal.org/xsd/imsmd_rootv1p2p2 imsmd_rootv1p2p2.xsd
+                              http://www.adlnet.org/xsd/adlcp_rootv1p2 adlcp_rootv1p2.xsd">
+  <metadata>
+    <schema>ADL SCORM</schema>
+    <schemaversion>1.2</schemaversion>
+  </metadata>
+  <organizations default="{{ORG_ID}}">
+    <organization identifier="{{ORG_ID}}">
+      <title>{{TITRE_ACTIVITE}}</title>
+      <item identifier="{{ITEM_ID}}" identifierref="{{RES_ID}}">
+        <title>{{TITRE_ACTIVITE}}</title>
+        <adlcp:masteryscore>60</adlcp:masteryscore>
+      </item>
+    </organization>
+  </organizations>
+  <resources>
+    <resource identifier="{{RES_ID}}" type="webcontent" adlcp:scormtype="sco" href="index.html">
+      <file href="index.html"/>
+      <file href="src/style.css"/>
+      <file href="src/tokens.css"/>
+      <file href="src/app.js"/>
+      <file href="src/scorm_api.js"/>
+      <file href="src/mathjax.js"/>
+    </resource>
+  </resources>
+</manifest>

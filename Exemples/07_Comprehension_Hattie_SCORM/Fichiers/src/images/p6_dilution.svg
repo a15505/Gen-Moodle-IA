@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 420" role="img" aria-labelledby="t6">
+  <title id="t6">Dilution : les mêmes 6 g de sucre passent de 0,1 L à 0,2 L de solution</title>
+  <style>
+    .t{font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;fill:#0f172a}
+    .l{font-size:18px;font-weight:700}
+    .s{font-size:16px;fill:#334155;font-variant-numeric:tabular-nums}
+    .eau{fill:#dbeafe}
+    .verre{fill:none;stroke:#334155;stroke-width:2.5;stroke-linejoin:round}
+    .g{stroke:#334155;stroke-width:2}
+    .p{fill:#b45309}
+  </style>
+  <defs>
+    <marker id="fl" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="8" markerHeight="8" orient="auto">
+      <path d="M0 0 L10 5 L0 10 Z" fill="#334155"/>
+    </marker>
+  </defs>
+  <rect width="720" height="420" fill="#ffffff"/>
+
+  <circle cx="284" cy="34" r="5" class="p"/>
+  <text x="298" y="40" class="t s">= 0,5 g de sucre</text>
+
+  <!-- Avant : 0,1 L -->
+  <rect x="91" y="190" width="158" height="90" class="eau"/>
+  <g class="p">
+    <circle cx="112" cy="206" r="5"/><circle cx="146" cy="214" r="5"/><circle cx="182" cy="204" r="5"/><circle cx="222" cy="212" r="5"/>
+    <circle cx="124" cy="240" r="5"/><circle cx="164" cy="236" r="5"/><circle cx="204" cy="244" r="5"/><circle cx="236" cy="236" r="5"/>
+    <circle cx="106" cy="266" r="5"/><circle cx="146" cy="264" r="5"/><circle cx="186" cy="268" r="5"/><circle cx="226" cy="264" r="5"/>
+  </g>
+  <path d="M90 90 L90 274 Q90 281 97 281 L243 281 Q250 281 250 274 L250 90" class="verre"/>
+  <line x1="250" y1="190" x2="262" y2="190" class="g"/>
+  <line x1="250" y1="100" x2="262" y2="100" class="g"/>
+  <text x="170" y="312" text-anchor="middle" class="t l">Avant</text>
+  <text x="170" y="336" text-anchor="middle" class="t s">6 g dans 0,1 L</text>
+  <text x="170" y="360" text-anchor="middle" class="t s">C = 60 g/L</text>
+
+  <!-- Ajout d'eau -->
+  <line x1="290" y1="200" x2="420" y2="200" stroke="#334155" stroke-width="2.5" marker-end="url(#fl)"/>
+  <text x="355" y="182" text-anchor="middle" class="t s">+ 0,1 L d'eau</text>
+
+  <!-- Après : 0,2 L -->
+  <rect x="471" y="100" width="158" height="180" class="eau"/>
+  <g class="p">
+    <circle cx="496" cy="122" r="5"/><circle cx="560" cy="114" r="5"/><circle cx="610" cy="132" r="5"/>
+    <circle cx="520" cy="160" r="5"/><circle cx="590" cy="170" r="5"/><circle cx="486" cy="194" r="5"/>
+    <circle cx="552" cy="200" r="5"/><circle cx="614" cy="214" r="5"/><circle cx="506" cy="236" r="5"/>
+    <circle cx="574" cy="244" r="5"/><circle cx="490" cy="266" r="5"/><circle cx="604" cy="264" r="5"/>
+  </g>
+  <path d="M470 90 L470 274 Q470 281 477 281 L623 281 Q630 281 630 274 L630 90" class="verre"/>
+  <line x1="630" y1="190" x2="642" y2="190" class="g"/>
+  <line x1="630" y1="100" x2="642" y2="100" class="g"/>
+  <text x="550" y="312" text-anchor="middle" class="t l">Après</text>
+  <text x="550" y="336" text-anchor="middle" class="t s">6 g dans 0,2 L</text>
+  <text x="550" y="360" text-anchor="middle" class="t s">C = 30 g/L</text>
+
+  <line x1="40" y1="378" x2="680" y2="378" stroke="#cbd5e1" stroke-width="1"/>
+  <text x="360" y="406" text-anchor="middle" class="t l">Le sucre reste là : le volume double, la concentration est divisée par 2</text>
+</svg>

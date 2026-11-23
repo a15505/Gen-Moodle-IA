@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 420" role="img" aria-labelledby="t5">
+  <title id="t5">Deux béchers de 0,25 L : 5 g de sel dans A, 10 g dans B</title>
+  <style>
+    .t{font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;fill:#0f172a}
+    .l{font-size:18px;font-weight:700}
+    .s{font-size:16px;fill:#334155;font-variant-numeric:tabular-nums}
+    .eau{fill:#dbeafe}
+    .verre{fill:none;stroke:#334155;stroke-width:2.5;stroke-linejoin:round}
+    .p{fill:#b45309}
+  </style>
+  <rect width="720" height="420" fill="#ffffff"/>
+
+  <circle cx="290" cy="34" r="5" class="p"/>
+  <text x="304" y="40" class="t s">= 1 g de sel dissous</text>
+
+  <!-- Solution A : 5 g -->
+  <rect x="111" y="110" width="178" height="170" class="eau"/>
+  <g class="p">
+    <circle cx="145" cy="140" r="5"/><circle cx="240" cy="150" r="5"/><circle cx="190" cy="196" r="5"/>
+    <circle cx="135" cy="246" r="5"/><circle cx="256" cy="250" r="5"/>
+  </g>
+  <path d="M110 70 L110 274 Q110 281 117 281 L283 281 Q290 281 290 274 L290 70" class="verre"/>
+  <text x="200" y="312" text-anchor="middle" class="t l">Solution A</text>
+  <text x="200" y="336" text-anchor="middle" class="t s">5 g dans 0,25 L</text>
+  <text x="200" y="360" text-anchor="middle" class="t s">C = 20 g/L</text>
+
+  <!-- Solution B : 10 g -->
+  <rect x="431" y="110" width="178" height="170" class="eau"/>
+  <g class="p">
+    <circle cx="460" cy="134" r="5"/><circle cx="512" cy="146" r="5"/><circle cx="580" cy="132" r="5"/>
+    <circle cx="482" cy="184" r="5"/><circle cx="548" cy="178" r="5"/><circle cx="596" cy="206" r="5"/>
+    <circle cx="452" cy="232" r="5"/><circle cx="520" cy="226" r="5"/><circle cx="566" cy="256" r="5"/>
+    <circle cx="488" cy="262" r="5"/>
+  </g>
+  <path d="M430 70 L430 274 Q430 281 437 281 L603 281 Q610 281 610 274 L610 70" class="verre"/>
+  <text x="520" y="312" text-anchor="middle" class="t l">Solution B</text>
+  <text x="520" y="336" text-anchor="middle" class="t s">10 g dans 0,25 L</text>
+  <text x="520" y="360" text-anchor="middle" class="t s">C = 40 g/L</text>
+
+  <line x1="40" y1="378" x2="680" y2="378" stroke="#cbd5e1" stroke-width="1"/>
+  <text x="360" y="406" text-anchor="middle" class="t l">Même volume, 2 fois plus de soluté : 2 fois plus concentrée</text>
+</svg>
