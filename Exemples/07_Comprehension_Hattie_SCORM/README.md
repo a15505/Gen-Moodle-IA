@@ -5,7 +5,7 @@ Activité de référence du [canevas Hattie](../../.agents/skills/assistant_scor
 - **Commande à exécuter :**
   > `Génère un exercice de compréhension SCORM selon le canevas Hattie`
 - **Consigne d'origine :** [`Consigne_de_generation.html`](./Consigne_de_generation.html) (aucun PDF source ; résumé des demandes qui ont produit l'activité).
-- **Fondements :** dossier [`john_hattie/`](../../john_hattie/) (intentions et critères de réussite ; analyse cognitive des tâches).
+- **Fondements :** travaux de John Hattie (intentions et critères de réussite ; analyse cognitive des tâches).
 
 ### Ce que montre cet exemple
 1. Accueil avec deux tuiles : « Ce que j'apprends » et « Je sais que j'ai réussi quand… ».

@@ -6,7 +6,7 @@ Commande : « Génère un exercice de compréhension SCORM selon le canevas Hatt
 - Gabarit à copier : [`resources/gabarit_questions_comprehension.js`](./resources/gabarit_questions_comprehension.js)
 - Validateur : [`resources/valider_questions_data.py`](./resources/valider_questions_data.py)
 - Image de référence de la formule : [`../eval_pfeq/resources/reference_formule_concentration.png`](../eval_pfeq/resources/reference_formule_concentration.png)
-- Fondements : dossier [`john_hattie/`](../../../john_hattie/) (intentions et critères de réussite ; analyse cognitive des tâches)
+- Fondements : travaux de John Hattie (intentions et critères de réussite ; analyse cognitive des tâches)
 
 ---
 

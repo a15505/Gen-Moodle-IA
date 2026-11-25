@@ -124,3 +124,25 @@ Les skills sont des modes d'emploi spécialisés, rangés dans [`.agents/skills/
 | [`concepteur_web`](./.agents/skills/concepteur_web/SKILL.md) | Conçoit des pages web et des écrans interactifs selon les deux modèles du moteur (tableau de bord ou activité interactive), sans framework externe. | « Crée une page d'activité interactive sur les états de la matière » |
 | [`jeu_hero`](./.agents/skills/jeu_hero/SKILL.md) | Scénarise des jeux « dont vous êtes le héros » pour les sciences au secondaire : embranchements, choix de l'élève, score qui débute à 0. | « Crée un jeu dont vous êtes le héros sur la digestion » |
 | [`wcag`](./.agents/skills/wcag/SKILL.md) | Référentiel d'accessibilité (WCAG 2.1 AA et AAA) appliqué à toutes les pages : contrastes, navigation au clavier, structure lisible par les lecteurs d'écran. | Appliqué automatiquement |
+
+---
+
+## Licence
+
+Copyright © 2026 Yvon Quémener
+
+Ce projet est distribué sous une double licence :
+
+- **Code** (scripts Python, JavaScript, HTML, CSS, gabarits et moteurs) : [GNU General Public License v3.0](./LICENSE) (GPL-3.0-or-later). Vous pouvez utiliser, modifier et redistribuer le code, à condition que toute version modifiée distribuée demeure sous la même licence et que son code source reste accessible.
+- **Documentation** (fichiers Markdown, directives, canevas, guides et contenus didactiques) : [Creative Commons Attribution – Partage dans les mêmes conditions 4.0 International](./LICENSE-DOCS) (CC BY-SA 4.0). Vous pouvez partager et adapter ces contenus, à condition de créditer l'auteur et de diffuser vos adaptations sous la même licence.
+
+### Composants tiers
+
+Les bibliothèques suivantes, incluses localement, conservent leur propre licence :
+
+| Composant | Fichier | Licence |
+| :--- | :--- | :--- |
+| Quill | `moteur-ui/src/quill.js` | BSD 3-Clause |
+| MathJax | `moteur-ui/src/mathjax.js` | Apache 2.0 |
+| fflate | `moteur-ui/src/fflate.js` | MIT |
+| lamejs | `moteur-ui/simulateurs/scorm/lame.min.js` | LGPL 3.0 |
