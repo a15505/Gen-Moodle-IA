@@ -2143,7 +2143,7 @@
     sonderAudio(cheminAudio(q));
     if (!narrationPossible(q)) return '';
     return '<div class="narration-lecteur">' +
-        '<button type="button" class="btn btn-primary" data-narration="basculer">Écouter l\'explication</button>' +
+        '<button type="button" class="btn btn-accent" data-narration="basculer">Écouter l\'explication</button>' +
         '<button type="button" class="btn" data-narration="recommencer" hidden>Recommencer</button>' +
         '<p class="narration-etat" aria-live="polite"></p>' +
       '</div>';

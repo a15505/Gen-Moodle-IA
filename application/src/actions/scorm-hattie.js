@@ -603,7 +603,11 @@
     q.id = ancienne.id || q.id;
     if (ancienne.image) { q.image = ancienne.image; q.imageAlt = ancienne.imageAlt; }
     // L'enregistrement de la voix est gardé ; le volet signale si la narration a changé depuis.
-    if (ancienne.audio && liste(q.narration).length) { q.audio = ancienne.audio; q.audioDuree = ancienne.audioDuree; q.audioTexte = ancienne.audioTexte; }
+    // La voix d'un projet d'exemple (audioExemple) est retirée dès que la narration change : la voix de synthèse lit le nouveau texte.
+    const memeTexte = ancienne.audioTexte === liste(q.narration).join('\n');
+    if (ancienne.audio && liste(q.narration).length && (!ancienne.audioExemple || memeTexte)) {
+      q.audio = ancienne.audio; q.audioDuree = ancienne.audioDuree; q.audioTexte = ancienne.audioTexte; q.audioExemple = ancienne.audioExemple;
+    }
     if (!q.imageCaption && ancienne.imageCaption) q.imageCaption = ancienne.imageCaption;
     const notes = [];
     if (drapeaux.numeros) notes.push('Le numéro placé devant le titre a été retiré.');

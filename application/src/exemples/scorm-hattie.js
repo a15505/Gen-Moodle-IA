@@ -6,6 +6,9 @@
  * Comme l'IA, la réponse décrit le schéma de chaque présentation (« figure ») sans fournir d'image.
  * « images » associe ensuite à chaque station le schéma SVG de Exemples/07 (src/exemples/images-exemples.js) :
  * l'assistant le pose par sa méthode d'ajout habituelle, comme si l'enseignant l'avait collé à l'étape 3.
+ * « audios » associe à chaque station la narration MP3 de Exemples/07 (copie dans src/exemples/audio/) :
+ * réservée à ce projet d'exemple, posée comme un enregistrement de l'enseignant et retirée si la narration change.
+ * En ouverture locale (file:///), le navigateur bloque la lecture de ces fichiers : la voix de synthèse prend le relais.
  */
 window.MoodleAIExemples = window.MoodleAIExemples || {};
 window.MoodleAIExemples.scormHattie = (function () {
@@ -1320,6 +1323,16 @@ window.MoodleAIExemples.scormHattie = (function () {
       "La dilution": "07/p6_dilution",
       "Vérifier un calcul de concentration": "07/p7_analyse_erreur",
       "Préparer une solution au laboratoire": "07/p8_preparer"
+    },
+    audios: {
+      "Soluté, solvant et solution homogène": "./src/exemples/audio/p1.mp3",
+      "Ce que veut dire une concentration en g/L": "./src/exemples/audio/p2.mp3",
+      "Des millilitres aux litres": "./src/exemples/audio/p3.mp3",
+      "Des grammes aux kilogrammes": "./src/exemples/audio/p4.mp3",
+      "Comparer deux solutions": "./src/exemples/audio/p5.mp3",
+      "La dilution": "./src/exemples/audio/p6.mp3",
+      "Vérifier un calcul de concentration": "./src/exemples/audio/p7.mp3",
+      "Préparer une solution au laboratoire": "./src/exemples/audio/p8.mp3"
     }
   };
 })();

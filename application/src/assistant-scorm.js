@@ -358,6 +358,7 @@
     etat.etapeMax = etat.donnees ? NB_ETAPES : 2;
     ouvrirParcours(1);
     appliquerImagesExemple(ex);
+    appliquerAudiosExemple(ex);
   }
 
   function demarrerNouveau(type) {
@@ -588,7 +589,7 @@
     norm.donnees.questions.forEach(function (q) {
       const a = anciennes[q.titre];
       if (a && a.image) { q.image = a.image; q.imageAlt = a.imageAlt; }
-      if (a && a.audio && (q.narration || []).length) { q.audio = a.audio; q.audioDuree = a.audioDuree; q.audioTexte = a.audioTexte; }
+      if (voixReprise(a, q)) { q.audio = a.audio; q.audioDuree = a.audioDuree; q.audioTexte = a.audioTexte; q.audioExemple = a.audioExemple; }
     });
     const nouvelle = !conserver || brut !== etat.reponseBrute || !etat.donnees;
     etat.donnees = norm.donnees;
@@ -805,7 +806,7 @@
       : 'Toutes les questions') + '</p>' +
       '<ul class="liste-questions-images">' + qs.map(function (q, k) {
         const etatTxt = (q.image ? 'image ajoutée' : (q.figure ? 'schéma manquant' : 'sans image')) +
-          (avecVoix(q) ? (V().aVoix(q) ? ', votre voix' : ', voix de synthèse') : '');
+          (avecVoix(q) ? (V().aVoix(q) ? (q.audioExemple ? ', narration de l\'exemple' : ', votre voix') : ', voix de synthèse') : '');
         return '<li><button type="button" class="lien-question-image' + (q.figure && !q.image ? ' est-manquante' : '') + '" data-aller-image-scorm="' + k + '"' +
           (k === i ? ' aria-current="true"' : '') + '>' +
           '<span class="nombres">' + (k + 1) + '.</span> <span>' + ech(q.titre || '') + '</span>' +
@@ -870,6 +871,7 @@
         station.audio = r.audio;
         station.audioDuree = r.duree;
         station.audioTexte = r.texte;
+        delete station.audioExemple;
         sauver();
         rechargerSurQuestion(etat.donnees.questions.indexOf(station));
         statutImage('Votre voix est enregistrée pour la station ' + (etat.donnees.questions.indexOf(station) + 1) +
@@ -879,6 +881,7 @@
         delete station.audio;
         delete station.audioDuree;
         delete station.audioTexte;
+        delete station.audioExemple;
         sauver();
         rechargerSurQuestion(etat.donnees.questions.indexOf(station));
         statutImage('Enregistrement retiré : la voix de synthèse lit de nouveau la narration.');
@@ -1135,6 +1138,63 @@
     const poses = donnees.questions.map(function (q) {
       const src = banque[ex.images[q.titre]];
       return q.figure && !q.image && src ? poserImage(q, src) : Promise.resolve(false);
+    });
+    Promise.all(poses).then(function (r) {
+      if (etat.donnees !== donnees || r.indexOf(true) < 0) return;
+      sauver();
+      if (etat.etape === 3) chargerApercu();
+      if (etat.etape === 4) preparerEtapeExport();
+    });
+  }
+
+  /** Texte de la narration tel que l'enregistreur le compare (audioTexte). */
+  function texteNarration(q) { return (q.narration || []).join('\n'); }
+
+  /** Une voix d'exemple ne suit une station que si sa narration n'a pas changé. */
+  function voixReprise(a, q) {
+    return !!(a && a.audio && (q.narration || []).length && (!a.audioExemple || a.audioTexte === texteNarration(q)));
+  }
+
+  /** Lit un fichier MP3 local du paquet en data: et sa durée ; null si le navigateur le refuse (file:///). */
+  function lireAudio(chemin) {
+    return fetch(chemin).then(function (r) {
+      if (!r.ok) throw new Error(r.status);
+      return r.blob();
+    }).then(function (blob) {
+      return new Promise(function (resolve) {
+        const lecteur = new FileReader();
+        lecteur.onload = function () {
+          const url = String(lecteur.result).replace(/^data:[^;,]*/, 'data:audio/mpeg');
+          const a = new Audio();
+          a.preload = 'metadata';
+          a.onloadedmetadata = function () { resolve({ audio: url, duree: isFinite(a.duration) ? a.duration : 0 }); };
+          a.onerror = function () { resolve({ audio: url, duree: 0 }); };
+          a.src = url;
+        };
+        lecteur.onerror = function () { resolve(null); };
+        lecteur.readAsDataURL(blob);
+      });
+    }).catch(function () { return null; });
+  }
+
+  /**
+   * Narrations MP3 d'un projet d'exemple (src/exemples/audio/, reprises de ../Exemples/) : posées comme un
+   * enregistrement de l'enseignant, sur ce seul projet. « audioExemple » les retire si la narration change.
+   */
+  function appliquerAudiosExemple(ex) {
+    if (!ex || !ex.audios || !etat.donnees) return;
+    const donnees = etat.donnees;
+    const poses = donnees.questions.map(function (q) {
+      const chemin = ex.audios[q.titre];
+      if (!chemin || q.audio || !(q.narration || []).length) return Promise.resolve(false);
+      return lireAudio(chemin).then(function (r) {
+        if (!r || etat.donnees !== donnees || q.audio) return false;
+        q.audio = r.audio;
+        q.audioDuree = r.duree;
+        q.audioTexte = texteNarration(q);
+        q.audioExemple = true;
+        return true;
+      });
     });
     Promise.all(poses).then(function (r) {
       if (etat.donnees !== donnees || r.indexOf(true) < 0) return;

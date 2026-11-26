@@ -42,7 +42,9 @@
   function carteHtml(q) {
     const voix = aVoix(q);
     const visee = R() ? R().dureeVisee({ narration: q.narration || [] }) : 0;
-    let etat = voix ? 'Votre voix est enregistrée (' + duree(q.audioDuree) + ').' : 'Voix de synthèse : aucun enregistrement.';
+    let etat = voix
+      ? (q.audioExemple ? 'Narration enregistrée de l\'exemple (' + duree(q.audioDuree) + ').' : 'Votre voix est enregistrée (' + duree(q.audioDuree) + ').')
+      : 'Voix de synthèse : aucun enregistrement.';
     return '<section class="carte-voix" aria-labelledby="titreVoixScorm">' +
       '<h4 id="titreVoixScorm">Narration avec votre voix</h4>' +
       '<p class="voix-etat">' + etat + '</p>' +

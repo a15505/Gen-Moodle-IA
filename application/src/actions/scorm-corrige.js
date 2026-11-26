@@ -785,6 +785,7 @@
       delete q.reponsesIA;
       delete q.audioDuree;
       delete q.audioTexte;
+      delete q.audioExemple;
       if (q.image && cheminImage) q.image = cheminImage(q, i);
       if (q.audio && !/^data:audio\/|^\.\//.test(q.audio)) delete q.audio;
       if (q.audio && cheminAudio) q.audio = cheminAudio(q, i);
