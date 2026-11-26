@@ -30,6 +30,13 @@
   function texteNarration(q) { return (q.narration || []).join('\n'); }
 
   function disponible() { return !!R() && typeof window.lamejs !== 'undefined'; }
+
+  /** Taille maximale d'un MP3 téléversé (gardé dans le projet et dans le package). */
+  const TAILLE_MAX_MP3 = 15 * 1048576;
+  function boutonTeleverser() {
+    return '<button type="button" class="btn" data-voix="televerser">Téléverser un MP3</button>' +
+      '<input type="file" accept=".mp3,audio/mpeg" data-voix="fichier" hidden>';
+  }
   /** La station a-t-elle un enregistrement de l'enseignant ? */
   function aVoix(q) { return /^data:audio\//.test((q && q.audio) || ''); }
   /** Le texte de la narration a changé depuis l'enregistrement. */
@@ -59,9 +66,14 @@
             '<button type="button" class="btn btn-primary" data-voix="enregistrer">' + (voix ? 'Enregistrer de nouveau' : 'Enregistrer ma voix') + '</button>' +
             '<button type="button" class="btn btn-primary" data-voix="arreter" hidden>Arrêter</button>' +
             (voix ? '<button type="button" class="btn" data-voix="ecouter">Écouter</button>' : '') +
+            boutonTeleverser() +
             (voix ? '<button type="button" class="btn" data-voix="retirer">Retirer l\'enregistrement</button>' : '') +
           '</div>'
-        : '<p class="aide">L\'enregistreur (moteur-ui/simulateurs/scorm/narration-recorder.js et lame.min.js) n\'est pas chargé.</p>') +
+        : '<p class="aide">L\'enregistreur (moteur-ui/simulateurs/scorm/narration-recorder.js et lame.min.js) n\'est pas chargé.</p>' +
+          '<div class="image-courante-boutons">' + boutonTeleverser() +
+            (voix ? '<button type="button" class="btn" data-voix="retirer">Retirer l\'enregistrement</button>' : '') +
+          '</div>') +
+      '<p class="aide">Vous avez déjà la narration en MP3 ? « Téléverser un MP3 » la place dans cette station (' + Math.round(TAILLE_MAX_MP3 / 1048576) + ' Mo au plus).</p>' +
       '<p class="statut voix-message" role="status" aria-live="polite"></p>' +
     '</section>';
   }
@@ -81,6 +93,12 @@
     b('enregistrer', demarrer);
     b('arreter', arreter);
     b('ecouter', ecouter);
+    b('televerser', function () {
+      const champ = $('[data-voix="fichier"]');
+      if (champ && !enCours) { lecteur.pause(); champ.value = ''; champ.click(); }
+    });
+    const champ = $('[data-voix="fichier"]');
+    if (champ) champ.addEventListener('change', function () { if (champ.files && champ.files[0]) televerser(champ.files[0]); });
     b('retirer', function () {
       lecteur.pause();
       if (confirm('Retirer votre enregistrement de cette station ? La voix de synthèse lira de nouveau la narration.') && rappels.retire) rappels.retire(q);
@@ -92,7 +110,7 @@
     const arr = $('[data-voix="arreter"]');
     if (enr) { enr.hidden = etat === 'capture'; enr.disabled = enCours; }
     if (arr) arr.hidden = etat !== 'capture';
-    ['ecouter', 'retirer'].forEach(function (a) { const el = $('[data-voix="' + a + '"]'); if (el) { el.disabled = enCours; el.hidden = etat === 'capture'; } });
+    ['ecouter', 'retirer', 'televerser'].forEach(function (a) { const el = $('[data-voix="' + a + '"]'); if (el) { el.disabled = enCours; el.hidden = etat === 'capture'; } });
   }
 
   function compteARebours(n) {
@@ -188,6 +206,33 @@
       terminer();
       message('L\'enregistrement n\'a pas pu être converti en MP3. Recommencez.');
     });
+  }
+
+  /** MP3 choisi sur l'ordinateur : rangé dans la station comme un enregistrement (data:audio/mpeg). */
+  function televerser(fichier) {
+    if (enCours || !station) return;
+    const q = station;
+    if (!/\.mp3$/i.test(fichier.name) && fichier.type !== 'audio/mpeg') { message('Ce fichier n\'est pas un MP3. Choisissez un fichier .mp3.'); return; }
+    if (fichier.size > TAILLE_MAX_MP3) { message('Ce fichier dépasse ' + Math.round(TAILLE_MAX_MP3 / 1048576) + ' Mo. Choisissez un MP3 plus léger.'); return; }
+    enCours = true;
+    majBoutons();
+    message('Lecture du fichier…');
+    const fr = new FileReader();
+    fr.onerror = function () { terminer(); message('Le fichier n\'a pas pu être lu.'); };
+    fr.onload = function () {
+      const url = String(fr.result).replace(/^data:[^;,]*/, 'data:audio/mpeg');
+      const essai = new Audio();
+      essai.preload = 'metadata';
+      essai.onerror = function () { terminer(); message('Ce fichier MP3 n\'a pas pu être lu par le navigateur.'); };
+      essai.onloadedmetadata = function () {
+        const secondes = isFinite(essai.duration) ? essai.duration : 0;
+        enCours = false;
+        if (rappels.enregistre) rappels.enregistre(q, { audio: url, duree: Math.round(secondes * 10) / 10, texte: texteNarration(q), avis: ' Fichier téléversé : « ' + fichier.name + ' ».' });
+        if (rappels.fini) rappels.fini();
+      };
+      essai.src = url;
+    };
+    fr.readAsDataURL(fichier);
   }
 
   function terminer() {
